@@ -44,3 +44,40 @@ def point_limit(point):
         point[0] = 0
     if point[1] < 0:
         point[1] = 0
+
+def accurate_place(card_img_hsv,limit1,limit2,color):#车牌根据颜色再定位
+    row_num , col_num = card_img_hsv.shape[:2]
+    xl = col_num 
+    xr = 0 
+    yh = 0
+    yl = row_num
+    row_num_limit = 20
+    col_num_limit = col_num * 0.8 if color != "green" else col_num * 0.5 #绿色车牌存在渐变,判断绿色暂时判断一半
+    for i in range(row_num): #O(N^2)
+        count = 0
+        for j in range(col_num):
+            H = card_img_hsv.item(i,j,0)
+            S = card_img_hsv.item(i,j,1)
+            V = card_img_hsv.item(i,j,2)
+            if limit1 < H <= limit2 and 34 < S and 46 < V:
+                count += 1 
+        if count > col_num_limit :
+            if yl > i:
+                yl = i
+            if yh < i:
+                yh = i
+
+    for j in range(col_num):
+        count = 0
+        for i in range(row_num):
+            H = card_img_hsv.item(i,j,0)
+            S = card_img_hsv.item(i,j,1)
+            V = card_img_hsv.item(i,j,2)
+            if limit1 < H <= limit2 and 34 < S and 46 < V:
+                count += 1 
+        if count > col_num_limit :
+            if xl > i:
+                xl = i
+            if xr < i:
+                xr = i
+    return xl,xr,yh,yl
