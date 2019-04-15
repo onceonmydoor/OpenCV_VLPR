@@ -142,7 +142,7 @@ class Predict:
                 car_contours.append(rect)
                 box = cv2.boxPoints(rect)
                 box = np.int0(box)#int0==int64
-                oldimg = cv2.drawContours(oldimg, [box], 0, (0, 0, 255), 2)#在原图像上画出矩形
+                #oldimg = cv2.drawContours(oldimg, [box], 0, (0, 0, 255), 2)#在原图像上画出矩形
                 #cv2.imshow("edge4", oldimg)
                 #cv2.waitKey()
                 #cv2.destroyAllWindows()
@@ -273,12 +273,24 @@ class Predict:
                     xl = 0
                     xr = col_num
             card_imgs[card_index] = card_img[yl:yh, xl:xr] if color != "green" or yl < (yh - yl) // 4 else card_img[yl - (yh - yl) // 4:yh,xl:xr]
+            
+        #返回可能存在的
+        for i in colors[:]:
+            if i == "no":
+                index = colors.index(i)
+                colors.remove("no")
+                card_imgs.pop(index)
+        #show图片
+        for card_img in card_imgs:
             cv2.imshow("dingwei", card_img)
             cv2.waitKey()
             cv2.destroyAllWindows()
+        
+        return colors,card_imgs  #可能存在多个车牌，暂时保留列表结构                                                                          
 
-        return colors,card_imgs                                                                            
 
+    #def char_recogize(colors,card_imgs):
+        #车牌字符识别
    
         
 
