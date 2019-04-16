@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter.filedialog import *
 from tkinter import ttk
-import img_fun as predict
+import predict
 import img_math
 import cv2
 from PIL import Image, ImageTk

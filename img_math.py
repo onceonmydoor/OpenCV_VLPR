@@ -18,7 +18,6 @@ def img_read(filename):
     return cv2.imdecode(np.fromfile(filename,dtype=np.uint8),cv2.IMREAD_COLOR)
     #使用uint8方式读取文件 放入imdecode中,解决imread不能读取中文路径的问题
 
-
 def find_waves(threshold,histogram):
     up_point = -1 #上升点
     is_peak = False 
@@ -37,7 +36,6 @@ def find_waves(threshold,histogram):
     if is_peak and up_point != -1 and i-up_point > 4:
         wave_peaks.append((up_point,i))
     return wave_peaks
-
 
 def point_limit(point):
     if point[0] < 0:
@@ -81,3 +79,9 @@ def accurate_place(card_img_hsv,limit1,limit2,color):#车牌根据颜色再定�
             if xr < i:
                 xr = i
     return xl,xr,yh,yl
+
+
+
+
+
+
