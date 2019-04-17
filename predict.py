@@ -10,6 +10,9 @@ import img_rec
 import Train_SVM
 import config
 import json
+from PIL import ImageStat
+from PIL import Image
+
 
 SZ = 20 #训练图片长宽 (训练样本是20*20的图片)
 MAX_WIDTH = 2000 #原始图片最大宽度
@@ -48,7 +51,42 @@ class Predict:
         output = np.uint8(255 / (B - A)*(img_gray - A) + 0.5)
         return output
 
+    def brightness1( car_pic ):
+        im = Image.open(car_pic).convert('L')
+        stat = ImageStat.Stat(im)   
+        return stat.mean[0]
+        print(brightness1('c:\\meiping1.png'))
 
+
+
+
+
+    def isdark(self,car_pic):
+
+        if type(car_pic) == type(""):
+            img = img_math.img_read(car_pic)
+        else:
+            img = car_pic
+        #把图片转换成为灰度图
+        gray_img = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+
+        #获取灰度图矩阵的行数和列数
+        rows , cols = gray_img.shape[:2]
+        dark_sum = 0
+        dark_prop = 0
+        piexs_sum = rows*cols
+
+        #遍历灰度图的所有像素
+        for row in gray_img:
+            for col in row:
+                if col<40:
+                    dark_sum+=1
+        dark_prop = dark_sum/(piexs_sum)
+        print("总的黑色像素为"+str(dark_sum))
+        print("总像素是："+str(piexs_sum))
+        if dark_prop >= 0.75:
+            return True
+        return False
 
 
     def preprocess(self, car_pic_file):
@@ -69,6 +107,10 @@ class Predict:
                 img = cv2.resize(img, (MAX_WIDTH, int(pic_hight * resize_rate)), interpolation=cv2.INTER_AREA)
             
             gray_img = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)#转成灰度图
+
+            dst = cv2.equalizeHist(gray_img)
+            cv2.imshow("dst",dst)
+            cv2.waitKey(0)
 
             blur_img = cv2.blur(gray_img,(3,3))#均值模糊
 
@@ -272,7 +314,7 @@ class Predict:
             return_flag = False
             angle = rect[2]#获得矩形旋转的角度
             print("角度是{}".format(angle))
-            print("宽是{},长是{}".format(rect[1][0],rect[0][1]))
+            print("宽是{},长是{}".format(rect[1][0],rect[1][1]))
 
             rect = (rect[0],(rect[1][0] + 5,rect[1][1] + 5),angle) #扩大范围，避免车牌的边缘被排除
 
@@ -282,8 +324,10 @@ class Predict:
                 rect_w , rect_h = rect_h , rect_w
                 return_flag = True
             if return_flag:
-                car_img = oldimg[int(rect[0][1]-rect_h/2):int(rect[0][1]+rect_h/2),int(rect[0][0]-rect_w/2):int(rect[0][0]+rect_w/2)]
-                return car_img
+                card_img = oldimg[int(rect[0][1] - rect_h / 2):int(rect[0][1] + rect_h / 2),
+                          int(rect[0][0] - rect_w / 2):int(rect[0][0] + rect_w / 2)]
+                card_imgs.append(card_img)
+                return card_imgs
 
             box = cv2.boxPoints(rect)
             height_point = right_point = [0,0]#设定右上是0，0
@@ -310,8 +354,8 @@ class Predict:
                 card_img = dst[int(left_point[1]):int(height_point[1]),int(left_point[0]):int(new_right_point[0])]#摆正图像
                 #show
                 card_imgs.append(card_img)
-                cv2.imshow("card2",card_img)
-                cv2.waitKey(0)
+                #cv2.imshow("card2",card_img)
+                #cv2.waitKey(0)
             elif low_point[0] <= height_point[0]:  #负角度
                 new_left_point = [left_point[0],height_point[1]]
                 pts2 = np.float32([new_left_point,height_point,right_point])  #字符只是高度需要改变
@@ -324,8 +368,8 @@ class Predict:
                 card_img = dst[int(right_point[1]):int(height_point[1]),int(new_left_point[0]):int(right_point[0])]
                 #show
                 card_imgs.append(card_img)
-                cv2.imshow("card2",card_img)
-                cv2.waitKey(0)
+                #cv2.imshow("card2",card_img)
+                #cv2.waitKey(0)
         return card_imgs
 
     def img_color(self,card_imgs):
@@ -338,8 +382,8 @@ class Predict:
                 #TODO：可能会存在转换失败的问题，原因来自于矫正矩形失败
                 if card_img_hsv is None:
                     continue
-                cv2.imshow("hsv",card_img_hsv)
-                cv2.waitKey(0)
+                #cv2.imshow("hsv",card_img_hsv)
+                #cv2.waitKey(0)
 
                 row_num , col_num = card_img_hsv.shape[:2]#获取长宽
                 card_img_count = row_num * col_num
@@ -413,7 +457,9 @@ class Predict:
 
 if __name__ == '__main__':
     q = Predict()
-    afterprocess,old = q.preprocess("test\\test1.jpg")
+    #if q.isdark("test\\timg.jpg"):
+        #print("是黑夜拍的")
+    afterprocess,old = q.preprocess("test\\1.jpg")
     #afterprocess,old=q.preprocess("test\\Yes_img\\3_2.jpg")
     cv2.imshow("预处理", afterprocess)
     cv2.waitKey()
