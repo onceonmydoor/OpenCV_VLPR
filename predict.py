@@ -13,7 +13,7 @@ import json
 
 SZ = 20 #训练图片长宽 (训练样本是20*20的图片)
 MAX_WIDTH = 2000 #原始图片最大宽度
-MIN_AREA = 2000 #车牌区域的允许最大面积（不能过大）
+MIN_AREA = 1000 #车牌区域的允许最大面积（不能过大）
 PROVINCE_START = 1000 #用于字符分类
 
 
@@ -63,55 +63,49 @@ class Predict:
 
             pic_hight, pic_width = img.shape[:2]
             print("图片长为{}，图片宽为{}".format(pic_hight,pic_width))
+            #适当缩小图片
             if pic_width > MAX_WIDTH:
                 resize_rate = MAX_WIDTH / pic_width
                 img = cv2.resize(img, (MAX_WIDTH, int(pic_hight * resize_rate)), interpolation=cv2.INTER_AREA)
-            # 缩小图片
-
-            blur = self.cfg["blur"]
-            # 高斯去噪
-            if blur > 0:
-                gaussian = cv2.GaussianBlur(img, (blur, blur), 0)#高斯平滑
-            #调整图片分辨率
-            oldimg = gaussian
-            # 中值滤波
-            #median = cv2.medianBlur(gaussian, 5)
-            # Sobel算子，X方向求梯度
-            #canny =cv2.Canny(median, 100, 200)
-
-            # 转化成灰度图像
-            #img = self.grey_scale(img)
-            img = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
-            #equ = cv2.equalizeHist(img)
-            #img = np.hstack((img,equ))
-           
-            Matrix = np.ones((self.cfg["morphologyr"], self.cfg["morphologyc"]), np.uint8)
-            img_opening = cv2.morphologyEx(img, cv2.MORPH_OPEN, Matrix)
-            img_opening = cv2.addWeighted(img, 1, img_opening, -1, 0)
-            # 创建20*20的元素为1的矩阵 开操作，并和img重合,除去孤立的小点，毛刺和小桥，而总的位置和形状不变
-
-            ret, img_thresh = cv2.threshold(img_opening, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
-            img_edge = cv2.Canny(img_thresh, 100, 200)#Canny算子
-            # x = cv2.Sobel(img,cv2.CV_16S,1,0)
-            # y = cv2.Sobel(img,cv2.CV_16S,0,1)
-
-            # absX =cv2.convertScaleAbs(x) #转回uint8
-            # absY =cv2.convertScaleAbs(y)
-
-            # img_edge = cv2.addWeighted(absX,0.5,absY,0.5,0)
             
+            gray_img = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)#转成灰度图
+
+            blur_img = cv2.blur(gray_img,(3,3))#均值模糊
+
+            sobel_img = cv2.Sobel(blur_img,cv2.CV_16S, 1, 0, ksize=3)#sobel获取垂直边缘
+            sobel_img = cv2.convertScaleAbs(sobel_img)
+
+            hsv_img = cv2.cvtColor(img,cv2.COLOR_BGR2HSV)#转成HSV
+
+            # cv2.imshow("hsv",hsv_img)
+            # cv2.waitKey(0)
+
+            h , s , v = hsv_img[:, :, 0], hsv_img[:, :, 1],hsv_img[:, :, 2]
+
+            #黄色的色调区间再[26,34],蓝色的色调区间再[100,124]，绿色的色调区间在[35,100]
+            blue_img = (((h > 15) & (h <= 34)) | ((h > 35) & (h < 100)) | ((h >= 100) & (h <= 124))) & (s > 70) & (v > 70)
+            blue_img = blue_img.astype('float32')
+
+            mix_img = np.multiply(sobel_img, blue_img)
+            #cv2.imshow('mix', mix_img)
+
+            mix_img = mix_img.astype(np.uint8)
+
+            ret, binary_img = cv2.threshold(mix_img, 0, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
+            #cv2.imshow('binary',binary_img)
+
+            kernel = cv2.getStructuringElement(cv2.MORPH_RECT,(21,5))
+            close_img = cv2.morphologyEx(binary_img, cv2.MORPH_CLOSE, kernel)
             
 
-            # Otsu’s二值化 找到图像边缘
+            return close_img , img
 
 
+
+         
             
-            Matrix = np.ones((4, 19), np.uint8)
-            img_edge1 = cv2.morphologyEx(img_edge, cv2.MORPH_CLOSE, Matrix)
-            img_edge2 = cv2.morphologyEx(img_edge1, cv2.MORPH_OPEN, Matrix)
-            #使用开运算和闭运算让图像边缘成为一个整体
             
-            return img_edge2, oldimg
+            #return img_edge2, oldimg
 
             ##生成预处理图像，车牌识别的第一步
     
@@ -152,12 +146,12 @@ class Predict:
                     xr = j
         return xl, xr, yh, yl
 
-    def img_color_contours(self,img_coutours,oldimg):
+    def locate_carPlate(self,img_coutours,oldimg):
         """
         :param img_contours :预处理好的图像
         :param oldimg: 原图像
         :return: 已经定位好的车牌
-        :此方法为确定车牌的定位，通过矩形长宽比和颜色定位图像
+        :此方法为确定车牌的定位，通过矩形长宽比和颜色定位图像t
         """
         # if img_coutours.any():
         #     config.set_name(img_coutours)
@@ -246,6 +240,8 @@ class Predict:
         image,contours,hierarchy = cv2.findContours(img_coutours,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
         contours = [cnt for cnt in contours if cv2.contourArea(cnt)>MIN_AREA]#选择出大于最小的矩形的可能车牌区域
         print('len(contours)',len(contours))
+        if len(contours)==0:
+            print("没有找到可能是车牌的区域")
         #一一排除不是车牌的矩形区域
         car_contours = []
         for cnt in contours:
@@ -269,23 +265,33 @@ class Predict:
         return car_contours
                 
     def img_Transform(self,card_contours,oldimg):
-        pic_hight, pic_width = oldimg.shape[:2]#获取图片的长宽
+        rect_h, rect_w = oldimg.shape[:2]#获取图片的长宽
         card_imgs = []
         #矩形区域可能是倾斜的矩阵，需要矫正，以便使用颜色定位
-        for rect in card_contours:
-            if rect[2] > -1 and rect[2] < 1:
-                angle = 1
-            else:
-                angle = rect[2]#获得矩形旋转的角度
+        for rect in card_contours:#rect((中心点坐标)，（宽，长），角度)
+            return_flag = False
+            angle = rect[2]#获得矩形旋转的角度
+            print("角度是{}".format(angle))
+            print("宽是{},长是{}".format(rect[1][0],rect[0][1]))
+
             rect = (rect[0],(rect[1][0] + 5,rect[1][1] + 5),angle) #扩大范围，避免车牌的边缘被排除
+
+            if angle == 0:
+                return_flag = True
+            if angle == -90 and rect_w<rect_h:
+                rect_w , rect_h = rect_h , rect_w
+                return_flag = True
+            if return_flag:
+                car_img = oldimg[int(rect[0][1]-rect_h/2):int(rect[0][1]+rect_h/2),int(rect[0][0]-rect_w/2):int(rect[0][0]+rect_w/2)]
+                return car_img
 
             box = cv2.boxPoints(rect)
             height_point = right_point = [0,0]#设定右上是0，0
-            left_point = low_point = [pic_width,pic_hight]
+            left_point = low_point = [rect[0][0],rect[0][1]]
             for point in box:
                 if left_point[0] > point[0]:
                     left_point = point
-                if low_point[1] > point[1]:
+                if low_point[1] > point[1]:#最低点的Y大于现在的y
                     low_point = point 
                 if height_point[1] < point[1]:
                     height_point = point
@@ -297,33 +303,34 @@ class Predict:
                 pts2 = np.float32([left_point,height_point,new_right_point])
                 pts1 = np.float32([left_point,height_point,right_point])
                 M = cv2.getAffineTransform(pts1,pts2) #INPUT Array 2*3的变换矩阵
-                dst = cv2.warpAffine(oldimg,M,(pic_width,pic_hight))#仿射变换,OUTPUT Array，输出图像
+                dst = cv2.warpAffine(oldimg,M,(round(rect_w*2),round(rect_h*2)))#仿射变换,OUTPUT Array，输出图像
                 img_math.point_limit(new_right_point)
                 img_math.point_limit(left_point)
                 img_math.point_limit(height_point)
                 card_img = dst[int(left_point[1]):int(height_point[1]),int(left_point[0]):int(new_right_point[0])]#摆正图像
                 #show
                 card_imgs.append(card_img)
-                #cv2.imshow("card2",card_img)
-                #cv2.waitKey(0)
+                cv2.imshow("card2",card_img)
+                cv2.waitKey(0)
             elif left_point[1] > right_point[1]:  #负角度
                 new_left_point = [left_point[0],height_point[1]]
                 pts2 = np.float32([new_left_point,height_point,right_point])  #字符只是高度需要改变
                 pts1 = np.float32([left_point,height_point,right_point])
                 M = cv2.getAffineTransform(pts1,pts2)
-                dst = cv2.warpAffine(oldimg,M,(pic_width,pic_hight))
+                dst = cv2.warpAffine(oldimg,M,(round(rect_w*2),round(rect_h*2)))
                 img_math.point_limit(right_point)
                 img_math.point_limit(height_point)
                 img_math.point_limit(new_left_point)
                 card_img = dst[int(right_point[1]):int(height_point[1]),int(new_left_point[0]):int(right_point[0])]
                 #show
                 card_imgs.append(card_img)
-                #cv2.imshow("card2",card_img)
-                #cv2.waitKey(0)
+                cv2.imshow("card2",card_img)
+                cv2.waitKey(0)
         return card_imgs
+
     def img_color(self,card_imgs):
         colors = []
-        print(len(card_imgs))
+        print("可能存在{}个车牌".format(len(card_imgs)))
         for card_index, card_img in enumerate(card_imgs):
             green = yellow = blue = black = white = 0
             if card_img.any():
@@ -331,6 +338,9 @@ class Predict:
                 #TODO：可能会存在转换失败的问题，原因来自于矫正矩形失败
                 if card_img_hsv is None:
                     continue
+                cv2.imshow("hsv",card_img_hsv)
+                cv2.waitKey(0)
+
                 row_num , col_num = card_img_hsv.shape[:2]#获取长宽
                 card_img_count = row_num * col_num
                 for i in range(row_num): #O(N^2)
@@ -358,11 +368,11 @@ class Predict:
                     color = "green"
                     limit1 = 35
                     limit2 = 99 #存在绿色偏蓝的情况
-                elif blue * 2 >= card_img_count:
+                elif blue * 2.3 >= card_img_count:
                     color = "blue"
                     limit1 = 100
                     limit2 = 124 #存在蓝色偏紫的情况
-                elif black + white >= (card_img_count*0.7):
+                elif black + white >= int(card_img_count*0.7):
                     color = "bw"
                 print(color)
                 colors.append(color)
@@ -403,11 +413,11 @@ class Predict:
 
 if __name__ == '__main__':
     q = Predict()
-    afterprocess,old = q.preprocess("test\\2.jpg")
+    afterprocess,old = q.preprocess("test\\9.png")
     #afterprocess,old=q.preprocess("test\\Yes_img\\3_2.jpg")
-    #cv2.imshow("预处理", afterprocess)
-    #cv2.waitKey()
-    #cv2.destroyAllWindows()
-    colors,card_imgs=q.img_color_contours(afterprocess,old)
+    cv2.imshow("预处理", afterprocess)
+    cv2.waitKey()
+    cv2.destroyAllWindows()
+    colors,card_imgs=q.locate_carPlate(afterprocess,old)
     #colors,card_imgs = q.img_only_color(old,afterprocess)
     q.char_recogize(colors,card_imgs)
