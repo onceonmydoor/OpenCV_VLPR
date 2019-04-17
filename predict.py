@@ -298,7 +298,7 @@ class Predict:
                 if right_point[0] < point[0]:
                     right_point = point
             
-            if left_point[1] <= right_point[1]: #正角度
+            if low_point[0] > height_point[0]: #正角度
                 new_right_point = [right_point[0],height_point[1]]
                 pts2 = np.float32([left_point,height_point,new_right_point])
                 pts1 = np.float32([left_point,height_point,right_point])
@@ -312,7 +312,7 @@ class Predict:
                 card_imgs.append(card_img)
                 cv2.imshow("card2",card_img)
                 cv2.waitKey(0)
-            elif left_point[1] > right_point[1]:  #负角度
+            elif low_point[0] <= height_point[0]:  #负角度
                 new_left_point = [left_point[0],height_point[1]]
                 pts2 = np.float32([new_left_point,height_point,right_point])  #字符只是高度需要改变
                 pts1 = np.float32([left_point,height_point,right_point])
@@ -413,7 +413,7 @@ class Predict:
 
 if __name__ == '__main__':
     q = Predict()
-    afterprocess,old = q.preprocess("test\\9.png")
+    afterprocess,old = q.preprocess("test\\test1.jpg")
     #afterprocess,old=q.preprocess("test\\Yes_img\\3_2.jpg")
     cv2.imshow("预处理", afterprocess)
     cv2.waitKey()
