@@ -181,8 +181,42 @@ class TrainSVM:
             self.model.save("svmChinese.dat")
 
 
-if __name__ == '__main__':
-    c = TrainSVM()
-    c.train_svm()  
+
+    def final_rec(self,part_cards):
+        predict_result = []
+        
+        for i , part_card in enumerate(part_cards):
+            #排除固定车牌的铆钉
+            if np.mean(part_card) < 255 /5:
+                print("a point")
+                continue
+            part_card_old = part_card
+            w = abs(part_card.shape[1]-SZ) // 2
+
+            part_card = cv2.copyMakeBorder(part_card, 0, 0, w, w, cv2.BORDER_CONSTANT, value=[0,0,0])
+            part_card = cv2.resize(part_card,(SZ,SZ),interpolation=cv2.INTER_AREA)
+
+            cv2.imshow("fengezifu",part_card)
+            cv2.waitKey(0)
+
+            part_card = preprocess_hog([part_card])  
+            if i == 0 :
+                resp = self.modelchinese.predict(part_card)
+                if resp<1000:
+                    continue
+                charactor = provinces[int(resp[0])-PROVINCE_START]
+            else:
+                resp = self.model.predict(part_card)
+                charactor = chr(resp[0])
+            #判断最后一个数是否是车牌的边缘，假设车牌的边缘被认为是1
+            if charactor == "1" and i == len(part_cards) - 1:
+                if part_card_old.shape[0] / part_card_old.shape[1] >= 7 : #如果1太细，认为是边缘
+                    continue
+            predict_result.append(charactor)
+        return predict_result # 识别到的字符、定位的车牌图像、车牌颜色
+
+# if __name__ == '__main__':
+#     c = TrainSVM()
+#     c.train_svm()  
                 
 

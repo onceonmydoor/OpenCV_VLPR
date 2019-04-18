@@ -83,5 +83,35 @@ def accurate_place(card_img_hsv,limit1,limit2,color):#车牌根据颜色再定�
 
 
 
+def verify_scale(rotate_rect):
+    error = 0.4
+    aspect = 4  # 4.7272
+    min_area = 10 * (10 * aspect)
+    max_area = 150 * (150 * aspect)
+    min_aspect = aspect * (1 - error)
+    max_aspect = aspect * (1 + error)
+    theta = 30
+
+    # 宽或高为0，不满足矩形直接返回False
+    if rotate_rect[1][0] == 0 or rotate_rect[1][1] == 0:
+        return False
+
+    r = rotate_rect[1][0] / rotate_rect[1][1]
+    r = max(r, 1 / r)
+    area = rotate_rect[1][0] * rotate_rect[1][1]
+    if area > min_area and area < max_area and r > min_aspect and r < max_aspect:
+        # 矩形的倾斜角度在不超过theta
+        if ((rotate_rect[1][0] < rotate_rect[1][1] and rotate_rect[2] >= -90 and rotate_rect[2] < -(90 - theta)) or
+                (rotate_rect[1][1] < rotate_rect[1][0] and rotate_rect[2] > -theta and rotate_rect[2] <= 0)):
+            return True
+    return False
+
+
+
+def sperate_card(img,waves):
+    part_cards = []
+    for wave in waves:
+        part_cards.append(img[:,wave[0]:wave[1]])
+    return part_cards 
 
 
