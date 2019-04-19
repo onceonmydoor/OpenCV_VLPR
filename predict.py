@@ -108,9 +108,9 @@ class Predict:
             
             gray_img = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)#转成灰度图
 
-            #dst = cv2.equalizeHist(gray_img)
-            #cv2.imshow("dst",dst)
-            #cv2.waitKey(0)
+            # dst = cv2.equalizeHist(gray_img)
+            # cv2.imshow("dst",dst)
+            # cv2.waitKey(0)
 
             blur_img = cv2.blur(gray_img,(3,3))#均值模糊
 
@@ -370,11 +370,11 @@ class Predict:
                 box = cv2.boxPoints(rect)
                 box = np.int64(box)#int0==int64
                 #show红色框框
-                #oldimg = cv2.drawContours(oldimg, [box], 0, (0, 0, 255), 2)#在原图像上画出矩形,TODO:正式识别时记得删除
-                #cv2.namedWindow("edge4", cv2.WINDOW_NORMAL)
-                #cv2.imshow("edge4", oldimg)
-                #cv2.waitKey()
-                #cv2.destroyAllWindows()
+                oldimg = cv2.drawContours(oldimg, [box], 0, (0, 0, 255), 2)#在原图像上画出矩形,TODO:正式识别时记得删除
+                cv2.namedWindow("edge4", cv2.WINDOW_NORMAL)
+                cv2.imshow("edge4", oldimg)
+                cv2.waitKey()
+                cv2.destroyAllWindows()
 
                 #print(rect)
         print("可能存在车牌数："+str(len(car_contours)))#有几个矩形
@@ -569,7 +569,8 @@ class Predict:
                 gray_img = gray_img[wave[0]:wave[1]]
 
                 row_num , col_num = gray_img.shape[:2]
-                #去掉车牌上下边缘的一个像素，比卖你白边影响阈值判断
+                #去掉车牌上下边缘的一个像素，防止白边影响阈值判断
+
                 gray_img = gray_img[1:row_num - 1]
                 y_histogram = np.sum( gray_img, axis=0)
                 y_min = np.min(y_histogram)
@@ -581,7 +582,7 @@ class Predict:
 
                 #车牌的字符应该大于6（蓝、黄7 、 绿8）
                 if(len(wave_peaks)<=6):
-                    print("peek les 1:",len(wave_peaks))
+                    print("第一次，顶点个数是",len(wave_peaks))
                     continue
                 
                 wave = max(wave_peaks, key = lambda x : x[1] - x[0])
@@ -612,14 +613,14 @@ class Predict:
 
                 
                 if len(wave_peaks) <= 6:
-                    print("peak less 2:",len(wave_peaks))
+                    print("分离之后，顶点个数是",len(wave_peaks))
                     continue
                 part_cards = img_math.sperate_card(gray_img,wave_peaks) 
                 card_color = color
                 roi = card_img
                 t = Train_SVM.TrainSVM()
                 t.train_svm()
-                predict_result= t.final_rec(part_cards)   
+                predict_result= t.final_rec(part_cards,color)   
             return predict_result, roi, card_color  # 识别到的字符、定位的车牌图像、车牌颜色
 
             
@@ -628,8 +629,8 @@ if __name__ == '__main__':
     q = Predict()
     #if q.isdark("test\\timg.jpg"):
         #print("是黑夜拍的")
-    afterprocess,old = q.preprocess("test\\Yes_img\\1_1.jpg")
-    #afterprocess,old=q.preprocess("test\\Yes_img\\3_2.jpg")
+    afterprocess,old = q.preprocess("test\\8.jpg")
+    #afterprocess,old=q.preprocess("test\\timg1.jpg")
     cv2.namedWindow("yuchuli",cv2.WINDOW_NORMAL)
     cv2.imshow("yuchuli", afterprocess)
     cv2.waitKey()

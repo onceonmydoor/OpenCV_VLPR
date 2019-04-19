@@ -13,7 +13,7 @@ import img_rec
 SZ = 20 #训练图片长宽 (训练样本是20*20的图片)
 MAX_WIDTH = 2000 #原始图片最大宽度
 MIN_AREA = 2000 #车牌区域的允许最大面积（不能过大）
-PROVINCE_START = 1000 #用于字符分类
+PROVINCE_START = 1000 #用于字符分类，把中文和数字字母错开
 
 # 来自opencv的sample，用于svm训练-----校正图像
 def deskew(img):#在找HOG之前，使用图像的二阶矩模型来抗色偏。首先定义一个函数deskew()取一个数字图像并对他抗色偏
@@ -121,7 +121,7 @@ class TrainSVM:
         self.model = SVM(C=1,gamma=0.5)#TODO:优化调参，C越大越严格越容易过拟合，gamma过大会导致只支持样本
 
         #识别中文
-        self.modelchinese = SVM(C=1,gamma=0.8)#TODO:优化调参
+        self.modelchinese = SVM(C=1,gamma=0.5)#TODO:优化调参
 
         #对于字母和数字的训练
         if os.path.exists("svm.dat"):
@@ -152,37 +152,37 @@ class TrainSVM:
         if os.path.exists("svmChinese.dat"):
             self.modelchinese.load("svmChinese.dat")
         else:
-            chars_train = [] 
-            chars_label = []#该provinces的索引
+            charsC_train = [] 
+            charsC_label = []#该provinces的索引
             for root, dirs, files in os.walk("train\\charsChinese"):
                 print("正在识别中文字符...")
                 if not os.path.basename(root).startswith("zh_"):
                     continue
                 pinyin = os.path.basename(root)
-                index = provinces.index(pinyin) + PROVINCE_START + 1  # 1是拼音对应的汉字
+                index = provinces.index(pinyin) + PROVINCE_START + 1  # +1是拼音对应的汉字
                 for filename in files:
                     filepath = os.path.join(root, filename)
-                    digit_img = cv2.imread(filepath)
-                    digit_img = cv2.cvtColor(digit_img, cv2.COLOR_BGR2GRAY)
-                    chars_train.append(digit_img)
+                    digitC_img = cv2.imread(filepath)
+                    digitC_img = cv2.cvtColor(digitC_img, cv2.COLOR_BGR2GRAY)
+                    charsC_train.append(digitC_img)
                     # chars_label.append(1)
-                    chars_label.append(index)
-            chars_train = list(map(deskew,chars_train))
-            chars_train = preprocess_hog(chars_train)
-            chars_label = np.array(chars_label)
-            print(chars_train.shape)
-            self.modelchinese.train(chars_train,chars_label)
+                    charsC_label.append(index)
+            charsC_train = list(map(deskew,charsC_train))
+            charsC_train = preprocess_hog(charsC_train)
+            charsC_label = np.array(charsC_label)
+            print(charsC_train.shape)
+            self.modelchinese.train(charsC_train,charsC_label)
         
     
     def save_traindata(self):
         if not os.path.exists("svm.dat"):
             self.model.save("svm.dat")
         if not os.path.exists("svmChinese.dat"):
-            self.model.save("svmChinese.dat")
+            self.modelchinese.save("svmChinese.dat")
 
 
 
-    def final_rec(self,part_cards):
+    def final_rec(self,part_cards,color):
         predict_result = []
         
         for i , part_card in enumerate(part_cards):
@@ -192,31 +192,40 @@ class TrainSVM:
                 continue
             part_card_old = part_card
             w = abs(part_card.shape[1]-SZ) // 2
-
+            #
             part_card = cv2.copyMakeBorder(part_card, 0, 0, w, w, cv2.BORDER_CONSTANT, value=[0,0,0])
             part_card = cv2.resize(part_card,(SZ,SZ),interpolation=cv2.INTER_AREA)
+            #卷积边界，填充边界使分割图像变成训练集大小，即20*20
 
-            cv2.imshow("fengezifu",part_card)
-            cv2.waitKey(0)
+
+            #显示每个分割字符，用于界面显示
+            #cv2.imshow("fengezifu",part_card)
+            #cv2.waitKey(0)
 
             part_card = preprocess_hog([part_card])  
             if i == 0 :
+                #识别第一中文字符
                 resp = self.modelchinese.predict(part_card)
-                if resp<1000:
-                    continue
                 charactor = provinces[int(resp[0])-PROVINCE_START]
             else:
                 resp = self.model.predict(part_card)
                 charactor = chr(resp[0])
             #判断最后一个数是否是车牌的边缘，假设车牌的边缘被认为是1
             if charactor == "1" and i == len(part_cards) - 1:
-                if part_card_old.shape[0] / part_card_old.shape[1] >= 7 : #如果1太细，认为是边缘
+                if color != "green" and len(predict_result)==7:
+                    #只有绿色车牌是8位数
                     continue
+                if color == "green" and len(predict_result)==8:
+                #绿色车牌已经是8位数了
+                    continue
+                # if part_card_old.shape[0] / part_card_old.shape[1] >= 7 : #如果1太细，认为是边缘
+                #     continue
             predict_result.append(charactor)
-        return predict_result # 识别到的字符、定位的车牌图像、车牌颜色
+        return predict_result # 识别到的字符、定位的车牌图像、车牌颜色                                             
 
 # if __name__ == '__main__':
 #     c = TrainSVM()
 #     c.train_svm()  
+#     del c
                 
 
