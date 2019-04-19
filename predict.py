@@ -12,10 +12,12 @@ import config
 import json
 from PIL import ImageStat
 from PIL import Image
+from matplotlib import pyplot as plt
 
 
 SZ = 20 #训练图片长宽 (训练样本是20*20的图片)
 MAX_WIDTH = 2000 #原始图片最大宽度
+
 MIN_AREA = 1000 #车牌区域的允许最大面积（不能过大）
 PROVINCE_START = 1000 #用于字符分类
 
@@ -370,9 +372,10 @@ class Predict:
                 box = cv2.boxPoints(rect)
                 box = np.int64(box)#int0==int64
                 #show红色框框
-                oldimg = cv2.drawContours(oldimg, [box], 0, (0, 0, 255), 2)#在原图像上画出矩形,TODO:正式识别时记得删除
+                oldimg_copy = oldimg.copy()
+                oldimg_copy = cv2.drawContours(oldimg_copy, [box], 0, (0, 0, 255), 2)#在原图像上画出矩形,TODO:正式识别时记得删除
                 cv2.namedWindow("edge4", cv2.WINDOW_NORMAL)
-                cv2.imshow("edge4", oldimg)
+                cv2.imshow("edge4", oldimg_copy)
                 cv2.waitKey()
                 cv2.destroyAllWindows()
 
@@ -439,8 +442,7 @@ class Predict:
                 #cv2.waitKey(0)
 
             elif low_point[0] == height_point[0]: #已经是正的车牌
-                card_img = oldimg[int(rect[0][1]-rect_h/2):int(rect[0][1]+rect_h/2),
-                  int(rect[0][0]-rect_w/2):int(rect[0][0]+rect_w/2)]
+                card_img = oldimg[int(rect[0][1]-rect[1][1]/2):int(rect[0][1]+rect[1][1]/2),int(rect[0][0]-rect[1][0]/2):int(rect[0][0]+rect[1][0]/2)]
                 card_imgs.append(card_img)
         return card_imgs
 
@@ -491,12 +493,12 @@ class Predict:
                 elif black + white >= int(card_img_count*0.7):
                     color = "bw"
                 print(color)
-                if color == "yellow" and black/card_img_count < 0.04:#排除黄色枯草
-                    continue
-                elif color == "blue" and blue/card_img_count < 0.03:
-                    continue
-                elif color == "green" and black/card_img_count < 0.04:#排除绿地
-                    continue
+                # if color == "yellow" and black/card_img_count < 0.04:#排除黄色枯草
+                #     continue
+                # elif color == "blue" and blue/card_img_count < 0.03:
+                #     continue
+                # elif color == "green" and black/card_img_count < 0.03:#排除绿地
+                #     continue
                 
                 colors.append(color)
                 print("blue:{},green:{},yellow:{},black:{},white:{},count:{}".format(blue,green,yellow,black,white,card_img_count))
@@ -538,6 +540,9 @@ class Predict:
 
     def char_recogize(self,colors,card_imgs):
         #车牌字符识别
+        cards_result=[]#多个车牌的识别结果
+        colors_result=[]
+        rois = []
         roi = None
         card_color = None
         for i , color in enumerate(colors):   
@@ -550,9 +555,16 @@ class Predict:
                     gray_img = cv2.bitwise_not(gray_img)
                 ret , gray_img = cv2.threshold(gray_img, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)#OTSU  ,字符显示的第一步
                 #（灰度图，阈值，最大值，阈值类型）把阈值设为0，算法会找到最优阈值
-                #cv2.imshow("erzhihua", gray_img)
-                #cv2.waitKey()
-                #cv2.destroyAllWindows()
+                cv2.imshow("erzhihua", gray_img)
+                cv2.waitKey()
+                cv2.destroyAllWindows()
+
+
+                # #img123=np.array(gray_img.convert('L'))
+                # plt.figure("lena")
+                # arr=gray_img.flatten()
+                # n, bins, patches = plt.hist(arr, bins=10, normed=1, facecolor='green', alpha=0.75)
+                # plt.show()
 
                 #查找垂直直方图波峰
                 x_histogram = np.sum(gray_img , axis=1)
@@ -572,30 +584,37 @@ class Predict:
                 #去掉车牌上下边缘的一个像素，防止白边影响阈值判断
 
                 gray_img = gray_img[1:row_num - 1]
+                gray_img = gray_img[1:col_num - 1]
                 y_histogram = np.sum( gray_img, axis=0)
                 y_min = np.min(y_histogram)
                 y_average = np.sum(y_histogram) / y_histogram.shape[0]
-                y_threshold = (y_min + y_average) / 5 #U 和 0 要求阈值偏小 ， 否则U和0会被分成两半
+                y_threshold = (y_min + y_average) / 7 #U 和 0 要求阈值偏小 ， 否则U和0会被分成两半
 
                 wave_peaks = img_math.find_waves(y_threshold,y_histogram)
 
-
+                print("存在的波峰数量："+str(len(wave_peaks)))
                 #车牌的字符应该大于6（蓝、黄7 、 绿8）
                 if(len(wave_peaks)<=6):
                     print("第一次，顶点个数是",len(wave_peaks))
                     continue
-                
+
+
+
                 wave = max(wave_peaks, key = lambda x : x[1] - x[0])
                 max_wave_dis = wave[1] - wave[0]
+
+
+
 
                 #判断是否是左侧车牌边缘
                 if wave_peaks[0][1] - wave_peaks[0][0] < max_wave_dis / 3 and wave_peaks[0][0] == 0 :
                     wave_peaks.pop(0)
+                    #wave_peaks[0][0] = 4
                 
                 #组合分离汉字
                 cur_dis = 0
                 for i , wave in enumerate(wave_peaks):
-                    if wave[1] - wave[0] + cur_dis > max_wave_dis * 0.6:
+                    if wave[1] - wave[0] + cur_dis > int(max_wave_dis * 0.35):#TODO:优化调参
                         break
                     else:
                         cur_dis += wave[1] - wave[0]
@@ -603,14 +622,13 @@ class Predict:
                     wave = (wave_peaks[0][0],wave_peaks[i][1])
                     wave_peaks = wave_peaks[i + 1:]
                     wave_peaks.insert(0, wave)
-                
-                #去除车牌上的分隔点
-                point = wave_peaks[2]#第三个点
-                if point[1] - point[0] < max_wave_dis / 3:
-                    point_img = gray_img[:,point[0]:point[1]]
-                    if np.mean(point_img) < 255 /5:
-                        wave_peaks.pop(2)
 
+                # 去除车牌上的分隔点
+                point = wave_peaks[2]  # 第三个点
+                if point[1] - point[0] < max_wave_dis / 3:
+                    point_img = gray_img[:, point[0]:point[1]]
+                    if np.mean(point_img) < 255 / 5:
+                        wave_peaks.pop(2)
                 
                 if len(wave_peaks) <= 6:
                     print("分离之后，顶点个数是",len(wave_peaks))
@@ -620,8 +638,11 @@ class Predict:
                 roi = card_img
                 t = Train_SVM.TrainSVM()
                 t.train_svm()
-                predict_result= t.final_rec(part_cards,color)   
-            return predict_result, roi, card_color  # 识别到的字符、定位的车牌图像、车牌颜色
+                predict_result= t.final_rec(part_cards,color)
+                colors_result.append(card_color)
+                rois.append(roi)
+                cards_result.append(predict_result)
+        return cards_result, rois, colors_result  # 识别到的字符、定位的车牌图像、车牌颜色
 
             
 
@@ -629,7 +650,7 @@ if __name__ == '__main__':
     q = Predict()
     #if q.isdark("test\\timg.jpg"):
         #print("是黑夜拍的")
-    afterprocess,old = q.preprocess("test\\8.jpg")
+    afterprocess,old = q.preprocess("test\\Yes_img\\3_2.jpg")
     #afterprocess,old=q.preprocess("test\\timg1.jpg")
     cv2.namedWindow("yuchuli",cv2.WINDOW_NORMAL)
     cv2.imshow("yuchuli", afterprocess)
@@ -637,8 +658,11 @@ if __name__ == '__main__':
     cv2.destroyAllWindows()
     colors,card_imgs=q.locate_carPlate(afterprocess,old)
     #colors,card_imgs = q.img_only_color(old,afterprocess)
-    result , roi , color=q.char_recogize(colors,card_imgs)
+    result , roi , color=q.char_recogize(colors,card_imgs) #all list
     if len(result)==0:
         print("未能识别到车牌")
     else:
-        print(result)
+        for r in range(len(result)):
+            print("车牌的颜色为："+color[r])
+            print(result[r])
+            print("\n")
