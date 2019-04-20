@@ -322,7 +322,7 @@ class Predict:
         upper_blue = np.array([130, 255, 255])
         lower_yellow = np.array([15, 55, 55])
         upper_yellow = np.array([50, 255, 255])
-        lower_green = np.array([50, 50, 50])
+        lower_green = np.array([70, 20, 80])
         upper_green = np.array([100, 255, 255])
         hsv = cv2.cvtColor(oldimg, cv2.COLOR_BGR2HSV)
         mask_blue = cv2.inRange(hsv, lower_blue, upper_blue)
@@ -595,7 +595,7 @@ class Predict:
                 print("存在的波峰数量："+str(len(wave_peaks)))
                 #车牌的字符应该大于6（蓝、黄7 、 绿8）
                 if(len(wave_peaks)<=6):
-                    print("第一次，顶点个数是",len(wave_peaks))
+                    print("初始的波峰个数是",len(wave_peaks))
                     continue
 
 
@@ -607,7 +607,7 @@ class Predict:
 
 
                 #判断是否是左侧车牌边缘
-                if wave_peaks[0][1] - wave_peaks[0][0] < max_wave_dis / 3 and wave_peaks[0][0] == 0 :
+                if wave_peaks[0][1] - wave_peaks[0][0] < max_wave_dis / 3 :
                     wave_peaks.pop(0)
                     #wave_peaks[0][0] = 4
                 
@@ -631,7 +631,7 @@ class Predict:
                         wave_peaks.pop(2)
                 
                 if len(wave_peaks) <= 6:
-                    print("分离之后，顶点个数是",len(wave_peaks))
+                    print("分离之后，波峰个数是",len(wave_peaks))
                     continue
                 part_cards = img_math.sperate_card(gray_img,wave_peaks) 
                 card_color = color
@@ -650,8 +650,8 @@ if __name__ == '__main__':
     q = Predict()
     #if q.isdark("test\\timg.jpg"):
         #print("是黑夜拍的")
-    afterprocess,old = q.preprocess("test\\Yes_img\\3_2.jpg")
-    #afterprocess,old=q.preprocess("test\\timg1.jpg")
+    #afterprocess,old = q.preprocess("test\\Yes_img\\22.png")
+    afterprocess,old=q.preprocess("test\\22.png")
     cv2.namedWindow("yuchuli",cv2.WINDOW_NORMAL)
     cv2.imshow("yuchuli", afterprocess)
     cv2.waitKey()
