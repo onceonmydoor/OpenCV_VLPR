@@ -211,7 +211,7 @@ class TrainSVM:
                 resp = self.model.predict(part_card)
                 charactor = chr(resp[0])
             #判断最后一个数是否是车牌的边缘，假设车牌的边缘被认为是1
-            if i == len(part_cards) - 1 and (charactor == "1" or charactor=="Z"):
+            if i == len(part_cards) - 1 and (charactor == "1" or charactor=="Z" or charactor == "7"):
                 if color != "green" and len(predict_result)==7:
                     #只有绿色车牌是8位数
                     continue
