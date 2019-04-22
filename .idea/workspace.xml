@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0dc24bcb-9547-45af-9436-82979cbf304f" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/test/6I0GFMOFS5N8YXV4IAS}$DH.png" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/predict.py" afterPath="$PROJECT_DIR$/predict.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/svm.dat" afterPath="$PROJECT_DIR$/svm.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/svmChinese.dat" afterPath="$PROJECT_DIR$/svmChinese.dat" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -17,10 +19,25 @@
       <file leaf-file-name="predict.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/predict.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="295">
-              <caret line="653" column="49" lean-forward="true" selection-start-line="653" selection-start-column="49" selection-end-line="653" selection-end-column="49" />
+            <state relative-caret-position="150">
+              <caret line="595" column="0" lean-forward="false" selection-start-line="595" selection-start-column="0" selection-end-line="595" selection-end-column="0" />
               <folding>
                 <element signature="e#18#27#0" expanded="true" />
+                <marker date="1555901389094" expanded="true" signature="25111:25806" ph="..." />
+                <marker date="1555901389094" expanded="true" signature="25678:25806" ph="..." />
+                <marker date="1555901389094" expanded="true" signature="25715:25806" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="firstGUI.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/firstGUI.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="450">
+              <caret line="15" column="27" lean-forward="false" selection-start-line="15" selection-start-column="27" selection-end-line="15" selection-end-column="27" />
+              <folding>
+                <element signature="e#37#78#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -51,16 +68,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="12780">
               <caret line="475" column="0" lean-forward="false" selection-start-line="475" selection-start-column="0" selection-end-line="475" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
-        <entry file="file://C:/Program Files/Python37/Lib/site-packages/matplotlib/__init__.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="26790">
-              <caret line="893" column="0" lean-forward="false" selection-start-line="893" selection-start-column="0" selection-end-line="893" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -120,6 +127,13 @@
       </file>
     </leaf>
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
   <component name="FindInProjectRecents">
     <findStrings>
       <find>img_color</find>
@@ -136,15 +150,16 @@
       <list>
         <option value="$PROJECT_DIR$/img_math.py" />
         <option value="$PROJECT_DIR$/Train_SVM.py" />
+        <option value="$PROJECT_DIR$/firstGUI.py" />
         <option value="$PROJECT_DIR$/predict.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
+    <option name="x" value="-2031" />
+    <option name="y" value="97" />
     <option name="width" value="1936" />
-    <option name="height" value="1056" />
+    <option name="height" value="1055" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -161,6 +176,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -172,12 +189,11 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="preferences.externalTools" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -210,6 +226,23 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="OpenCV_VLPR" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Train_SVM.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+    </configuration>
+    <configuration name="firstGUI" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="OpenCV_VLPR" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/firstGUI.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -248,16 +281,18 @@
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
     </configuration>
-    <list size="3">
+    <list size="4">
       <item index="0" class="java.lang.String" itemvalue="Python.predict" />
       <item index="1" class="java.lang.String" itemvalue="Python.Train_SVM" />
       <item index="2" class="java.lang.String" itemvalue="Python.img_math" />
+      <item index="3" class="java.lang.String" itemvalue="Python.firstGUI" />
     </list>
     <recent_temporary>
-      <list size="3">
+      <list size="4">
         <item index="0" class="java.lang.String" itemvalue="Python.predict" />
-        <item index="1" class="java.lang.String" itemvalue="Python.Train_SVM" />
-        <item index="2" class="java.lang.String" itemvalue="Python.img_math" />
+        <item index="1" class="java.lang.String" itemvalue="Python.firstGUI" />
+        <item index="2" class="java.lang.String" itemvalue="Python.Train_SVM" />
+        <item index="3" class="java.lang.String" itemvalue="Python.img_math" />
       </list>
     </recent_temporary>
   </component>
@@ -275,18 +310,18 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
+    <frame x="-1928" y="-8" width="1936" height="1056" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12864584" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36836517" sideWeight="0.409375" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33227175" sideWeight="0.590625" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.45435244" sideWeight="0.590625" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.46921444" sideWeight="0.91979164" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.46921444" sideWeight="0.91979164" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296875" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -346,13 +381,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/predict.py</url>
-          <line>540</line>
+          <line>544</line>
           <option name="timeStamp" value="89" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/predict.py</url>
-          <line>602</line>
-          <option name="timeStamp" value="92" />
+          <line>594</line>
+          <option name="timeStamp" value="93" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
@@ -365,19 +400,11 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="93" />
+      <option name="time" value="94" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://C:/Program Files/Python37/Lib/codecs.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="9690">
-          <caret line="324" column="0" lean-forward="false" selection-start-line="324" selection-start-column="0" selection-end-line="324" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://C:/Program Files/Python37/Lib/site-packages/numpy/linalg/linalg.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="70500">
@@ -448,6 +475,9 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#18#27#0" expanded="true" />
+            <marker date="1555901389094" expanded="true" signature="25111:25806" ph="..." />
+            <marker date="1555901389094" expanded="true" signature="25678:25806" ph="..." />
+            <marker date="1555901389094" expanded="true" signature="25715:25806" ph="..." />
           </folding>
         </state>
       </provider>
@@ -500,6 +530,9 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#18#27#0" expanded="true" />
+            <marker date="1555901389094" expanded="true" signature="25111:25806" ph="..." />
+            <marker date="1555901389094" expanded="true" signature="25678:25806" ph="..." />
+            <marker date="1555901389094" expanded="true" signature="25715:25806" ph="..." />
           </folding>
         </state>
       </provider>
@@ -536,6 +569,9 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#18#27#0" expanded="true" />
+            <marker date="1555901389094" expanded="true" signature="25111:25806" ph="..." />
+            <marker date="1555901389094" expanded="true" signature="25678:25806" ph="..." />
+            <marker date="1555901389094" expanded="true" signature="25715:25806" ph="..." />
           </folding>
         </state>
       </provider>
@@ -564,6 +600,9 @@
           <caret line="407" column="36" lean-forward="true" selection-start-line="407" selection-start-column="36" selection-end-line="407" selection-end-column="36" />
           <folding>
             <element signature="e#18#27#0" expanded="true" />
+            <marker date="1555901389094" expanded="true" signature="25111:25806" ph="..." />
+            <marker date="1555901389094" expanded="true" signature="25678:25806" ph="..." />
+            <marker date="1555901389094" expanded="true" signature="25715:25806" ph="..." />
           </folding>
         </state>
       </provider>
@@ -584,6 +623,9 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#18#27#0" expanded="true" />
+            <marker date="1555901389094" expanded="true" signature="25111:25806" ph="..." />
+            <marker date="1555901389094" expanded="true" signature="25678:25806" ph="..." />
+            <marker date="1555901389094" expanded="true" signature="25715:25806" ph="..." />
           </folding>
         </state>
       </provider>
@@ -692,7 +734,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
           <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -700,7 +741,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="168">
           <caret line="402" column="0" lean-forward="false" selection-start-line="402" selection-start-column="0" selection-end-line="402" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -708,7 +748,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="26790">
           <caret line="893" column="0" lean-forward="false" selection-start-line="893" selection-start-column="0" selection-end-line="893" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -778,12 +817,25 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/firstGUI.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="15" column="27" lean-forward="false" selection-start-line="15" selection-start-column="27" selection-end-line="15" selection-end-column="27" />
+          <folding>
+            <element signature="e#37#78#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/predict.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="295">
-          <caret line="653" column="49" lean-forward="true" selection-start-line="653" selection-start-column="49" selection-end-line="653" selection-end-column="49" />
+        <state relative-caret-position="150">
+          <caret line="595" column="0" lean-forward="false" selection-start-line="595" selection-start-column="0" selection-end-line="595" selection-end-column="0" />
           <folding>
             <element signature="e#18#27#0" expanded="true" />
+            <marker date="1555901389094" expanded="true" signature="25111:25806" ph="..." />
+            <marker date="1555901389094" expanded="true" signature="25678:25806" ph="..." />
+            <marker date="1555901389094" expanded="true" signature="25715:25806" ph="..." />
           </folding>
         </state>
       </provider>
