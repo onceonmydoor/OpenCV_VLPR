@@ -184,6 +184,7 @@ class TrainSVM:
 
     def final_rec(self,part_cards,color):
         predict_result = []
+        div = []
         
         for i , part_card in enumerate(part_cards):
             #排除固定车牌的铆钉
@@ -199,8 +200,9 @@ class TrainSVM:
 
 
             #显示每个分割字符，用于界面显示
-            #cv2.imshow("fengezifu",part_card)
-            #cv2.waitKey(0)
+            div.append(part_card)
+            cv2.imshow("fengezifu",part_card)
+            cv2.waitKey(0)
 
             part_card = preprocess_hog([part_card])  
             if i == 0 :
@@ -221,7 +223,7 @@ class TrainSVM:
                 # if part_card_old.shape[0] / part_card_old.shape[1] >= 7 : #如果1太细，认为是边缘
                 #     continue
             predict_result.append(charactor)
-        return predict_result # 识别到的字符、定位的车牌图像、车牌颜色                                             
+        return predict_result,div # 识别到的字符、定位的车牌图像、车牌颜色
 
 # if __name__ == '__main__':
 #     c = TrainSVM()

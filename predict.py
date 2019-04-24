@@ -145,15 +145,15 @@ class Predict:
             close_img = cv2.morphologyEx(binary_img, cv2.MORPH_CLOSE, kernel)
 
 
-            # threshold_m = int(pic_width/80)#根据自己调参出来的
-            # print(threshold_m)
-            # Matrix = np.ones((4, 4), np.uint8)
-            # img_edge1 = cv2.morphologyEx(close_img, cv2.MORPH_CLOSE, Matrix)
-            # img_edge2 = cv2.morphologyEx(img_edge1, cv2.MORPH_OPEN, Matrix)
+            threshold_m = int(pic_width/80)#根据自己调参出来的
+            print(threshold_m)
+            Matrix = np.ones((threshold_m, threshold_m+5), np.uint8)
+            img_edge1 = cv2.morphologyEx(close_img, cv2.MORPH_CLOSE, Matrix)
+            img_edge2 = cv2.morphologyEx(img_edge1, cv2.MORPH_OPEN, Matrix)
 
             
 
-            return close_img , img
+            return img_edge2 , img
 
             ##生成预处理图像，车牌识别的第一步
     
@@ -553,6 +553,7 @@ class Predict:
         colors_result=[]
         rois = []
         roi = None
+        divs = [] #分割图片[[]]
         card_color = None
         for i , color in enumerate(colors):   
             if color in ("blue","yellow","green"):
@@ -564,9 +565,9 @@ class Predict:
                     gray_img = cv2.bitwise_not(gray_img)
                 ret , gray_img = cv2.threshold(gray_img, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)#OTSU  ,字符显示的第一步
                 #（灰度图，阈值，最大值，阈值类型）把阈值设为0，算法会找到最优阈值
-                # cv2.imshow("erzhihua", gray_img)
-                # cv2.waitKey()
-                # cv2.destroyAllWindows()
+                cv2.imshow("erzhihua", gray_img)
+                cv2.waitKey()
+                cv2.destroyAllWindows()
 
 
                 # #img123=np.array(gray_img.convert('L'))
@@ -649,11 +650,12 @@ class Predict:
                 roi = card_img
                 t = Train_SVM.TrainSVM()
                 t.train_svm()
-                predict_result= t.final_rec(part_cards,color)
+                predict_result,div= t.final_rec(part_cards,color)
+                divs.append(div)
                 colors_result.append(card_color)
                 rois.append(roi)
                 cards_result.append(predict_result)
-        return cards_result, rois, colors_result  # 识别到的字符、定位的车牌图像、车牌颜色
+        return cards_result, rois, colors_result,divs  # 识别到的字符、定位的车牌图像、车牌颜色
 
             
 
@@ -661,14 +663,14 @@ if __name__ == '__main__':
     q = Predict()
     #if q.isdark("test\\timg.jpg"):
         #print("是黑夜拍的")
-    afterprocess,old=q.preprocess("test\\car4.jpg")
-    # cv2.namedWindow("yuchuli",cv2.WINDOW_NORMAL)
-    # cv2.imshow("yuchuli", afterprocess)
-    # cv2.waitKey()
-    # cv2.destroyAllWindows()
+    afterprocess,old=q.preprocess("test\\37.jpg")
+    cv2.namedWindow("yuchuli",cv2.WINDOW_NORMAL)
+    cv2.imshow("yuchuli", afterprocess)
+    cv2.waitKey()
+    cv2.destroyAllWindows()
     colors,card_imgs=q.locate_carPlate(afterprocess,old)
     #colors,card_imgs = q.img_only_color(old,afterprocess)
-    result , roi , color=q.char_recogize(colors,card_imgs) #all list
+    result , roi , color,divs=q.char_recogize(colors,card_imgs) #all list
     if len(result)==0:
         print("未能识别到车牌")
     else:

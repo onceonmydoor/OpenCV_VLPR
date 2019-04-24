@@ -7,6 +7,7 @@ import cv2
 from PIL import Image, ImageTk
 import threading
 import time
+import Train_SVM
 
 
 
@@ -36,7 +37,7 @@ class Surface(ttk.Frame):
 		
 		from_pic_ctl = ttk.Button(frame_right2, text="来自图片", width=20, command=self.from_pic)
 		from_vedio_ctl = ttk.Button(frame_right2, text="来自摄像头", width=20, command=self.from_vedio)
-		from_img_pre = ttk.LABLE(frame_right2,text="查看形状预处理图像",width=20,command=self.show_img_pre)
+		#from_img_pre = ttk.Label(frame_right2,text="查看形状预处理图像",width=20,command=self.show_img_pre)
 		self.image_ctl = ttk.Label(frame_left)
 		self.image_ctl.pack(anchor="nw")
 		
@@ -49,8 +50,8 @@ class Surface(ttk.Frame):
 		self.color_ctl.grid(column=0, row=4, sticky=tk.W)
 		from_vedio_ctl.pack(anchor="se", pady="5")
 		from_pic_ctl.pack(anchor="se", pady="5")
-		self.predictor = predict.CardPredictor()
-		self.predictor.train_svm()
+		self.predictor = predict.Predict()
+		#self.Train_SVM.train_svm()
 		
 	def get_imgtk(self, img_bgr):#显示出需要识别的图像
 		img = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2RGB)

@@ -1,16 +1,27 @@
+# -*- coding: utf-8 -*-
 
+# Form implementation generated from reading ui file 'open.py'
+#
+# Created by: PyQt5 UI code generator 5.11.3
+#
+# WARNING! All changes made in this file will be lost!
 
-from PyQt5 import QtWidgets,QtGui
+from PyQt5 import QtWidgets,QtGui,QtCore
 import sys
 from test import Ui_Form #导入生成的界面类
 from PyQt5.QtWidgets import QFileDialog
 from predict import Predict
+import cv2
+
+
+
 class mywindow(QtWidgets.QWidget,Ui_Form):
     def __init__(self):
         super(mywindow,self).__init__()
         self.setupUi(self)
         #定义槽函数
     def openimage(self):
+        Eng2Chi = {"green":"绿色","blue":"蓝色","yellow":"黄色"}
     #打开文件路径
     #设置文件扩展名过滤，注意用双分号间隔
         imgPath , imgType = QFileDialog.getOpenFileName(self,"打开图片","","*.jpg;;*.png;;*.jpeg;;*.bmp;;All Files (*)")
@@ -22,28 +33,35 @@ class mywindow(QtWidgets.QWidget,Ui_Form):
 
         ###################识别#####################
         q = Predict()
-        # if q.isdark("test\\timg.jpg"):
-        # print("是黑夜拍的")
         afterprocess, old = q.preprocess(imgPath)
-        # cv2.namedWindow("yuchuli", cv2.WINDOW_NORMAL)
-        # cv2.imshow("yuchuli", afterprocess)
-        # cv2.waitKey()
-        # cv2.destroyAllWindows()
         colors, card_imgs = q.locate_carPlate(afterprocess, old)
-        # colors,card_imgs = q.img_only_color(old,afterprocess)
-        result, roi, color = q.char_recogize(colors, card_imgs)  # all list
+        result, roi, color, divs = q.char_recogize(colors, card_imgs)  # all list
         if len(result) == 0:
             print("未能识别到车牌")
         else:
-            for r in range(len(result)):
-                print("车牌的颜色为：" + color[r])
-                self.colorLabel.setText(color[r])
+            for r  in range(len(result)):
+                print("#"*10+"识别结果是"+"#"*10)
+                print("车牌的颜色为：" + Eng2Chi[color[r]])
+                self.colorLabel.setText(Eng2Chi[color[r]])
                 print(result[r])
-
+                result[r].insert(2,"-")
                 self.NumLabel.setText(''.join(result[r]))
+                print("#" * 25)
+                roi[r] = cv2.cvtColor(roi[r],cv2.COLOR_BGR2RGB)
+                QtImg = QtGui.QImage(roi[r].data,roi[r].shape[1],roi[r].shape[0],QtGui.QImage.Format_RGB888)
+                #显示图片到label中
+                self.location.resize(QtCore.QSize(roi[r].shape[1],roi[r].shape[0]))
+                self.location.setPixmap(QtGui.QPixmap.fromImage(QtImg))
+
                 print("\n")
         ###################识别#####################
+                # 同理
 
+        QtImg = QtGui.QImage(divs[0][0].data, divs[0][0].shape[1], divs[0][0].shape[0],
+                             QtGui.QImage.Format_RGB888)
+        # 显示图片到label中
+        self.div1.resize(QtCore.QSize(divs[0][0].shape[1], divs[0][0].shape[0]))
+        self.div1.setPixmap(QtGui.QPixmap.fromImage(QtImg))
 
 if __name__ == '__main__':
 
