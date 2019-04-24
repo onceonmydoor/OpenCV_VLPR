@@ -59,10 +59,12 @@ class mywindow(QtWidgets.QWidget,Ui_Form):
         ###################识别#####################
 
 
-        if len(divs[0])<7:
+        if len(divs)==0:
+            pass
+        elif len(divs[0])<7:
             pass
         else:
-            # 同理
+            # 与上同理
             Gray1 = self.QImage2Pixmap(0,divs)
             #self.div1.resize(QtCore.QSize(divs[0][0].shape[1], divs[0][0].shape[0]))
             self.div1.setPixmap(QtGui.QPixmap.fromImage(Gray1))

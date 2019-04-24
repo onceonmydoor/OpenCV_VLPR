@@ -11,7 +11,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
-        Form.resize(1658, 939)
+        Form.resize(1675, 1012)
         self.label = QtWidgets.QLabel(Form)
         self.label.setGeometry(QtCore.QRect(460, 0, 201, 61))
         self.label.setStyleSheet("font: 22pt \"Agency FB\";")
@@ -44,10 +44,10 @@ class Ui_Form(object):
 "font: 36pt \"Agency FB\";")
         self.NumLabel.setObjectName("NumLabel")
         self.groupBox_2 = QtWidgets.QGroupBox(Form)
-        self.groupBox_2.setGeometry(QtCore.QRect(19, 49, 1121, 831))
+        self.groupBox_2.setGeometry(QtCore.QRect(19, 49, 1121, 941))
         self.groupBox_2.setObjectName("groupBox_2")
         self.imgLabel = QtWidgets.QLabel(self.groupBox_2)
-        self.imgLabel.setGeometry(QtCore.QRect(30, 20, 1071, 801))
+        self.imgLabel.setGeometry(QtCore.QRect(30, 20, 1071, 901))
         self.imgLabel.setObjectName("imgLabel")
         self.groupBox_3 = QtWidgets.QGroupBox(Form)
         self.groupBox_3.setGeometry(QtCore.QRect(1160, 220, 501, 171))
