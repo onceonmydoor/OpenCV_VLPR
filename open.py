@@ -38,6 +38,8 @@ class mywindow(QtWidgets.QWidget,Ui_Form):
         result, roi, color, divs = q.char_recogize(colors, card_imgs)  # all list
         if len(result) == 0:
             print("未能识别到车牌")
+            self.colorLabel.setText("抱歉未能识别到车牌")
+            self.NumLabel.setText("抱歉，未能识别到车牌")
         else:
             for r  in range(len(result)):
                 print("#"*10+"识别结果是"+"#"*10)
@@ -55,13 +57,47 @@ class mywindow(QtWidgets.QWidget,Ui_Form):
 
                 print("\n")
         ###################识别#####################
-                # 同理
 
-        QtImg = QtGui.QImage(divs[0][0].data, divs[0][0].shape[1], divs[0][0].shape[0],
-                             QtGui.QImage.Format_RGB888)
-        # 显示图片到label中
-        self.div1.resize(QtCore.QSize(divs[0][0].shape[1], divs[0][0].shape[0]))
-        self.div1.setPixmap(QtGui.QPixmap.fromImage(QtImg))
+
+        if len(divs[0])<7:
+            pass
+        else:
+            # 同理
+            Gray1 = self.QImage2Pixmap(0,divs)
+            #self.div1.resize(QtCore.QSize(divs[0][0].shape[1], divs[0][0].shape[0]))
+            self.div1.setPixmap(QtGui.QPixmap.fromImage(Gray1))
+
+            Gray2 = self.QImage2Pixmap(1, divs)
+            # self.div1.resize(QtCore.QSize(divs[0][0].shape[1], divs[0][0].shape[0]))
+            self.div2.setPixmap(QtGui.QPixmap.fromImage(Gray2))
+
+            Gray3 = self.QImage2Pixmap(2, divs)
+            # self.div1.resize(QtCore.QSize(divs[0][0].shape[1], divs[0][0].shape[0]))
+            self.div3.setPixmap(QtGui.QPixmap.fromImage(Gray3))
+
+            Gray4 = self.QImage2Pixmap(3, divs)
+            # self.div1.resize(QtCore.QSize(divs[0][0].shape[1], divs[0][0].shape[0]))
+            self.div4.setPixmap(QtGui.QPixmap.fromImage(Gray4))
+
+            Gray5 = self.QImage2Pixmap(4, divs)
+            # self.div1.resize(QtCore.QSize(divs[0][0].shape[1], divs[0][0].shape[0]))
+            self.div5.setPixmap(QtGui.QPixmap.fromImage(Gray5))
+
+            Gray6 = self.QImage2Pixmap(5, divs)
+            # self.div1.resize(QtCore.QSize(divs[0][0].shape[1], divs[0][0].shape[0]))
+            self.div6.setPixmap(QtGui.QPixmap.fromImage(Gray6))
+
+            Gray7 = self.QImage2Pixmap(6, divs)
+            # self.div1.resize(QtCore.QSize(divs[0][0].shape[1], divs[0][0].shape[0]))
+            self.div7.setPixmap(QtGui.QPixmap.fromImage(Gray7))
+
+
+
+
+
+    def QImage2Pixmap(self,i,divs):
+        return QtGui.QImage(divs[0][i].data, divs[0][i].shape[1], divs[0][i].shape[0],
+                             QtGui.QImage.Format_Grayscale8)
 
 if __name__ == '__main__':
 
