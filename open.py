@@ -12,6 +12,7 @@ from test import Ui_Form #导入生成的界面类
 from PyQt5.QtWidgets import QFileDialog,QApplication, QMainWindow, QWidget, QPushButton
 from predict import Predict
 import cv2
+import openCamera
 
 
 
@@ -103,25 +104,25 @@ class mywindow(QtWidgets.QWidget,Ui_Form):
 
     def slot_btn_function(self):
         self.hide()
-        self.s = camera_Form()
+        self.s = openCamera.CamShow()
         self.s.show()
 
 
-class camera_Form(QWidget):
-    def __init(self):
-        super(camera_Form,self).__init__()
-        self.init_ui()
-    def init_ui(self):
-        self.resize(2000,1000)
-        self.setWindowTitle("camera")
-        self.btn = QPushButton("jump",self)
-        self.btn.setGeometry(150, 150, 100, 50)
-        self.btn.clicked.connect(self.slot_btn_function1)
-
-    def slot_btn_function1(self):
-        self.hide()
-        self.f = Ui_Form()
-        self.f.show()
+# class camera_Form(QWidget):
+#     def __init(self):
+#         super(camera_Form,self).__init__()
+#         self.init_ui()
+#     def init_ui(self):
+#         self.resize(2000,1000)
+#         self.setWindowTitle("camera")
+#         self.btn = QPushButton("jump",self)
+#         self.btn.setGeometry(150, 150, 100, 50)
+#         self.btn.clicked.connect(self.slot_btn_function1)
+#
+#     def slot_btn_function1(self):
+#         self.hide()
+#         self.f = Ui_Form()
+#         self.f.show()
 
 if __name__ == '__main__':
 

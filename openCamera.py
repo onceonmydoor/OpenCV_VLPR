@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import QApplication,QMainWindow,QFileDialog
 from PyQt5.QtCore import QTimer,QCoreApplication,QDateTime
 import time
 import cv2
+import open
 import qimage2ndarray
 from PyQt5.QtGui import QPixmap
 
@@ -32,6 +33,10 @@ class CamShow(QMainWindow,Ui_camera):
         Ctimer = QTimer(self)
         Ctimer.timeout.connect(self.showCurrTime)
         Ctimer.start()
+
+        self.Picbtn.clicked.connect(self.pic_model)
+
+
     def showCurrTime(self):
         datetime = QDateTime.currentDateTime()
         self.timeLabel.setText("     "+datetime.toString())
@@ -278,6 +283,11 @@ class CamShow(QMainWindow,Ui_camera):
             self.MsgTE.setPlainText('Video saved.')
             self.StopBt.setEnabled(True)
             self.ExitBt.setEnabled(True)
+
+    def pic_model(self):
+        self.hide()
+        self.s = open.mywindow()
+        self.s.show()
 
 
     def ExitApp(self):
