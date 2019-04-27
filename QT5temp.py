@@ -7,6 +7,7 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QApplication,QMainWindow,QWidget,QPushButton
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -91,7 +92,6 @@ class Ui_Form(object):
 
         self.retranslateUi(Form)
         self.pushButton.clicked.connect(Form.openimage)
-        self.pushButton_2.clicked.connect(Form.slot_btn_function)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def retranslateUi(self, Form):
@@ -119,4 +119,6 @@ class Ui_Form(object):
         self.div8.setText(_translate("Form", "8"))
         self.pushButton_2.setText(_translate("Form", "开启摄像头模式"))
         self.pushButton_3.setText(_translate("Form", "查看预处理图片"))
+
+
 

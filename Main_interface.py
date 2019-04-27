@@ -19,7 +19,7 @@ class Surface(ttk.Frame):
 	thread = None
 	thread_run = False
 	camera = None
-	color_transform = {"green":("绿牌","#55FF55"), "yello":("黄牌","#FFFF00"), "blue":("蓝牌","#6666FF")}
+	color_transform = {"green":("绿牌","#55FF55"), "yellow":("黄牌","#FFFF00"), "blue":("蓝牌","#6666FF")}
 		
 	def __init__(self, win):
 		ttk.Frame.__init__(self, win)
@@ -117,7 +117,7 @@ class Surface(ttk.Frame):
 			img_bgr = predict.imreadex(self.pic_path)
 			self.imgtk = self.get_imgtk(img_bgr)
 			self.image_ctl.configure(image=self.imgtk)
-			r, roi, color = self.predictor.predict(img_bgr)
+			r, roi, color = self.predictor.Predict(img_bgr)
 			self.show_roi(r, roi, color)
 
 
