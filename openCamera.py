@@ -6,7 +6,10 @@ import time
 import cv2
 import open
 import qimage2ndarray
+import threading
 from PyQt5.QtGui import QPixmap
+from predict import Predict
+from PyQt5 import QtWidgets,QtGui,QtCore
 
 class CamShow(QMainWindow,Ui_camera):
     def __del__(self):
@@ -17,6 +20,7 @@ class CamShow(QMainWindow,Ui_camera):
 
     def __init__(self,parent=None):
         super(CamShow,self).__init__(parent)
+        thread_run = False
         self.setupUi(self)
         self.PreSliders()#保证两个控件的值始终相等
         self.PreWidgets()
@@ -35,6 +39,8 @@ class CamShow(QMainWindow,Ui_camera):
         Ctimer.start()
 
         self.Picbtn.clicked.connect(self.pic_model)
+
+
 
 
     def showCurrTime(self):
@@ -140,6 +146,8 @@ class CamShow(QMainWindow,Ui_camera):
         self.ContrastSld.setEnabled(True)
         self.ContrastSpB.setEnabled(True)
         self.RecordBt.setText('录像')
+
+        self.vedio_thread()  # 开启识别线程
 
         self.Timer.start(1)
         self.timelb = time.time()
@@ -288,6 +296,43 @@ class CamShow(QMainWindow,Ui_camera):
         self.hide()
         self.s = open.mywindow()
         self.s.show()
+
+    def vedio_thread(self):
+        self.thread_run = True
+        predict_time = time.time()
+        while self.thread_run:
+            _ , img_bgr = self.camera.read()
+            if time.time() - predict_time >2:
+                self.predict_frame(img_bgr)
+                predict_time = time.time()
+
+    def predict_frame(self,imgPath):
+        Eng2Chi = {"green": "绿色", "blue": "蓝色", "yellow": "黄色"}
+        q = Predict()
+        afterprocess, old = q.preprocess(imgPath)
+        colors, card_imgs = q.locate_carPlate(afterprocess, old)
+        result, roi, color, divs = q.char_recogize(colors, card_imgs)  # all list
+        if len(result) == 0:
+            print("未能识别到车牌")
+            self.colorLabel.setText("抱歉未能识别到车牌")
+            self.NumLabel.setText("抱歉，未能识别到车牌")
+        else:
+            for r in range(len(result)):
+                print("#" * 10 + "识别结果是" + "#" * 10)
+                print("车牌的颜色为：" + Eng2Chi[color[r]])
+                self.colorLabel.setText(Eng2Chi[color[r]])
+                print(result[r])
+                result[r].insert(2, "-")
+                self.NumLabel.setText(''.join(result[r]))
+                print("#" * 25)
+                # roi[r] = cv2.cvtColor(roi[r], cv2.COLOR_BGR2RGB)
+                # QtImg = QtGui.QImage(roi[r].data, roi[r].shape[1], roi[r].shape[0], QtGui.QImage.Format_RGB888)
+                # # 显示图片到label中
+                # self.location.resize(QtCore.QSize(roi[r].shape[1], roi[r].shape[0]))
+                # self.location.setPixmap(QtGui.QPixmap.fromImage(QtImg))
+
+                print("\n")
+
 
 
     def ExitApp(self):

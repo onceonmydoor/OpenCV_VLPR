@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1269</width>
-    <height>892</height>
+    <width>1310</width>
+    <height>887</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -692,7 +692,7 @@
        <string>车牌号码：</string>
       </property>
      </widget>
-     <widget class="QLabel" name="label_14">
+     <widget class="QLabel" name="colorLabel">
       <property name="geometry">
        <rect>
         <x>130</x>
@@ -705,7 +705,7 @@
        <string>LY</string>
       </property>
      </widget>
-     <widget class="QLabel" name="label_15">
+     <widget class="QLabel" name="NumLabel">
       <property name="geometry">
        <rect>
         <x>120</x>
@@ -847,7 +847,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1269</width>
+     <width>1310</width>
      <height>23</height>
     </rect>
    </property>

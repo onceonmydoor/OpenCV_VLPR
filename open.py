@@ -21,6 +21,7 @@ class mywindow(QtWidgets.QWidget,Ui_Form):
         super(mywindow,self).__init__()
         self.setupUi(self)
         #定义槽函数
+        self.Img_preprocess = None
     def openimage(self):
         Eng2Chi = {"green":"绿色","blue":"蓝色","yellow":"黄色"}
     #打开文件路径
@@ -35,6 +36,7 @@ class mywindow(QtWidgets.QWidget,Ui_Form):
         ###################识别#####################
         q = Predict()
         afterprocess, old = q.preprocess(imgPath)
+        self.Img_preprocess = afterprocess
         colors, card_imgs = q.locate_carPlate(afterprocess, old)
         result, roi, color, divs = q.char_recogize(colors, card_imgs)  # all list
         if len(result) == 0:
@@ -106,6 +108,11 @@ class mywindow(QtWidgets.QWidget,Ui_Form):
         self.hide()
         self.s = openCamera.CamShow()
         self.s.show()
+    def show_preprocess(self):
+        if self.Img_preprocess.any():
+            cv2.imshow("preprocess",self.Img_preprocess)
+
+
 
 
 # class camera_Form(QWidget):

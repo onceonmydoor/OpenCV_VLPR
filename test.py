@@ -92,6 +92,7 @@ class Ui_Form(object):
         self.retranslateUi(Form)
         self.pushButton.clicked.connect(Form.openimage)
         self.pushButton_2.clicked.connect(Form.slot_btn_function)
+        self.pushButton_3.clicked.connect(Form.show_preprocess)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def retranslateUi(self, Form):
