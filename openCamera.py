@@ -147,7 +147,11 @@ class CamShow(QMainWindow,Ui_camera):
         self.ContrastSpB.setEnabled(True)
         self.RecordBt.setText('录像')
 
-        self.vedio_thread()  # 开启识别线程
+        # 开启识别线程
+        p = threading.Thread(target=self.vedio_thread)
+        p.setDaemon(True)#子线程附加在主线程上
+        p.start()
+
 
         self.Timer.start(1)
         self.timelb = time.time()
@@ -297,6 +301,8 @@ class CamShow(QMainWindow,Ui_camera):
         self.s = open.mywindow()
         self.s.show()
 
+
+
     def vedio_thread(self):
         self.thread_run = True
         predict_time = time.time()
@@ -339,6 +345,7 @@ class CamShow(QMainWindow,Ui_camera):
         self.Timer.stop()#停止计时器
         self.camera.release()#释放摄像头
         self.MsgTE.setPlainText("Exiting the application..")
+
         QCoreApplication,quit()
 
 

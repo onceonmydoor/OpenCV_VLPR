@@ -4,11 +4,9 @@
 import os
 import cv2
 import numpy as np
-import debug
 import img_math
 import img_rec
 import Train_SVM
-import config
 import json
 from PIL import ImageStat
 from PIL import Image
@@ -565,9 +563,9 @@ class Predict:
                     gray_img = cv2.bitwise_not(gray_img)
                 ret , gray_img = cv2.threshold(gray_img, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)#OTSU  ,字符显示的第一步
                 #（灰度图，阈值，最大值，阈值类型）把阈值设为0，算法会找到最优阈值
-                cv2.imshow("erzhihua", gray_img)
-                cv2.waitKey()
-                cv2.destroyAllWindows()
+                # cv2.imshow("erzhihua", gray_img)
+                # cv2.waitKey()
+                # cv2.destroyAllWindows()
 
 
                 # #img123=np.array(gray_img.convert('L'))

@@ -124,8 +124,8 @@ class TrainSVM:
         self.modelchinese = SVM(C=1,gamma=0.6)#TODO:优化调参
 
         #对于字母和数字的训练
-        if os.path.exists("svm.dat"):
-            self.model.load("svm.dat")
+        if os.path.exists("svm\\svm.dat"):
+            self.model.load("svm\\svm.dat")
         else:
             chars_train = []#储存训练后的图像矩阵
             chars_label = []#该数字的标签
@@ -149,8 +149,8 @@ class TrainSVM:
 
 
         #对于中文字符的训练
-        if os.path.exists("svmChinese.dat"):
-            self.modelchinese.load("svmChinese.dat")
+        if os.path.exists("svm\\svmChinese.dat"):
+            self.modelchinese.load("svm\\svmChinese.dat")
         else:
             charsC_train = [] 
             charsC_label = []#该provinces的索引
@@ -175,10 +175,10 @@ class TrainSVM:
         
     
     def save_traindata(self):
-        if not os.path.exists("svm.dat"):
-            self.model.save("svm.dat")
-        if not os.path.exists("svmChinese.dat"):
-            self.modelchinese.save("svmChinese.dat")
+        if not os.path.exists("svm\\svm.dat"):
+            self.model.save("svm\\svm.dat")
+        if not os.path.exists("svm\\svmChinese.dat"):
+            self.modelchinese.save("svm\\svmChinese.dat")
 
 
 
@@ -201,8 +201,8 @@ class TrainSVM:
 
             #显示每个分割字符，用于界面显示
             div.append(part_card)
-            cv2.imshow("fengezifu",part_card)
-            cv2.waitKey(0)
+            # cv2.imshow("fengezifu",part_card)
+            # cv2.waitKey(0)
 
             part_card = preprocess_hog([part_card])  
             if i == 0 :
