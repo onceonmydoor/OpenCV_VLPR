@@ -36,6 +36,84 @@ class Predict:
     def __del__(self):
         pass
 
+    def verify_color(self, rotate_rect, src_image):
+        img_h, img_w = src_image.shape[:2]
+        mask = np.zeros(shape=[img_h + 2, img_w + 2], dtype=np.uint8)
+        connectivity = 4  # 种子点上下左右4邻域与种子颜色值在[loDiff,upDiff]的被涂成new_value，也可设置8邻域
+        loDiff, upDiff = 30, 30
+        new_value = 255
+        flags = connectivity
+        flags |= cv2.FLOODFILL_FIXED_RANGE  # 考虑当前像素与种子象素之间的差，不设置的话则和邻域像素比较
+        flags |= new_value << 8
+        flags |= cv2.FLOODFILL_MASK_ONLY  # 设置这个标识符则不会去填充改变原始图像，而是去填充掩模图像（mask）
+
+        rand_seed_num = 5000  # 生成多个随机种子
+        valid_seed_num = 200  # 从rand_seed_num中随机挑选valid_seed_num个有效种子
+        adjust_param = 0.1
+        box_points = cv2.boxPoints(rotate_rect)
+        box_points_x = [n[0] for n in box_points]
+        box_points_x.sort(reverse=False)
+        adjust_x = int((box_points_x[2] - box_points_x[1]) * adjust_param)
+        col_range = [box_points_x[1] + adjust_x, box_points_x[2] - adjust_x]
+        box_points_y = [n[1] for n in box_points]
+        box_points_y.sort(reverse=False)
+        adjust_y = int((box_points_y[2] - box_points_y[1]) * adjust_param)
+        row_range = [box_points_y[1] + adjust_y, box_points_y[2] - adjust_y]
+        # 如果以上方法种子点在水平或垂直方向可移动的范围很小，则采用旋转矩阵对角线来设置随机种子点
+        if (col_range[1] - col_range[0]) / (box_points_x[3] - box_points_x[0]) < 0.4 \
+                or (row_range[1] - row_range[0]) / (box_points_y[3] - box_points_y[0]) < 0.4:
+            points_row = []
+            points_col = []
+            for i in range(2):
+                pt1, pt2 = box_points[i], box_points[i + 2]
+                x_adjust, y_adjust = int(adjust_param * (abs(pt1[0] - pt2[0]))), int(
+                    adjust_param * (abs(pt1[1] - pt2[1])))
+                if (pt1[0] <= pt2[0]):
+                    pt1[0], pt2[0] = pt1[0] + x_adjust, pt2[0] - x_adjust
+                else:
+                    pt1[0], pt2[0] = pt1[0] - x_adjust, pt2[0] + x_adjust
+                if (pt1[1] <= pt2[1]):
+                    pt1[1], pt2[1] = pt1[1] + adjust_y, pt2[1] - adjust_y
+                else:
+                    pt1[1], pt2[1] = pt1[1] - y_adjust, pt2[1] + y_adjust
+                temp_list_x = [int(x) for x in np.linspace(pt1[0], pt2[0], int(rand_seed_num / 2))]
+                temp_list_y = [int(y) for y in np.linspace(pt1[1], pt2[1], int(rand_seed_num / 2))]
+                points_col.extend(temp_list_x)
+                points_row.extend(temp_list_y)
+        else:
+            points_row = np.random.randint(row_range[0], row_range[1], size=rand_seed_num)
+            points_col = np.linspace(col_range[0], col_range[1], num=rand_seed_num).astype(np.int)
+
+        points_row = np.array(points_row)
+        points_col = np.array(points_col)
+        hsv_img = cv2.cvtColor(src_image, cv2.COLOR_BGR2HSV)
+        h, s, v = hsv_img[:, :, 0], hsv_img[:, :, 1], hsv_img[:, :, 2]
+        # 将随机生成的多个种子依次做漫水填充,理想情况是整个车牌被填充
+        flood_img = src_image.copy()
+        seed_cnt = 0
+        for i in range(rand_seed_num):
+            rand_index = np.random.choice(rand_seed_num, 1, replace=False)
+            row, col = points_row[rand_index], points_col[rand_index]
+            # 限制随机种子必须是车牌背景色
+            if ((h[row, col] > 26) & (h[row, col] < 124)) & (s[row, col] > 70) & (v[row, col] > 70):
+                cv2.floodFill(src_image, mask, (col, row), (255, 255, 255), (loDiff,) * 3, (upDiff,) * 3, flags)
+                cv2.circle(flood_img, center=(col, row), radius=2, color=(0, 0, 255), thickness=2)
+                seed_cnt += 1
+                if seed_cnt >= valid_seed_num:
+                    break
+                    # ======================调试用======================#
+                    # show_seed = np.random.uniform(1,100,1).astype(np.uint16)
+                    # cv2.imshow('floodfill'+str(show_seed),flood_img)
+                    # cv2.imshow('flood_mask'+str(show_seed),mask)
+                    # ======================调试用======================#
+                    # 获取掩模上被填充点的像素点，并求点集的最小外接矩形
+        mask_points = []
+        for row in range(1, img_h + 1):
+            for col in range(1, img_w + 1):
+                if mask[row, col] != 0:
+                    mask_points.append((col - 1, row - 1))
+        mask_rotateRect = cv2.minAreaRect(np.array(mask_points))
+        return True, mask_rotateRect
 
     def grey_scale(self,image):
         img_gray = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
@@ -56,10 +134,6 @@ class Predict:
         stat = ImageStat.Stat(im)   
         return stat.mean[0]
         print(brightness1('c:\\meiping1.png'))
-
-
-
-
 
     def isdark(self,car_pic):
 
@@ -97,6 +171,9 @@ class Predict:
                 img = img_math.img_read(car_pic_file)
             else:
                 img = car_pic_file
+
+            if img.any() == None:
+                return
 
             pic_hight, pic_width = img.shape[:2]
             print("图片长高为{}，图片长为{}".format(pic_hight,pic_width))
@@ -154,86 +231,6 @@ class Predict:
             return img_edge2 , img
 
             ##生成预处理图像，车牌识别的第一步
-    
-    def verify_color(self,rotate_rect,src_image):
-        img_h,img_w = src_image.shape[:2]
-        mask = np.zeros(shape=[img_h+2,img_w+2],dtype=np.uint8)
-        connectivity = 4 #种子点上下左右4邻域与种子颜色值在[loDiff,upDiff]的被涂成new_value，也可设置8邻域
-        loDiff,upDiff = 30,30
-        new_value = 255
-        flags = connectivity
-        flags |= cv2.FLOODFILL_FIXED_RANGE  #考虑当前像素与种子象素之间的差，不设置的话则和邻域像素比较
-        flags |= new_value << 8
-        flags |= cv2.FLOODFILL_MASK_ONLY #设置这个标识符则不会去填充改变原始图像，而是去填充掩模图像（mask）
-
-        rand_seed_num = 5000 #生成多个随机种子
-        valid_seed_num = 200 #从rand_seed_num中随机挑选valid_seed_num个有效种子
-        adjust_param = 0.1
-        box_points = cv2.boxPoints(rotate_rect)
-        box_points_x = [n[0] for n in box_points]
-        box_points_x.sort(reverse=False)
-        adjust_x = int((box_points_x[2]-box_points_x[1])*adjust_param)
-        col_range = [box_points_x[1]+adjust_x,box_points_x[2]-adjust_x]
-        box_points_y = [n[1] for n in box_points]
-        box_points_y.sort(reverse=False)
-        adjust_y = int((box_points_y[2]-box_points_y[1])*adjust_param)
-        row_range = [box_points_y[1]+adjust_y, box_points_y[2]-adjust_y]
-        # 如果以上方法种子点在水平或垂直方向可移动的范围很小，则采用旋转矩阵对角线来设置随机种子点
-        if (col_range[1]-col_range[0])/(box_points_x[3]-box_points_x[0])<0.4\
-            or (row_range[1]-row_range[0])/(box_points_y[3]-box_points_y[0])<0.4:
-            points_row = []
-            points_col = []
-            for i in range(2):
-                pt1,pt2 = box_points[i],box_points[i+2]
-                x_adjust,y_adjust = int(adjust_param*(abs(pt1[0]-pt2[0]))),int(adjust_param*(abs(pt1[1]-pt2[1])))
-                if (pt1[0] <= pt2[0]):
-                    pt1[0], pt2[0] = pt1[0] + x_adjust, pt2[0] - x_adjust
-                else:
-                    pt1[0], pt2[0] = pt1[0] - x_adjust, pt2[0] + x_adjust
-                if (pt1[1] <= pt2[1]):
-                    pt1[1], pt2[1] = pt1[1] + adjust_y, pt2[1] - adjust_y
-                else:
-                    pt1[1], pt2[1] = pt1[1] - y_adjust, pt2[1] + y_adjust
-                temp_list_x = [int(x) for x in np.linspace(pt1[0],pt2[0],int(rand_seed_num /2))]
-                temp_list_y = [int(y) for y in np.linspace(pt1[1],pt2[1],int(rand_seed_num /2))]
-                points_col.extend(temp_list_x)
-                points_row.extend(temp_list_y)
-        else:
-            points_row = np.random.randint(row_range[0],row_range[1],size=rand_seed_num)
-            points_col = np.linspace(col_range[0],col_range[1],num=rand_seed_num).astype(np.int)
-
-        points_row = np.array(points_row)
-        points_col = np.array(points_col)
-        hsv_img = cv2.cvtColor(src_image, cv2.COLOR_BGR2HSV)
-        h,s,v = hsv_img[:,:,0],hsv_img[:,:,1],hsv_img[:,:,2]
-        # 将随机生成的多个种子依次做漫水填充,理想情况是整个车牌被填充
-        flood_img = src_image.copy()
-        seed_cnt = 0
-        for i in range(rand_seed_num):
-            rand_index = np.random.choice(rand_seed_num,1,replace=False)
-            row,col = points_row[rand_index],points_col[rand_index]
-            # 限制随机种子必须是车牌背景色
-            if ((h[row,col]>26)&(h[row,col]<124))&(s[row,col]>70)&(v[row,col]>70):
-                cv2.floodFill(src_image, mask, (col,row), (255, 255, 255), (loDiff,) * 3, (upDiff,) * 3, flags)
-                cv2.circle(flood_img,center=(col,row),radius=2,color=(0,0,255),thickness=2)
-                seed_cnt += 1
-                if seed_cnt >= valid_seed_num:
-                    break
-    #======================调试用======================#
-    # show_seed = np.random.uniform(1,100,1).astype(np.uint16)
-    # cv2.imshow('floodfill'+str(show_seed),flood_img)
-    # cv2.imshow('flood_mask'+str(show_seed),mask)
-    #======================调试用======================#
-    # 获取掩模上被填充点的像素点，并求点集的最小外接矩形
-        mask_points = []
-        for row in range(1,img_h+1):
-            for col in range(1,img_w+1):
-                if mask[row,col] != 0:
-                    mask_points.append((col-1,row-1))
-        mask_rotateRect = cv2.minAreaRect(np.array(mask_points))
-        return True,mask_rotateRect
-
-
 
     def accurate_place(self, card_img_hsv, limit1, limit2, color):#微调车牌位置
         row_num, col_num = card_img_hsv.shape[:2]
@@ -312,7 +309,6 @@ class Predict:
         
         return colors,card_imgs  #可能存在多个车牌，暂时保留列表结构                                                                          
 
-
     def img_only_color(self, oldimg, img_contours):
         """
         :param filename: 图像文件
@@ -343,10 +339,6 @@ class Predict:
         colors, car_imgs = self.img_color(card_imgs)
         return colors,car_imgs
 
-
-
-  
-                
     def img_findContours(self,img_coutours,oldimg):
         pic_hight, pic_width = oldimg.shape[:2]#获取图片的长宽
         #查找图像边缘整体形成的矩形区域，可能有很多，车牌就在其中一个矩形
@@ -510,6 +502,8 @@ class Predict:
                 colors.append(color)
                 print("blue:{},green:{},yellow:{},black:{},white:{},count:{}".format(blue,green,yellow,black,white,card_img_count))
 
+                if color =="green":
+                    continue
 
                 #根据车牌颜色在定位，缩小非车牌的边界区域
                 xl, xr, yh, yl = self.accurate_place(card_img_hsv, limit1, limit2, color)
@@ -543,8 +537,6 @@ class Predict:
 
         return colors , card_imgs
 
-
-
     def char_recogize(self,colors,card_imgs):
         #车牌字符识别
         cards_result=[]#多个车牌的识别结果
@@ -563,8 +555,8 @@ class Predict:
                     gray_img = cv2.bitwise_not(gray_img)
                 ret , gray_img = cv2.threshold(gray_img, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)#OTSU  ,字符显示的第一步
                 #（灰度图，阈值，最大值，阈值类型）把阈值设为0，算法会找到最优阈值
-                # cv2.imshow("erzhihua", gray_img)
-                # cv2.waitKey()
+                cv2.imshow("erzhihua", gray_img)
+                cv2.waitKey()
                 # cv2.destroyAllWindows()
 
 
@@ -578,7 +570,7 @@ class Predict:
                 x_histogram = np.sum(gray_img , axis=1)
                 x_min = np.min(x_histogram)
                 x_average = np.sum(x_histogram) / x_histogram.shape[0]
-                x_threshold = (x_min + x_average)/2
+                x_threshold = (x_min + x_average)/3
                 wave_peaks = img_math.find_waves(x_threshold,x_histogram)
                 #
                 if len(wave_peaks) == 0:
@@ -591,20 +583,22 @@ class Predict:
                 row_num , col_num = gray_img.shape[:2]
                 
 
-                #gray_img = gray_img[1:row_num - 1]
+                if color =="green":
+                    gray_img = gray_img[1:row_num + 1]
                 gray_img = gray_img[1:col_num - 1]
                 #去掉车牌左右边缘的一个像素，防止白边影响阈值判断#TODO，暂时还没想到更好的办法
                 y_histogram = np.sum( gray_img, axis=0)
                 y_min = np.min(y_histogram)
                 y_average = np.sum(y_histogram) / y_histogram.shape[0]
-                y_threshold = (y_min + y_average) / 8 #U 和 0 要求阈值偏小 ， 否则U和0会被分成两半
+                y_threshold = (y_min + y_average) / 6 #U 和 0 要求阈值偏小 ， 否则U和0会被分成两半
                 #TODO:阈值影响很大，很难受
+                print("阈值为："+str(y_threshold))
 
                 wave_peaks = img_math.find_waves(y_threshold,y_histogram)
 
                 print("存在的波峰数量："+str(len(wave_peaks)))
                 #车牌的字符应该大于6（蓝、黄7 、 绿8）
-                if(len(wave_peaks)<=6):
+                if(len(wave_peaks)<6):
                     print("初始的波峰个数是",len(wave_peaks))
                     continue
 
@@ -640,7 +634,7 @@ class Predict:
                     if np.mean(point_img) < 255 / 5:
                         wave_peaks.pop(2)
                 
-                if len(wave_peaks) <= 6:
+                if len(wave_peaks) < 6:
                     print("分离之后，波峰个数是",len(wave_peaks))
                     continue
                 part_cards = img_math.sperate_card(gray_img,wave_peaks) 
@@ -661,7 +655,8 @@ if __name__ == '__main__':
     q = Predict()
     #if q.isdark("test\\timg.jpg"):
         #print("是黑夜拍的")
-    afterprocess,old=q.preprocess("test\\37.jpg")
+    #afterprocess,old=q.preprocess("test\\2.jpg")
+    afterprocess,old =q.preprocess("D:\\车牌测试用\\车牌识别测试图\\P90427-144602.jpg")
     cv2.namedWindow("yuchuli",cv2.WINDOW_NORMAL)
     cv2.imshow("yuchuli", afterprocess)
     cv2.waitKey()

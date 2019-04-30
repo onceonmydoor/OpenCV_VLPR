@@ -187,6 +187,7 @@ class TrainSVM:
         div = []
         
         for i , part_card in enumerate(part_cards):
+
             #排除固定车牌的铆钉
             if np.mean(part_card) < 255 /5:
                 print("a point")
@@ -201,8 +202,8 @@ class TrainSVM:
 
             #显示每个分割字符，用于界面显示
             div.append(part_card)
-            # cv2.imshow("fengezifu",part_card)
-            # cv2.waitKey(0)
+            cv2.imshow("fengezifu",part_card)
+            cv2.waitKey(0)
 
             part_card = preprocess_hog([part_card])  
             if i == 0 :

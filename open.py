@@ -13,6 +13,7 @@ from PyQt5.QtWidgets import QFileDialog,QApplication, QMainWindow, QWidget, QPus
 from predict import Predict
 import cv2
 import openCamera
+import qimage2ndarray
 
 
 
@@ -43,6 +44,7 @@ class mywindow(QtWidgets.QWidget,Ui_Form):
             print("未能识别到车牌")
             self.colorLabel.setText("抱歉未能识别到车牌")
             self.NumLabel.setText("抱歉，未能识别到车牌")
+            self.location.clear()
         else:
             for r  in range(len(result)):
                 print("#"*10+"识别结果是"+"#"*10)
@@ -53,10 +55,13 @@ class mywindow(QtWidgets.QWidget,Ui_Form):
                 self.NumLabel.setText(''.join(result[r]))
                 print("#" * 25)
                 roi[r] = cv2.cvtColor(roi[r],cv2.COLOR_BGR2RGB)
-                QtImg = QtGui.QImage(roi[r].data,roi[r].shape[1],roi[r].shape[0],QtGui.QImage.Format_RGB888)
-                #显示图片到label中
-                self.location.resize(QtCore.QSize(roi[r].shape[1],roi[r].shape[0]))
-                self.location.setPixmap(QtGui.QPixmap.fromImage(QtImg))
+                qimg = qimage2ndarray.array2qimage(roi[r])
+                local_img =qimg.scaled(self.location.width(),self.location.height())
+                self.location.setPixmap(QtGui.QPixmap(local_img))
+                # QtImg = QtGui.QImage(roi[r].data,roi[r].shape[1],roi[r].shape[0],QtGui.QImage.Format_RGB888)
+                # #显示图片到label中
+                # self.location.resize(QtCore.QSize(roi[r].shape[1],roi[r].shape[0]))
+                # self.location.setPixmap(QtGui.QPixmap.fromImage(QtImg))
 
                 print("\n")
         ###################识别#####################

@@ -15,7 +15,8 @@ PROVINCE_START = 1000
 """
 
 def img_read(filename):
-    return cv2.imdecode(np.fromfile(filename,dtype=np.uint8),cv2.IMREAD_COLOR)
+    if filename:
+        return cv2.imdecode(np.fromfile(filename,dtype=np.uint8),cv2.IMREAD_COLOR)
     #使用uint8方式读取文件 放入imdecode中,解决imread不能读取中文路径的问题
 
 def find_waves(threshold,histogram):

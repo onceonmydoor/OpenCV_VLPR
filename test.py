@@ -11,7 +11,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
-        Form.resize(1675, 1012)
+        Form.resize(1488, 884)
         self.label = QtWidgets.QLabel(Form)
         self.label.setGeometry(QtCore.QRect(460, 0, 201, 61))
         self.label.setStyleSheet("font: 22pt \"Agency FB\";")
@@ -21,7 +21,7 @@ class Ui_Form(object):
         self.pushButton.setGeometry(QtCore.QRect(1170, 630, 191, 31))
         self.pushButton.setObjectName("pushButton")
         self.groupBox = QtWidgets.QGroupBox(Form)
-        self.groupBox.setGeometry(QtCore.QRect(1160, 50, 501, 161))
+        self.groupBox.setGeometry(QtCore.QRect(1160, 50, 321, 161))
         self.groupBox.setObjectName("groupBox")
         self.label_2 = QtWidgets.QLabel(self.groupBox)
         self.label_2.setGeometry(QtCore.QRect(20, 30, 54, 12))
@@ -50,13 +50,13 @@ class Ui_Form(object):
         self.imgLabel.setGeometry(QtCore.QRect(30, 20, 1071, 901))
         self.imgLabel.setObjectName("imgLabel")
         self.groupBox_3 = QtWidgets.QGroupBox(Form)
-        self.groupBox_3.setGeometry(QtCore.QRect(1160, 220, 501, 171))
+        self.groupBox_3.setGeometry(QtCore.QRect(1160, 220, 321, 171))
         self.groupBox_3.setObjectName("groupBox_3")
         self.location = QtWidgets.QLabel(self.groupBox_3)
-        self.location.setGeometry(QtCore.QRect(20, 30, 221, 61))
+        self.location.setGeometry(QtCore.QRect(20, 30, 281, 91))
         self.location.setObjectName("location")
         self.groupBox_4 = QtWidgets.QGroupBox(Form)
-        self.groupBox_4.setGeometry(QtCore.QRect(1160, 430, 501, 161))
+        self.groupBox_4.setGeometry(QtCore.QRect(1160, 430, 321, 161))
         self.groupBox_4.setObjectName("groupBox_4")
         self.div1 = QtWidgets.QLabel(self.groupBox_4)
         self.div1.setGeometry(QtCore.QRect(10, 50, 31, 41))
@@ -92,7 +92,6 @@ class Ui_Form(object):
         self.retranslateUi(Form)
         self.pushButton.clicked.connect(Form.openimage)
         self.pushButton_2.clicked.connect(Form.slot_btn_function)
-        self.pushButton_3.clicked.connect(Form.show_preprocess)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def retranslateUi(self, Form):
