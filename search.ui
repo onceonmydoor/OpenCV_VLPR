@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>783</width>
-    <height>591</height>
+    <width>845</width>
+    <height>596</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,7 +19,7 @@
      <rect>
       <x>10</x>
       <y>60</y>
-      <width>761</width>
+      <width>821</width>
       <height>491</height>
      </rect>
     </property>
@@ -85,12 +85,12 @@
      <rect>
       <x>660</x>
       <y>10</y>
-      <width>91</width>
+      <width>81</width>
       <height>31</height>
      </rect>
     </property>
     <property name="text">
-     <string> 查询</string>
+     <string> 条件查询</string>
     </property>
    </widget>
    <widget class="QLabel" name="label">
@@ -175,13 +175,26 @@
      <string>颜色</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="all">
+    <property name="geometry">
+     <rect>
+      <x>750</x>
+      <y>10</y>
+      <width>81</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>查询所有</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>783</width>
+     <width>845</width>
      <height>23</height>
     </rect>
    </property>
@@ -206,8 +219,25 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>all</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>Getall()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>791</x>
+     <y>55</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>710</x>
+     <y>76</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>GetsearchContent()</slot>
+  <slot>Getall()</slot>
  </slots>
 </ui>

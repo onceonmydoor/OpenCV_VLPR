@@ -11,11 +11,11 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(783, 591)
+        MainWindow.resize(845, 596)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.tableView = QtWidgets.QTableView(self.centralwidget)
-        self.tableView.setGeometry(QtCore.QRect(10, 60, 761, 491))
+        self.tableView.setGeometry(QtCore.QRect(10, 60, 821, 491))
         self.tableView.setObjectName("tableView")
         self.lineEdit_2 = QtWidgets.QLineEdit(self.centralwidget)
         self.lineEdit_2.setGeometry(QtCore.QRect(40, 10, 121, 31))
@@ -29,7 +29,7 @@ class Ui_MainWindow(object):
         self.dateTimeEdit_2.setDateTime(QtCore.QDateTime(QtCore.QDate(2019, 5, 1), QtCore.QTime(0, 0, 0)))
         self.dateTimeEdit_2.setObjectName("dateTimeEdit_2")
         self.search = QtWidgets.QPushButton(self.centralwidget)
-        self.search.setGeometry(QtCore.QRect(660, 10, 91, 31))
+        self.search.setGeometry(QtCore.QRect(660, 10, 81, 31))
         self.search.setObjectName("search")
         self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setGeometry(QtCore.QRect(3, 11, 41, 31))
@@ -50,9 +50,12 @@ class Ui_MainWindow(object):
         self.label_4 = QtWidgets.QLabel(self.centralwidget)
         self.label_4.setGeometry(QtCore.QRect(170, 10, 41, 31))
         self.label_4.setObjectName("label_4")
+        self.all = QtWidgets.QPushButton(self.centralwidget)
+        self.all.setGeometry(QtCore.QRect(750, 10, 81, 31))
+        self.all.setObjectName("all")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 783, 23))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 845, 23))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -61,6 +64,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         self.search.clicked.connect(MainWindow.GetsearchContent)
+        self.all.clicked.connect(MainWindow.Getall)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -68,7 +72,7 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.dateTimeEdit.setDisplayFormat(_translate("MainWindow", "yyyy/MM/dd HH:mm:ss"))
         self.dateTimeEdit_2.setDisplayFormat(_translate("MainWindow", "yyyy/MM/dd HH:mm:ss"))
-        self.search.setText(_translate("MainWindow", " 查询"))
+        self.search.setText(_translate("MainWindow", " 条件查询"))
         self.label.setText(_translate("MainWindow", "车牌："))
         self.label_2.setText(_translate("MainWindow", "至"))
         self.comboBox.setItemText(0, _translate("MainWindow", "全部"))
@@ -77,4 +81,5 @@ class Ui_MainWindow(object):
         self.comboBox.setItemText(3, _translate("MainWindow", "蓝色"))
         self.label_3.setText(_translate("MainWindow", "时间："))
         self.label_4.setText(_translate("MainWindow", "颜色"))
+        self.all.setText(_translate("MainWindow", "查询所有"))
 

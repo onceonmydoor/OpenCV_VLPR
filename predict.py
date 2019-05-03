@@ -570,7 +570,7 @@ class Predict:
                 x_histogram = np.sum(gray_img , axis=1)
                 x_min = np.min(x_histogram)
                 x_average = np.sum(x_histogram) / x_histogram.shape[0]
-                x_threshold = (x_min + x_average)/3
+                x_threshold = (x_min + x_average)/3#TODO:根据分辨率进行调参使用config
                 wave_peaks = img_math.find_waves(x_threshold,x_histogram)
                 #
                 if len(wave_peaks) == 0:
@@ -591,7 +591,7 @@ class Predict:
                 y_min = np.min(y_histogram)
                 y_average = np.sum(y_histogram) / y_histogram.shape[0]
                 y_threshold = (y_min + y_average) / 6 #U 和 0 要求阈值偏小 ， 否则U和0会被分成两半
-                #TODO:阈值影响很大，很难受
+                # TODO:根据分辨率进行调参使用config
                 print("阈值为："+str(y_threshold))
 
                 wave_peaks = img_math.find_waves(y_threshold,y_histogram)

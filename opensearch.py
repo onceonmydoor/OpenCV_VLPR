@@ -28,6 +28,11 @@ class Searchwindow(QMainWindow,Ui_MainWindow):
         self.cur.execute("SELECT * FROM plate")
         self.showresult()
 
+
+    # def __del__(self):
+    #     self.cur.close()
+    #     self.conn.close()
+
     def showresult(self):
 
         self.data = self.cur.fetchall()
@@ -88,6 +93,9 @@ class Searchwindow(QMainWindow,Ui_MainWindow):
             self.cur.execute(' SELECT * FROM plate WHERE plate_color = "' + comboBox_contents + '" ')
             self.showresult()
 
+    def Getall(self):
+        self.cur.execute("SELECT * FROM plate")
+        self.showresult()
 
 
 
