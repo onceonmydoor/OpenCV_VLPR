@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'camera.ui'
+# Form implementation generated from reading ui file 'camera_model_interface.ui'
 #
 # Created by: PyQt5 UI code generator 5.11.3
 #
@@ -28,10 +28,10 @@ class Ui_camera(object):
         self.frame_2.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_2.setObjectName("frame_2")
         self.ShowBt = QtWidgets.QPushButton(self.frame_2)
-        self.ShowBt.setGeometry(QtCore.QRect(10, 500, 91, 23))
+        self.ShowBt.setGeometry(QtCore.QRect(10, 500, 111, 31))
         self.ShowBt.setObjectName("ShowBt")
         self.StopBt = QtWidgets.QPushButton(self.frame_2)
-        self.StopBt.setGeometry(QtCore.QRect(120, 500, 91, 23))
+        self.StopBt.setGeometry(QtCore.QRect(160, 500, 111, 31))
         self.StopBt.setObjectName("StopBt")
         self.RedColorSpB = QtWidgets.QDoubleSpinBox(self.frame_2)
         self.RedColorSpB.setGeometry(QtCore.QRect(320, 110, 62, 22))
@@ -180,18 +180,21 @@ class Ui_camera(object):
         self.label_11.setGeometry(QtCore.QRect(10, 430, 51, 21))
         self.label_11.setObjectName("label_11")
         self.RecordBt = QtWidgets.QPushButton(self.frame_2)
-        self.RecordBt.setGeometry(QtCore.QRect(230, 500, 91, 23))
+        self.RecordBt.setGeometry(QtCore.QRect(300, 500, 111, 31))
         self.RecordBt.setObjectName("RecordBt")
         self.ExitBt = QtWidgets.QPushButton(self.frame_2)
-        self.ExitBt.setGeometry(QtCore.QRect(300, 570, 131, 23))
+        self.ExitBt.setGeometry(QtCore.QRect(300, 562, 111, 31))
         self.ExitBt.setObjectName("ExitBt")
         self.label_3 = QtWidgets.QLabel(self.frame_2)
         self.label_3.setGeometry(QtCore.QRect(160, 40, 131, 51))
         self.label_3.setStyleSheet("font: 20pt \"Agency FB\";")
         self.label_3.setObjectName("label_3")
         self.Picbtn = QtWidgets.QPushButton(self.frame_2)
-        self.Picbtn.setGeometry(QtCore.QRect(330, 500, 91, 23))
+        self.Picbtn.setGeometry(QtCore.QRect(160, 560, 111, 31))
         self.Picbtn.setObjectName("Picbtn")
+        self.sql_model = QtWidgets.QPushButton(self.frame_2)
+        self.sql_model.setGeometry(QtCore.QRect(10, 560, 111, 31))
+        self.sql_model.setObjectName("sql_model")
         self.frame_3 = QtWidgets.QFrame(self.centralwidget)
         self.frame_3.setGeometry(QtCore.QRect(20, 620, 1231, 231))
         self.frame_3.setFrameShape(QtWidgets.QFrame.Box)
@@ -247,10 +250,16 @@ class Ui_camera(object):
         self.menubar = QtWidgets.QMenuBar(camera)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 1310, 23))
         self.menubar.setObjectName("menubar")
+        self.menu = QtWidgets.QMenu(self.menubar)
+        self.menu.setObjectName("menu")
+        self.menu_2 = QtWidgets.QMenu(self.menubar)
+        self.menu_2.setObjectName("menu_2")
         camera.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(camera)
         self.statusbar.setObjectName("statusbar")
         camera.setStatusBar(self.statusbar)
+        self.menubar.addAction(self.menu.menuAction())
+        self.menubar.addAction(self.menu_2.menuAction())
 
         self.retranslateUi(camera)
         QtCore.QMetaObject.connectSlotsByName(camera)
@@ -274,6 +283,7 @@ class Ui_camera(object):
         self.ExitBt.setText(_translate("camera", "退出"))
         self.label_3.setText(_translate("camera", "参数调节"))
         self.Picbtn.setText(_translate("camera", "图片模式"))
+        self.sql_model.setText(_translate("camera", "数据库查询"))
         self.groupBox.setTitle(_translate("camera", "车牌识别结果"))
         self.label_12.setText(_translate("camera", "颜色："))
         self.label_13.setText(_translate("camera", "车牌号码："))
@@ -285,4 +295,6 @@ class Ui_camera(object):
         self.label_2.setText(_translate("camera", "图像尺寸："))
         self.timeLabel.setText(_translate("camera", "TextLabel"))
         self.label_17.setText(_translate("camera", "当前时间:"))
+        self.menu.setTitle(_translate("camera", "摄像头模式"))
+        self.menu_2.setTitle(_translate("camera", "查询数据库"))
 

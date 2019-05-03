@@ -8,11 +8,12 @@
 
 from PyQt5 import QtWidgets,QtGui,QtCore
 import sys
-from test import Ui_Form #导入生成的界面类
+from picture_model_interface import Ui_Form #导入生成的界面类
 from PyQt5.QtWidgets import QFileDialog,QApplication, QMainWindow, QWidget, QPushButton
 from predict import Predict
 import cv2
 import openCamera
+import openSearch
 import qimage2ndarray
 import pymysql
 import datetime
@@ -149,6 +150,11 @@ class mywindow(QtWidgets.QWidget,Ui_Form):
     def show_preprocess(self):
         if self.Img_preprocess.any():
             cv2.imshow("preprocess",self.Img_preprocess)
+
+    def sql_btn_function(self):
+        self.s = openSearch.Searchwindow()
+        self.s.show()
+
 
 
 

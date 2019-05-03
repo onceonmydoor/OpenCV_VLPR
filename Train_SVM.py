@@ -8,7 +8,7 @@ import sys
 import os
 import json
 import img_math
-import img_rec
+
 
 SZ = 20 #训练图片长宽 (训练样本是20*20的图片)
 MAX_WIDTH = 2000 #原始图片最大宽度

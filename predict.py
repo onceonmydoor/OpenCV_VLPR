@@ -5,12 +5,11 @@ import os
 import cv2
 import numpy as np
 import img_math
-import img_rec
 import Train_SVM
 import json
 from PIL import ImageStat
 from PIL import Image
-from matplotlib import pyplot as plt
+
 
 
 SZ = 20 #训练图片长宽 (训练样本是20*20的图片)
@@ -162,6 +161,7 @@ class Predict:
             return True
         return False
 
+    #预处理
     def preprocess(self, car_pic_file):
             """
             :param car_pic_file: 图像文件
@@ -222,7 +222,7 @@ class Predict:
 
             threshold_m = int(pic_width/80)#根据自己调参出来的
             print(threshold_m)
-            Matrix = np.ones((threshold_m, threshold_m+5), np.uint8)
+            Matrix = np.ones((threshold_m, int(threshold_m*1.3)), np.uint8)
             img_edge1 = cv2.morphologyEx(close_img, cv2.MORPH_CLOSE, Matrix)
             img_edge2 = cv2.morphologyEx(img_edge1, cv2.MORPH_OPEN, Matrix)
 
@@ -232,7 +232,8 @@ class Predict:
 
             ##生成预处理图像，车牌识别的第一步
 
-    def accurate_place(self, card_img_hsv, limit1, limit2, color):#微调车牌位置
+    #微调车牌位置
+    def accurate_place(self, card_img_hsv, limit1, limit2, color):
         row_num, col_num = card_img_hsv.shape[:2]
         xl = col_num
         xr = 0
@@ -269,6 +270,7 @@ class Predict:
                     xr = j
         return xl, xr, yh, yl
 
+    #车牌定位主函数
     def locate_carPlate(self,img_coutours,oldimg):
         """
         :param img_contours :预处理好的图像
@@ -309,6 +311,7 @@ class Predict:
         
         return colors,card_imgs  #可能存在多个车牌，暂时保留列表结构                                                                          
 
+    #没用这个方法
     def img_only_color(self, oldimg, img_contours):
         """
         :param filename: 图像文件
@@ -339,6 +342,7 @@ class Predict:
         colors, car_imgs = self.img_color(card_imgs)
         return colors,car_imgs
 
+    #找矩形
     def img_findContours(self,img_coutours,oldimg):
         pic_hight, pic_width = oldimg.shape[:2]#获取图片的长宽
         #查找图像边缘整体形成的矩形区域，可能有很多，车牌就在其中一个矩形
@@ -359,7 +363,9 @@ class Predict:
             print(wh_ratio)
             #要求矩形区域长宽比在2到5.5之间，2到5.5是车牌的长宽比，其余的矩形排除
             if wh_ratio < 2 or wh_ratio > 6:
-                contours.remove(cnt)
+                ###################BUG1###################
+                contours.remove(cnt)#BUG1
+                ###################BUG1###################
             else:
                 #ret , rect2 = self.verify_color(rect,oldimg)
                 #if ret == False:
@@ -537,6 +543,7 @@ class Predict:
 
         return colors , card_imgs
 
+    #字符识别
     def char_recogize(self,colors,card_imgs):
         #车牌字符识别
         cards_result=[]#多个车牌的识别结果
@@ -548,6 +555,8 @@ class Predict:
         for i , color in enumerate(colors):   
             if color in ("blue","yellow","green"):
                 card_img = card_imgs[i]
+                if card_img.any()==None:
+                    continue
                 gray_img = cv2.cvtColor(card_img,cv2.COLOR_BGR2GRAY)#转成灰度图
                 
                 #黄、绿车牌字符比背景暗、与蓝车牌刚好相反，所以黄、绿车牌需要反向
@@ -656,7 +665,7 @@ if __name__ == '__main__':
     #if q.isdark("test\\timg.jpg"):
         #print("是黑夜拍的")
     #afterprocess,old=q.preprocess("test\\2.jpg")
-    afterprocess,old =q.preprocess("D:\\车牌测试用\\车牌识别测试图\\P90427-144702.jpg")
+    afterprocess,old =q.preprocess("D:\\车牌测试用\\车牌识别测试图\\P90427-145627.jpg")
     cv2.namedWindow("yuchuli",cv2.WINDOW_NORMAL)
     cv2.imshow("yuchuli", afterprocess)
     cv2.waitKey()

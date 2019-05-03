@@ -77,21 +77,25 @@ class Searchwindow(QMainWindow,Ui_MainWindow):
         #self.comboBox =QtWidgets.QComboBox()
 
         comboBox_contents = self.comboBox.currentText()
-        print("颜色是"+comboBox_contents)
+        print("颜色是" + comboBox_contents)
+
         if pre_datetime > last_datetime:
             QMessageBox.warning(self, "警告", "初始时间大于截至时间，请重新输入！",
                                 QMessageBox.Yes)
         else:
-            self.cur.execute(' SELECT * FROM plate WHERE time BETWEEN "' + pre_datetime + '" AND "' + last_datetime + '" ')
-            self.showresult()
+            if comboBox_contents != "全部":
+                self.cur.execute(' SELECT * FROM plate WHERE plate_color = "' + comboBox_contents + '" AND time BETWEEN "' + pre_datetime + '" AND "' + last_datetime + '" ')
+                self.showresult()
+            else:
+                self.cur.execute(
+                    ' SELECT * FROM plate WHERE time BETWEEN "' + pre_datetime + '" AND "' + last_datetime + '" ')
+                self.showresult()
+
 
         if plate_num:
             self.cur.execute(' SELECT * FROM plate WHERE plate_num = "'+plate_num+'" ')
             self.showresult()
 
-        if comboBox_contents!="全部":
-            self.cur.execute(' SELECT * FROM plate WHERE plate_color = "' + comboBox_contents + '" ')
-            self.showresult()
 
     def Getall(self):
         self.cur.execute("SELECT * FROM plate")

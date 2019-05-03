@@ -1,15 +1,18 @@
-from camera import Ui_camera
+from camera_model_interface import Ui_camera
 import sys
 from PyQt5.QtWidgets import QApplication,QMainWindow,QFileDialog
 from PyQt5.QtCore import QTimer,QCoreApplication,QDateTime
 import time
 import cv2
-import open
+import openPicture
+import openSearch
 import qimage2ndarray
 import threading
 from PyQt5.QtGui import QPixmap
 from predict import Predict
 from PyQt5 import QtWidgets,QtGui,QtCore
+import datetime
+
 
 class CamShow(QMainWindow,Ui_camera):
     def __del__(self):
@@ -39,6 +42,8 @@ class CamShow(QMainWindow,Ui_camera):
         Ctimer.start()
 
         self.Picbtn.clicked.connect(self.pic_model)
+        self.sql_model.clicked.connect(self.sql_search)
+
 
 
 
@@ -298,8 +303,12 @@ class CamShow(QMainWindow,Ui_camera):
 
     def pic_model(self):
         self.hide()
-        self.s = open.mywindow()
+        self.s = openPicture.mywindow()
         self.s.show()
+    def sql_search(self):
+        self.s = openSearch.Searchwindow()
+        self.s.show()
+
 
 
 
@@ -327,8 +336,10 @@ class CamShow(QMainWindow,Ui_camera):
                 print("#" * 10 + "识别结果是" + "#" * 10)
                 print("车牌的颜色为：" + Eng2Chi[color[r]])
                 self.colorLabel.setText(Eng2Chi[color[r]])
+                final_color = Eng2Chi[color[r]]
                 print(result[r])
                 result[r].insert(2, "-")
+                final_result = ''.join(result[r])
                 self.NumLabel.setText(''.join(result[r]))
                 print("#" * 25)
                 # roi[r] = cv2.cvtColor(roi[r], cv2.COLOR_BGR2RGB)
@@ -337,7 +348,19 @@ class CamShow(QMainWindow,Ui_camera):
                 # self.location.resize(QtCore.QSize(roi[r].shape[1], roi[r].shape[0]))
                 # self.location.setPixmap(QtGui.QPixmap.fromImage(QtImg))
 
-                print("\n")
+                if len(final_result)>=8 and u'\u4e00' <= final_result[0] <= u'\u9fff':
+                    #保存至MYSQL数据库
+                    conn, cur = self.connetSQL()
+                    currenttime = datetime.datetime.now()
+                    print(currenttime.strftime('%Y-%m-%d %H:%M:%S'))
+                    try:
+                        cur.execute("insert into plate(plate_num,plate_color,time)values(%s,%s,%s)",(final_result,final_color,currenttime))
+                        conn.commit()
+                    except Exception as e:
+                        print("expect: ",e)
+                    finally:
+                        cur.close()
+                        conn.close()
 
 
 

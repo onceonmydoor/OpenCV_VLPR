@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1488</width>
+    <width>1508</width>
     <height>884</height>
    </rect>
   </property>
@@ -35,8 +35,8 @@
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>
-     <x>1170</x>
-     <y>630</y>
+     <x>1160</x>
+     <y>650</y>
      <width>191</width>
      <height>31</height>
     </rect>
@@ -50,7 +50,7 @@
     <rect>
      <x>1160</x>
      <y>50</y>
-     <width>321</width>
+     <width>341</width>
      <height>161</height>
     </rect>
    </property>
@@ -153,7 +153,7 @@ font: 36pt &quot;Agency FB&quot;;</string>
     <rect>
      <x>1160</x>
      <y>220</y>
-     <width>321</width>
+     <width>341</width>
      <height>171</height>
     </rect>
    </property>
@@ -178,9 +178,9 @@ font: 36pt &quot;Agency FB&quot;;</string>
    <property name="geometry">
     <rect>
      <x>1160</x>
-     <y>430</y>
-     <width>321</width>
-     <height>161</height>
+     <y>410</y>
+     <width>341</width>
+     <height>201</height>
     </rect>
    </property>
    <property name="title">
@@ -190,9 +190,9 @@ font: 36pt &quot;Agency FB&quot;;</string>
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>50</y>
+      <y>70</y>
       <width>31</width>
-      <height>41</height>
+      <height>51</height>
      </rect>
     </property>
     <property name="text">
@@ -203,9 +203,9 @@ font: 36pt &quot;Agency FB&quot;;</string>
     <property name="geometry">
      <rect>
       <x>50</x>
-      <y>50</y>
+      <y>70</y>
       <width>31</width>
-      <height>41</height>
+      <height>51</height>
      </rect>
     </property>
     <property name="text">
@@ -216,9 +216,9 @@ font: 36pt &quot;Agency FB&quot;;</string>
     <property name="geometry">
      <rect>
       <x>100</x>
-      <y>50</y>
+      <y>70</y>
       <width>31</width>
-      <height>41</height>
+      <height>51</height>
      </rect>
     </property>
     <property name="text">
@@ -229,9 +229,9 @@ font: 36pt &quot;Agency FB&quot;;</string>
     <property name="geometry">
      <rect>
       <x>140</x>
-      <y>50</y>
+      <y>70</y>
       <width>31</width>
-      <height>41</height>
+      <height>51</height>
      </rect>
     </property>
     <property name="text">
@@ -241,10 +241,10 @@ font: 36pt &quot;Agency FB&quot;;</string>
    <widget class="QLabel" name="div5">
     <property name="geometry">
      <rect>
-      <x>180</x>
-      <y>50</y>
+      <x>190</x>
+      <y>70</y>
       <width>31</width>
-      <height>41</height>
+      <height>51</height>
      </rect>
     </property>
     <property name="text">
@@ -254,10 +254,10 @@ font: 36pt &quot;Agency FB&quot;;</string>
    <widget class="QLabel" name="div6">
     <property name="geometry">
      <rect>
-      <x>220</x>
-      <y>50</y>
+      <x>230</x>
+      <y>70</y>
       <width>31</width>
-      <height>41</height>
+      <height>51</height>
      </rect>
     </property>
     <property name="text">
@@ -267,10 +267,10 @@ font: 36pt &quot;Agency FB&quot;;</string>
    <widget class="QLabel" name="div7">
     <property name="geometry">
      <rect>
-      <x>260</x>
-      <y>50</y>
+      <x>270</x>
+      <y>70</y>
       <width>31</width>
-      <height>41</height>
+      <height>51</height>
      </rect>
     </property>
     <property name="text">
@@ -280,10 +280,10 @@ font: 36pt &quot;Agency FB&quot;;</string>
    <widget class="QLabel" name="div8">
     <property name="geometry">
      <rect>
-      <x>300</x>
-      <y>50</y>
+      <x>310</x>
+      <y>70</y>
       <width>31</width>
-      <height>41</height>
+      <height>51</height>
      </rect>
     </property>
     <property name="text">
@@ -294,8 +294,8 @@ font: 36pt &quot;Agency FB&quot;;</string>
   <widget class="QPushButton" name="pushButton_2">
    <property name="geometry">
     <rect>
-     <x>1170</x>
-     <y>690</y>
+     <x>1160</x>
+     <y>700</y>
      <width>191</width>
      <height>31</height>
     </rect>
@@ -307,14 +307,27 @@ font: 36pt &quot;Agency FB&quot;;</string>
   <widget class="QPushButton" name="pushButton_3">
    <property name="geometry">
     <rect>
-     <x>1170</x>
-     <y>750</y>
+     <x>1160</x>
+     <y>810</y>
      <width>191</width>
      <height>31</height>
     </rect>
    </property>
    <property name="text">
     <string>查看预处理图片</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="sql_model">
+   <property name="geometry">
+    <rect>
+     <x>1160</x>
+     <y>760</y>
+     <width>191</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>数据库查询</string>
    </property>
   </widget>
  </widget>
@@ -327,8 +340,8 @@ font: 36pt &quot;Agency FB&quot;;</string>
    <slot>openimage()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>914</x>
-     <y>717</y>
+     <x>1160</x>
+     <y>680</y>
     </hint>
     <hint type="destinationlabel">
      <x>701</x>
@@ -352,9 +365,26 @@ font: 36pt &quot;Agency FB&quot;;</string>
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>sql_model</sender>
+   <signal>clicked()</signal>
+   <receiver>Form</receiver>
+   <slot>sql_btn_function()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1308</x>
+     <y>788</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1424</x>
+     <y>738</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>openimage()</slot>
   <slot>slot_btn_function()</slot>
+  <slot>sql_btn_function()</slot>
  </slots>
 </ui>
