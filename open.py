@@ -14,6 +14,9 @@ from predict import Predict
 import cv2
 import openCamera
 import qimage2ndarray
+import pymysql
+import datetime
+
 
 
 
@@ -23,10 +26,12 @@ class mywindow(QtWidgets.QWidget,Ui_Form):
         self.setupUi(self)
         #定义槽函数
         self.Img_preprocess = None
+
+
     def openimage(self):
         Eng2Chi = {"green":"绿色","blue":"蓝色","yellow":"黄色"}
-    #打开文件路径
-    #设置文件扩展名过滤，注意用双分号间隔
+        #打开文件路径
+        #设置文件扩展名过滤，注意用双分号间隔
         imgPath , imgType = QFileDialog.getOpenFileName(self,"打开图片","","*.jpg;;*.png;;*.jpeg;;*.bmp;;All Files (*)")
         print(imgPath)
         #利用qlabel显示图片
@@ -49,10 +54,12 @@ class mywindow(QtWidgets.QWidget,Ui_Form):
             for r  in range(len(result)):
                 print("#"*10+"识别结果是"+"#"*10)
                 print("车牌的颜色为：" + Eng2Chi[color[r]])
-                self.colorLabel.setText(Eng2Chi[color[r]])
+                final_color = Eng2Chi[color[r]]
+                self.colorLabel.setText(final_color)
                 print(result[r])
                 result[r].insert(2,"-")
-                self.NumLabel.setText(''.join(result[r]))
+                final_result = ''.join(result[r])
+                self.NumLabel.setText(final_result)
                 print("#" * 25)
                 roi[r] = cv2.cvtColor(roi[r],cv2.COLOR_BGR2RGB)
                 qimg = qimage2ndarray.array2qimage(roi[r])
@@ -63,7 +70,27 @@ class mywindow(QtWidgets.QWidget,Ui_Form):
                 # self.location.resize(QtCore.QSize(roi[r].shape[1],roi[r].shape[0]))
                 # self.location.setPixmap(QtGui.QPixmap.fromImage(QtImg))
 
-                print("\n")
+
+
+                if len(final_result)>=8 and u'\u4e00' <= final_result[0] <= u'\u9fff':
+                    #保存至MYSQL数据库
+                    conn, cur = self.connetSQL()
+                    currenttime = datetime.datetime.now()
+                    print(currenttime.strftime('%Y-%m-%d %H:%M:%S'))
+                    try:
+                        cur.execute("insert into plate(plate_num,plate_color,time)values(%s,%s,%s)",(final_result,final_color,currenttime))
+                        conn.commit()
+                    except Exception as e:
+                        print("expect: ",e)
+                    finally:
+                        cur.close()
+                        conn.close()
+
+
+
+
+
+
         ###################识别#####################
 
 
@@ -102,6 +129,12 @@ class mywindow(QtWidgets.QWidget,Ui_Form):
             self.div7.setPixmap(QtGui.QPixmap.fromImage(Gray7))
 
 
+
+    def connetSQL(self):
+        conn = pymysql.connect(host='localhost',port=3306,user='root',password='root',db='opencv',charset='utf8')
+        cur = conn.cursor()
+        #获取游标
+        return conn,cur
 
 
 

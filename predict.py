@@ -656,7 +656,7 @@ if __name__ == '__main__':
     #if q.isdark("test\\timg.jpg"):
         #print("是黑夜拍的")
     #afterprocess,old=q.preprocess("test\\2.jpg")
-    afterprocess,old =q.preprocess("D:\\车牌测试用\\车牌识别测试图\\P90427-144602.jpg")
+    afterprocess,old =q.preprocess("D:\\车牌测试用\\车牌识别测试图\\P90427-144702.jpg")
     cv2.namedWindow("yuchuli",cv2.WINDOW_NORMAL)
     cv2.imshow("yuchuli", afterprocess)
     cv2.waitKey()
