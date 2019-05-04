@@ -296,11 +296,10 @@ class Predict:
         colors , card_imgs = self.img_color(card_imgs)
             
         #返回可能存在的
-        for i in colors[:]:
-            if i == "no":
-                index = colors.index(i)
-                colors.remove("no")
-                card_imgs.pop(index)
+        for i in range(len(colors)-1,-1,-1):
+            if colors[i] == "no":
+                colors.pop(i)
+                card_imgs.pop(i)
          
         #show图片
         # for card_img in card_imgs:
@@ -353,8 +352,9 @@ class Predict:
             print("没有找到可能是车牌的区域")
         #一一排除不是车牌的矩形区域
         car_contours = []
-        for cnt in contours[:]:
-            rect = cv2.minAreaRect(cnt)# 得到最小外接矩形的（中心(x,y), (宽,高), 旋转角度）
+        for i in range(len(contours)-1,-1,-1):
+        #for cnt in contours[:]:
+            rect = cv2.minAreaRect(contours[i])# 得到最小外接矩形的（中心(x,y), (宽,高), 旋转角度）
 
             area_width,area_height = rect[1]
             if area_width < area_height:
@@ -362,27 +362,19 @@ class Predict:
             wh_ratio = area_width / area_height #长宽比
             print(wh_ratio)
             #要求矩形区域长宽比在2到5.5之间，2到5.5是车牌的长宽比，其余的矩形排除
-            if wh_ratio < 2 or wh_ratio > 6:
-                ###################BUG1###################
-                contours.remove(cnt)#BUG1
-                ###################BUG1###################
+            if wh_ratio < 2 or wh_ratio > 6.1:
+                contours.pop(i)
             else:
-                #ret , rect2 = self.verify_color(rect,oldimg)
-                #if ret == False:
-                    #continue
-               
-                #ret,rect = self.verify_color(rect,oldimg)
-                
                 car_contours.append(rect)
                 box = cv2.boxPoints(rect)
                 box = np.int64(box)#int0==int64
                 #show红色框框
                 oldimg_copy = oldimg.copy()
                 oldimg_copy = cv2.drawContours(oldimg_copy, [box], 0, (0, 0, 255), 2)#在原图像上画出矩形,TODO:正式识别时记得删除
-                # cv2.namedWindow("edge4", cv2.WINDOW_NORMAL)
-                # cv2.imshow("edge4", oldimg_copy)
-                # cv2.waitKey()
-                # cv2.destroyAllWindows()
+                cv2.namedWindow("edge4", cv2.WINDOW_NORMAL)
+                cv2.imshow("edge4", oldimg_copy)
+                cv2.waitKey()
+                cv2.destroyAllWindows()
 
                 #print(rect)
         print("可能存在车牌数："+str(len(car_contours)))#有几个矩形
@@ -400,12 +392,22 @@ class Predict:
 
             rect = (rect[0],(rect[1][0] + 5,rect[1][1] + 5),angle) #扩大范围，避免车牌的边缘被排除
 
+            # 如果已经是正的则不需要旋转
+            if angle == -90 :
+                card_img = oldimg[int(rect[0][1] - rect[1][1] / 2):int(rect[0][1] + rect[1][1] / 2),
+                           int(rect[0][0] - rect[1][0] / 2):int(rect[0][0] + rect[1][0] / 2)]
+                card_imgs.append(card_img)
+                continue
+            if angle == -0:
+                card_img = oldimg[int(rect[0][1] - rect[1][0] / 2):int(rect[0][1] + rect[1][0] / 2),
+                           int(rect[0][0] - rect[1][1] / 2):int(rect[0][0] + rect[1][1] / 2)]
+                card_imgs.append(card_img)
+                continue
 
+            #如果是歪的
             box = cv2.boxPoints(rect)
             height_point = right_point = [0,0]#设定右上是0，0
             left_point = low_point = [rect[0][0],rect[0][1]]
-
-
 
             for point in box:
                 if left_point[0] > point[0]:
@@ -446,9 +448,6 @@ class Predict:
                 #cv2.imshow("card2",card_img)
                 #cv2.waitKey(0)
 
-            elif low_point[0] == height_point[0]: #已经是正的车牌
-                card_img = oldimg[int(rect[0][1]-rect[1][1]/2):int(rect[0][1]+rect[1][1]/2),int(rect[0][0]-rect[1][0]/2):int(rect[0][0]+rect[1][0]/2)]
-                card_imgs.append(card_img)
         return card_imgs
 
     def img_color(self,card_imgs):
@@ -555,8 +554,6 @@ class Predict:
         for i , color in enumerate(colors):   
             if color in ("blue","yellow","green"):
                 card_img = card_imgs[i]
-                if card_img.any()==None:
-                    continue
                 gray_img = cv2.cvtColor(card_img,cv2.COLOR_BGR2GRAY)#转成灰度图
                 
                 #黄、绿车牌字符比背景暗、与蓝车牌刚好相反，所以黄、绿车牌需要反向
