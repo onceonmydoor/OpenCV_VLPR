@@ -390,10 +390,10 @@ class Predict:
             angle = rect[2]#获得矩形旋转的角度
             print("角度是{}".format(angle))
             print("宽是{},长是{}".format(rect[1][0],rect[1][1]))
-            # if rect[1][0]<rect[1][1]:
-            #     rect =  (rect[0],(rect[1][1] + 5,rect[1][0] + 5),angle)
-            # else:
-            rect = (rect[0],(rect[1][0] + 5,rect[1][1] + 5),angle) #扩大范围，避免车牌的边缘被排除
+            if rect[1][0]>rect[1][1]:
+                rect =  (rect[0],(rect[1][1] + 5,rect[1][0] + 5),angle)
+            else:
+                rect = (rect[0],(rect[1][0] + 5,rect[1][1] + 5),angle) #扩大范围，避免车牌的边缘被排除
 
             #如果已经是正的则不需要旋转
             if angle == -0 or angle == -90:
@@ -560,6 +560,8 @@ class Predict:
         for i , color in enumerate(colors):   
             if color in ("blue","yellow","green"):
                 card_img = card_imgs[i]
+                if card_img.size == 0:
+                    continue
                 gray_img = cv2.cvtColor(card_img,cv2.COLOR_BGR2GRAY)#转成灰度图
                 
                 #黄、绿车牌字符比背景暗、与蓝车牌刚好相反，所以黄、绿车牌需要反向

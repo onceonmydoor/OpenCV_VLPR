@@ -5,16 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0dc24bcb-9547-45af-9436-82979cbf304f" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/camera_model_interface.py" afterPath="$PROJECT_DIR$/camera_model_interface.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/camera_model_interface.ui" afterPath="$PROJECT_DIR$/camera_model_interface.ui" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/openPicture.py" afterPath="$PROJECT_DIR$/openPicture.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/opensearch.py" afterPath="$PROJECT_DIR$/opensearch.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/picture_model_interface.py" afterPath="$PROJECT_DIR$/picture_model_interface.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/picture_model_interface.ui" afterPath="$PROJECT_DIR$/picture_model_interface.ui" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/predict.py" afterPath="$PROJECT_DIR$/predict.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/search.py" afterPath="$PROJECT_DIR$/search.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/search.ui" afterPath="$PROJECT_DIR$/search.ui" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -28,8 +19,8 @@
       <file leaf-file-name="predict.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/predict.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="276">
-              <caret line="391" column="60" lean-forward="true" selection-start-line="391" selection-start-column="60" selection-end-line="391" selection-end-column="60" />
+            <state relative-caret-position="261">
+              <caret line="564" column="74" lean-forward="true" selection-start-line="564" selection-start-column="74" selection-end-line="564" selection-end-column="74" />
               <folding>
                 <element signature="e#18#27#0" expanded="true" />
                 <element signature="e#337#603#0" expanded="false" />
@@ -234,7 +225,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -247,6 +237,7 @@
         </subPane>
       </pane>
       <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -397,12 +388,12 @@
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12864584" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36836517" sideWeight="0.409375" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4819533" sideWeight="0.590625" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.4819533" sideWeight="0.590625" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.44798303" sideWeight="0.91979164" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5169851" sideWeight="0.91979164" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296875" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -739,8 +730,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/predict.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="391" column="60" lean-forward="true" selection-start-line="391" selection-start-column="60" selection-end-line="391" selection-end-column="60" />
+        <state relative-caret-position="261">
+          <caret line="564" column="74" lean-forward="true" selection-start-line="564" selection-start-column="74" selection-end-line="564" selection-end-column="74" />
           <folding>
             <element signature="e#18#27#0" expanded="true" />
             <element signature="e#337#603#0" expanded="false" />
