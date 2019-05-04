@@ -11,7 +11,11 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>摄像头模式</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>icon/监视摄像头.png</normaloff>icon/监视摄像头.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QFrame" name="frame">
@@ -869,13 +873,7 @@
      <string>摄像头模式</string>
     </property>
    </widget>
-   <widget class="QMenu" name="menu_2">
-    <property name="title">
-     <string>查询数据库</string>
-    </property>
-   </widget>
    <addaction name="menu"/>
-   <addaction name="menu_2"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>

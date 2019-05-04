@@ -9,7 +9,7 @@
 from PyQt5 import QtWidgets,QtGui,QtCore
 from PyQt5.QtGui import QStandardItemModel,QStandardItem
 import sys
-from search import Ui_MainWindow #导入生成的界面类
+from search import Ui_mainWindow #导入生成的界面类
 from PyQt5.QtWidgets import QFileDialog,QApplication, QMainWindow, QWidget, QPushButton,QHeaderView,QMessageBox
 from predict import Predict
 import cv2
@@ -19,7 +19,7 @@ import pymysql
 
 
 
-class Searchwindow(QMainWindow,Ui_MainWindow):
+class Searchwindow(QMainWindow,Ui_mainWindow):
     def __init__(self):
         super(Searchwindow,self).__init__()
         self.setupUi(self)
@@ -64,10 +64,6 @@ class Searchwindow(QMainWindow,Ui_MainWindow):
 
 
     def GetsearchContent(self):
-        #获取lineEdit控件的文本
-        #self.lineEdit_2 = QtWidgets.QDateEdit()
-        plate_num = self.lineEdit_2.text()
-        print("车牌号码是："+plate_num)
         #获取dateEdit时间
         pre_datetime = self.dateTimeEdit.dateTime().toString("yyyy-MM-dd hh:mm:ss")
         last_datetime = self.dateTimeEdit_2.dateTime().toString("yyyy-MM-dd hh:mm:ss")
@@ -92,8 +88,15 @@ class Searchwindow(QMainWindow,Ui_MainWindow):
                 self.showresult()
 
 
+
+
+    def GetCarNum(self):
+        # 获取lineEdit控件的文本
+        # self.lineEdit_2 = QtWidgets.QDateEdit()
+        plate_num = self.lineEdit_2.text()
+        print("车牌号码是：" + plate_num)
         if plate_num:
-            self.cur.execute(' SELECT * FROM plate WHERE plate_num = "'+plate_num+'" ')
+            self.cur.execute(' SELECT * FROM plate WHERE plate_num LIKE "%'+plate_num+'%" ')
             self.showresult()
 
 

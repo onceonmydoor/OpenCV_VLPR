@@ -12,6 +12,9 @@ class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
         Form.resize(1508, 884)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("icon/图片.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        Form.setWindowIcon(icon)
         self.label = QtWidgets.QLabel(Form)
         self.label.setGeometry(QtCore.QRect(460, 0, 201, 61))
         self.label.setStyleSheet("font: 22pt \"Agency FB\";")
@@ -100,7 +103,7 @@ class Ui_Form(object):
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
-        Form.setWindowTitle(_translate("Form", "Form"))
+        Form.setWindowTitle(_translate("Form", "单图模式"))
         self.label.setText(_translate("Form", "图片显示"))
         self.pushButton.setText(_translate("Form", "选择图片"))
         self.groupBox.setTitle(_translate("Form", "车牌识别结果："))

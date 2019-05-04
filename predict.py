@@ -167,6 +167,7 @@ class Predict:
             :param car_pic_file: 图像文件
             :return:已经处理好的图像文件 原图像文件
             """
+
             if type(car_pic_file) == type(""):
                 img = img_math.img_read(car_pic_file)
             else:
@@ -389,64 +390,69 @@ class Predict:
             angle = rect[2]#获得矩形旋转的角度
             print("角度是{}".format(angle))
             print("宽是{},长是{}".format(rect[1][0],rect[1][1]))
-
+            # if rect[1][0]<rect[1][1]:
+            #     rect =  (rect[0],(rect[1][1] + 5,rect[1][0] + 5),angle)
+            # else:
             rect = (rect[0],(rect[1][0] + 5,rect[1][1] + 5),angle) #扩大范围，避免车牌的边缘被排除
 
-            # 如果已经是正的则不需要旋转
-            if angle == -90 :
-                card_img = oldimg[int(rect[0][1] - rect[1][1] / 2):int(rect[0][1] + rect[1][1] / 2),
-                           int(rect[0][0] - rect[1][0] / 2):int(rect[0][0] + rect[1][0] / 2)]
-                card_imgs.append(card_img)
-                continue
-            if angle == -0:
-                card_img = oldimg[int(rect[0][1] - rect[1][0] / 2):int(rect[0][1] + rect[1][0] / 2),
-                           int(rect[0][0] - rect[1][1] / 2):int(rect[0][0] + rect[1][1] / 2)]
+            #如果已经是正的则不需要旋转
+            if angle == -0 or angle == -90:
+                if rect[1][0]<rect[1][1]:#如果宽小于长
+                    card_img = oldimg[int(rect[0][0] - rect[1][1] / 2):int(rect[0][0] + rect[1][1] / 2),
+                               int(rect[0][1] - rect[1][0] / 2):int(rect[0][1] + rect[1][0] / 2)]
+                else:
+                    card_img = oldimg[int(rect[0][0] - rect[1][0] / 2):int(rect[0][0] + rect[1][0] / 2),
+                               int(rect[0][1] - rect[1][1] / 2):int(rect[0][1] + rect[1][1] / 2)]
+
                 card_imgs.append(card_img)
                 continue
 
-            #如果是歪的
-            box = cv2.boxPoints(rect)
-            height_point = right_point = [0,0]#设定右上是0，0
-            left_point = low_point = [rect[0][0],rect[0][1]]
+            else:
 
-            for point in box:
-                if left_point[0] > point[0]:
-                    left_point = point
-                if low_point[1] > point[1]:#最低点的Y大于现在的y
-                    low_point = point 
-                if height_point[1] < point[1]:
-                    height_point = point
-                if right_point[0] < point[0]:
-                    right_point = point
-            
-            if low_point[0] > height_point[0]: #正角度
-                new_right_point = [right_point[0],height_point[1]]
-                pts2 = np.float32([left_point,height_point,new_right_point])
-                pts1 = np.float32([left_point,height_point,right_point])
-                M = cv2.getAffineTransform(pts1,pts2) #INPUT Array 2*3的变换矩阵
-                dst = cv2.warpAffine(oldimg,M,(round(rect_w*2),round(rect_h*2)))#仿射变换,OUTPUT Array，输出图像
-                img_math.point_limit(new_right_point)
-                img_math.point_limit(left_point)
-                img_math.point_limit(height_point)
-                card_img = dst[int(left_point[1]):int(height_point[1]),int(left_point[0]):int(new_right_point[0])]#摆正图像
-                #show
-                card_imgs.append(card_img)
-                #cv2.imshow("card2",card_img)
-                #cv2.waitKey(0)
-            elif low_point[0] < height_point[0]:  #负角度
-                new_left_point = [left_point[0],height_point[1]]
-                pts2 = np.float32([new_left_point,height_point,right_point])  #字符只是高度需要改变
-                pts1 = np.float32([left_point,height_point,right_point])
-                M = cv2.getAffineTransform(pts1,pts2)
-                dst = cv2.warpAffine(oldimg,M,(round(rect_w*2),round(rect_h*2)))
-                img_math.point_limit(right_point)
-                img_math.point_limit(height_point)
-                img_math.point_limit(new_left_point)
-                card_img = dst[int(right_point[1]):int(height_point[1]),int(new_left_point[0]):int(right_point[0])]
-                #show
-                card_imgs.append(card_img)
-                #cv2.imshow("card2",card_img)
-                #cv2.waitKey(0)
+
+                #如果是歪的
+                box = cv2.boxPoints(rect)
+                height_point = right_point = [0,0]#设定右上是0，0
+                left_point = low_point = [rect[0][0],rect[0][1]]
+
+                for point in box:
+                    if left_point[0] > point[0]:
+                        left_point = point
+                    if low_point[1] > point[1]:#最低点的Y大于现在的y
+                        low_point = point
+                    if height_point[1] < point[1]:
+                        height_point = point
+                    if right_point[0] < point[0]:
+                        right_point = point
+
+                if low_point[0] > height_point[0]: #正角度
+                    new_right_point = [right_point[0],height_point[1]]
+                    pts2 = np.float32([left_point,height_point,new_right_point])
+                    pts1 = np.float32([left_point,height_point,right_point])
+                    M = cv2.getAffineTransform(pts1,pts2) #INPUT Array 2*3的变换矩阵
+                    dst = cv2.warpAffine(oldimg,M,(round(rect_w*2),round(rect_h*2)))#仿射变换,OUTPUT Array，输出图像
+                    img_math.point_limit(new_right_point)
+                    img_math.point_limit(left_point)
+                    img_math.point_limit(height_point)
+                    card_img = dst[int(left_point[1]):int(height_point[1]),int(left_point[0]):int(new_right_point[0])]#摆正图像
+                    #show
+                    card_imgs.append(card_img)
+                    #cv2.imshow("card2",card_img)
+                    #cv2.waitKey(0)
+                elif low_point[0] < height_point[0]:  #负角度
+                    new_left_point = [left_point[0],height_point[1]]
+                    pts2 = np.float32([new_left_point,height_point,right_point])  #字符只是高度需要改变
+                    pts1 = np.float32([left_point,height_point,right_point])
+                    M = cv2.getAffineTransform(pts1,pts2)
+                    dst = cv2.warpAffine(oldimg,M,(round(rect_w*2),round(rect_h*2)))
+                    img_math.point_limit(right_point)
+                    img_math.point_limit(height_point)
+                    img_math.point_limit(new_left_point)
+                    card_img = dst[int(right_point[1]):int(height_point[1]),int(new_left_point[0]):int(right_point[0])]
+                    #show
+                    card_imgs.append(card_img)
+                    #cv2.imshow("card2",card_img)
+                    #cv2.waitKey(0)
 
         return card_imgs
 
@@ -661,7 +667,7 @@ if __name__ == '__main__':
     q = Predict()
     #if q.isdark("test\\timg.jpg"):
         #print("是黑夜拍的")
-    #afterprocess,old=q.preprocess("test\\2.jpg")
+    #afterprocess,old=q.preprocess("test\\pictures\\38.jpg")
     afterprocess,old =q.preprocess("D:\\车牌测试用\\车牌识别测试图\\P90427-145627.jpg")
     cv2.namedWindow("yuchuli",cv2.WINDOW_NORMAL)
     cv2.imshow("yuchuli", afterprocess)

@@ -12,6 +12,9 @@ class Ui_camera(object):
     def setupUi(self, camera):
         camera.setObjectName("camera")
         camera.resize(1310, 887)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("icon/监视摄像头.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        camera.setWindowIcon(icon)
         self.centralwidget = QtWidgets.QWidget(camera)
         self.centralwidget.setObjectName("centralwidget")
         self.frame = QtWidgets.QFrame(self.centralwidget)
@@ -252,21 +255,18 @@ class Ui_camera(object):
         self.menubar.setObjectName("menubar")
         self.menu = QtWidgets.QMenu(self.menubar)
         self.menu.setObjectName("menu")
-        self.menu_2 = QtWidgets.QMenu(self.menubar)
-        self.menu_2.setObjectName("menu_2")
         camera.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(camera)
         self.statusbar.setObjectName("statusbar")
         camera.setStatusBar(self.statusbar)
         self.menubar.addAction(self.menu.menuAction())
-        self.menubar.addAction(self.menu_2.menuAction())
 
         self.retranslateUi(camera)
         QtCore.QMetaObject.connectSlotsByName(camera)
 
     def retranslateUi(self, camera):
         _translate = QtCore.QCoreApplication.translate
-        camera.setWindowTitle(_translate("camera", "MainWindow"))
+        camera.setWindowTitle(_translate("camera", "摄像头模式"))
         self.DispLb.setText(_translate("camera", "                                                          摄像头区域"))
         self.ShowBt.setText(_translate("camera", "开始"))
         self.StopBt.setText(_translate("camera", "暂停"))
@@ -296,5 +296,4 @@ class Ui_camera(object):
         self.timeLabel.setText(_translate("camera", "TextLabel"))
         self.label_17.setText(_translate("camera", "当前时间:"))
         self.menu.setTitle(_translate("camera", "摄像头模式"))
-        self.menu_2.setTitle(_translate("camera", "查询数据库"))
 

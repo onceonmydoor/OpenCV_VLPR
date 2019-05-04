@@ -6,7 +6,15 @@
   <component name="ChangeListManager">
     <list default="true" id="0dc24bcb-9547-45af-9436-82979cbf304f" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/camera_model_interface.py" afterPath="$PROJECT_DIR$/camera_model_interface.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/camera_model_interface.ui" afterPath="$PROJECT_DIR$/camera_model_interface.ui" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/openPicture.py" afterPath="$PROJECT_DIR$/openPicture.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/opensearch.py" afterPath="$PROJECT_DIR$/opensearch.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/picture_model_interface.py" afterPath="$PROJECT_DIR$/picture_model_interface.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/picture_model_interface.ui" afterPath="$PROJECT_DIR$/picture_model_interface.ui" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/predict.py" afterPath="$PROJECT_DIR$/predict.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/search.py" afterPath="$PROJECT_DIR$/search.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/search.ui" afterPath="$PROJECT_DIR$/search.ui" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -20,8 +28,8 @@
       <file leaf-file-name="predict.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/predict.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="127">
-              <caret line="362" column="27" lean-forward="true" selection-start-line="362" selection-start-column="27" selection-end-line="362" selection-end-column="27" />
+            <state relative-caret-position="276">
+              <caret line="391" column="60" lean-forward="true" selection-start-line="391" selection-start-column="60" selection-end-line="391" selection-end-column="60" />
               <folding>
                 <element signature="e#18#27#0" expanded="true" />
                 <element signature="e#337#603#0" expanded="false" />
@@ -29,9 +37,20 @@
                 <element signature="e#4987#5402#0" expanded="false" />
                 <element signature="e#5444#5593#0" expanded="false" />
                 <element signature="e#5634#6292#0" expanded="false" />
-                <element signature="e#8781#10073#0" expanded="false" />
-                <element signature="e#11379#12625#0" expanded="false" />
+                <element signature="e#6355#8693#0" expanded="false" />
+                <element signature="e#8782#10074#0" expanded="false" />
+                <element signature="e#11380#12626#0" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="codecs.py" pinned="false" current-in-tab="false">
+        <entry file="file://C:/Program Files/Python37/Lib/codecs.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="9300">
+              <caret line="311" column="0" lean-forward="false" selection-start-line="311" selection-start-column="0" selection-end-line="311" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -41,6 +60,16 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
               <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="search.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/search.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="3000">
+              <caret line="100" column="0" lean-forward="false" selection-start-line="100" selection-start-column="0" selection-end-line="100" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -61,11 +90,11 @@
       <file leaf-file-name="openSearch.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/openSearch.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="450">
-              <caret line="15" column="17" lean-forward="false" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
+            <state relative-caret-position="240">
+              <caret line="17" column="14" lean-forward="false" selection-start-line="17" selection-start-column="14" selection-end-line="17" selection-end-column="14" />
               <folding>
+                <element signature="e#193#233#0" expanded="true" />
                 <element signature="e#1045#2066#0" expanded="false" />
-                <element signature="e#2109#3463#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -81,11 +110,21 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="camera_model_interface.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/camera_model_interface.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="openPicture.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/openPicture.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4110">
-              <caret line="147" column="37" lean-forward="false" selection-start-line="147" selection-start-column="37" selection-end-line="147" selection-end-column="37" />
+            <state relative-caret-position="1440">
+              <caret line="59" column="43" lean-forward="false" selection-start-line="59" selection-start-column="43" selection-end-line="59" selection-end-column="43" />
               <folding>
                 <element signature="e#193#233#0" expanded="true" />
               </folding>
@@ -149,17 +188,19 @@
         <option value="$PROJECT_DIR$/Train_SVM.py" />
         <option value="$PROJECT_DIR$/opensearch.py" />
         <option value="$PROJECT_DIR$/open.py" />
-        <option value="$PROJECT_DIR$/picture_model_interface.py" />
-        <option value="$PROJECT_DIR$/openPicture.py" />
         <option value="$PROJECT_DIR$/openCamera.py" />
         <option value="$PROJECT_DIR$/search.py" />
+        <option value="$PROJECT_DIR$/openSearch.py" />
+        <option value="$PROJECT_DIR$/picture_model_interface.py" />
+        <option value="$PROJECT_DIR$/openPicture.py" />
         <option value="$PROJECT_DIR$/predict.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="1">
-    <option name="x" value="257" />
-    <option name="width" value="1481" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="162" />
+    <option name="y" value="199" />
+    <option name="width" value="1761" />
     <option name="height" value="863" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
@@ -285,7 +326,7 @@
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
     </configuration>
-    <configuration name="opensearch" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="openSearch" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -297,7 +338,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="OpenCV_VLPR" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/opensearch.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/openSearch.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -322,17 +363,17 @@
     <list size="5">
       <item index="0" class="java.lang.String" itemvalue="Python.predict" />
       <item index="1" class="java.lang.String" itemvalue="Python.open" />
-      <item index="2" class="java.lang.String" itemvalue="Python.opensearch" />
-      <item index="3" class="java.lang.String" itemvalue="Python.openCamera" />
-      <item index="4" class="java.lang.String" itemvalue="Python.openPicture" />
+      <item index="2" class="java.lang.String" itemvalue="Python.openCamera" />
+      <item index="3" class="java.lang.String" itemvalue="Python.openPicture" />
+      <item index="4" class="java.lang.String" itemvalue="Python.openSearch" />
     </list>
     <recent_temporary>
       <list size="5">
         <item index="0" class="java.lang.String" itemvalue="Python.predict" />
         <item index="1" class="java.lang.String" itemvalue="Python.openPicture" />
-        <item index="2" class="java.lang.String" itemvalue="Python.openCamera" />
-        <item index="3" class="java.lang.String" itemvalue="Python.open" />
-        <item index="4" class="java.lang.String" itemvalue="Python.opensearch" />
+        <item index="2" class="java.lang.String" itemvalue="Python.openSearch" />
+        <item index="3" class="java.lang.String" itemvalue="Python.openCamera" />
+        <item index="4" class="java.lang.String" itemvalue="Python.open" />
       </list>
     </recent_temporary>
   </component>
@@ -350,19 +391,19 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="257" y="0" width="1481" height="863" extended-state="1" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16860068" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12864584" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36836517" sideWeight="0.409375" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4819533" sideWeight="0.590625" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.53004" sideWeight="0.590625" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.44798303" sideWeight="0.91979164" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4787686" sideWeight="0.91979164" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296875" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -382,13 +423,13 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/predict.py</url>
-          <line>669</line>
-          <option name="timeStamp" value="134" />
+          <line>285</line>
+          <option name="timeStamp" value="136" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/predict.py</url>
-          <line>284</line>
-          <option name="timeStamp" value="136" />
+          <line>395</line>
+          <option name="timeStamp" value="145" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
@@ -401,7 +442,7 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="139" />
+      <option name="time" value="146" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -595,26 +636,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="420">
           <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/open.py" />
     <entry file="file://$PROJECT_DIR$/camera.py" />
     <entry file="file://$PROJECT_DIR$/test.py" />
-    <entry file="file://$PROJECT_DIR$/camera_model_interface.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Train_SVM.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
           <caret line="7" column="9" lean-forward="false" selection-start-line="7" selection-start-column="9" selection-end-line="7" selection-end-column="9" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -636,7 +667,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://C:/Program Files/Python37/Lib/site-packages/numpy/core/_methods.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="146">
+          <caret line="31" column="0" lean-forward="false" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/search.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3000">
+          <caret line="100" column="0" lean-forward="false" selection-start-line="100" selection-start-column="0" selection-end-line="100" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/picture_model_interface.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/camera_model_interface.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -646,11 +700,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/openSearch.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="15" column="17" lean-forward="false" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
+        <state relative-caret-position="240">
+          <caret line="17" column="14" lean-forward="false" selection-start-line="17" selection-start-column="14" selection-end-line="17" selection-end-column="14" />
           <folding>
+            <element signature="e#193#233#0" expanded="true" />
             <element signature="e#1045#2066#0" expanded="false" />
-            <element signature="e#2109#3463#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -667,8 +721,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/openPicture.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4110">
-          <caret line="147" column="37" lean-forward="false" selection-start-line="147" selection-start-column="37" selection-end-line="147" selection-end-column="37" />
+        <state relative-caret-position="1440">
+          <caret line="59" column="43" lean-forward="false" selection-start-line="59" selection-start-column="43" selection-end-line="59" selection-end-column="43" />
           <folding>
             <element signature="e#193#233#0" expanded="true" />
           </folding>
@@ -677,32 +731,16 @@
     </entry>
     <entry file="file://C:/Program Files/Python37/Lib/codecs.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
+        <state relative-caret-position="9300">
           <caret line="311" column="0" lean-forward="false" selection-start-line="311" selection-start-column="0" selection-end-line="311" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Program Files/Python37/Lib/site-packages/numpy/core/_methods.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="146">
-          <caret line="31" column="0" lean-forward="false" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/search.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="13" column="35" lean-forward="false" selection-start-line="13" selection-start-column="35" selection-end-line="13" selection-end-column="35" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/predict.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="127">
-          <caret line="362" column="27" lean-forward="true" selection-start-line="362" selection-start-column="27" selection-end-line="362" selection-end-column="27" />
+        <state relative-caret-position="276">
+          <caret line="391" column="60" lean-forward="true" selection-start-line="391" selection-start-column="60" selection-end-line="391" selection-end-column="60" />
           <folding>
             <element signature="e#18#27#0" expanded="true" />
             <element signature="e#337#603#0" expanded="false" />
@@ -710,8 +748,9 @@
             <element signature="e#4987#5402#0" expanded="false" />
             <element signature="e#5444#5593#0" expanded="false" />
             <element signature="e#5634#6292#0" expanded="false" />
-            <element signature="e#8781#10073#0" expanded="false" />
-            <element signature="e#11379#12625#0" expanded="false" />
+            <element signature="e#6355#8693#0" expanded="false" />
+            <element signature="e#8782#10074#0" expanded="false" />
+            <element signature="e#11380#12626#0" expanded="false" />
           </folding>
         </state>
       </provider>

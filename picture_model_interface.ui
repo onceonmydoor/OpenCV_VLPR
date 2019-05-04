@@ -11,7 +11,11 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>单图模式</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>icon/图片.png</normaloff>icon/图片.png</iconset>
   </property>
   <widget class="QLabel" name="label">
    <property name="geometry">
