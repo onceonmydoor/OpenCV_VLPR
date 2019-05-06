@@ -54,6 +54,11 @@ class mywindow(QtWidgets.QWidget,Ui_Form):
                 self.location.clear()
             else:
                 for r  in range(len(result)):
+                    final_result = ''.join(result[r])
+                    if len(final_result)<7:
+                        self.NumLabel.setText("抱歉，未能识别到车牌")
+                        continue
+
                     print("#"*10+"识别结果是"+"#"*10)
                     print("车牌的颜色为：" + Eng2Chi[color[r]])
                     final_color = Eng2Chi[color[r]]
@@ -63,7 +68,6 @@ class mywindow(QtWidgets.QWidget,Ui_Form):
                     self.colorLabel.setText(final_color)
                     print(result[r])
                     result[r].insert(2,"-")
-                    final_result = ''.join(result[r])
                     self.NumLabel.setText(final_result)
                     print("#" * 25)
                     roi[r] = cv2.cvtColor(roi[r],cv2.COLOR_BGR2RGB)
