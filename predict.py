@@ -222,8 +222,11 @@ class Predict:
 
 
             threshold_m = int(pic_width/80)#根据自己调参出来的
-            print(threshold_m)
-            Matrix = np.ones((threshold_m, int(threshold_m*1.3)), np.uint8)
+            print("开运算的阈值为"+str(threshold_m))
+
+            x = threshold_m
+            y = int(threshold_m*1.3)
+            Matrix = np.ones((x, y), np.uint8)
             img_edge1 = cv2.morphologyEx(close_img, cv2.MORPH_CLOSE, Matrix)
             img_edge2 = cv2.morphologyEx(img_edge1, cv2.MORPH_OPEN, Matrix)
 
@@ -295,12 +298,14 @@ class Predict:
         
         print("正在根据颜色再定位...")
         colors , card_imgs = self.img_color(card_imgs)
+
             
         #返回可能存在的
         for i in range(len(colors)-1,-1,-1):
             if colors[i] == "no":
                 colors.pop(i)
                 card_imgs.pop(i)
+
          
         #show图片
         # for card_img in card_imgs:
@@ -382,27 +387,28 @@ class Predict:
         return car_contours
                 
     def img_Transform(self,card_contours,oldimg):
-        rect_h, rect_w = oldimg.shape[:2]#获取图片的长宽
+        img_h, img_w = oldimg.shape[:2]#获取图片的长宽
+
         card_imgs = []
         #矩形区域可能是倾斜的矩阵，需要矫正，以便使用颜色定位
         for rect in card_contours:#rect((中心点坐标)，（宽，长），角度)
-
+            rect_w,rect_h = rect[1][0],rect[1][1]
             angle = rect[2]#获得矩形旋转的角度
-            print("角度是{}".format(angle))
-            print("宽是{},长是{}".format(rect[1][0],rect[1][1]))
-            if rect[1][0]>rect[1][1]:
-                rect =  (rect[0],(rect[1][1] + 5,rect[1][0] + 5),angle)
-            else:
-                rect = (rect[0],(rect[1][0] + 5,rect[1][1] + 5),angle) #扩大范围，避免车牌的边缘被排除
+            print("矩形区域的角度是{}".format(angle))
+            print("矩形区域宽是{},长是{}".format(rect[1][0],rect[1][1]))
+
+
 
             #如果已经是正的则不需要旋转
-            if angle == -0 or angle == -90:
-                if rect[1][0]<rect[1][1]:#如果宽小于长
-                    card_img = oldimg[int(rect[0][0] - rect[1][1] / 2):int(rect[0][0] + rect[1][1] / 2),
-                               int(rect[0][1] - rect[1][0] / 2):int(rect[0][1] + rect[1][0] / 2)]
-                else:
-                    card_img = oldimg[int(rect[0][0] - rect[1][0] / 2):int(rect[0][0] + rect[1][0] / 2),
-                               int(rect[0][1] - rect[1][1] / 2):int(rect[0][1] + rect[1][1] / 2)]
+            return_flag = False
+            if angle == -0:
+                return_flag = True
+            if angle == -90 and rect_w>rect_h:
+                rect_w, rect_h = rect_h, rect_w
+                return_flag = True
+            if return_flag:
+                card_img = oldimg[int(rect[0][1]-rect_h/2):int(rect[0][1]+rect_h/2),
+                          int(rect[0][0]-rect_w/2):int(rect[0][0]+rect_w/2)]
 
                 card_imgs.append(card_img)
                 continue
@@ -430,7 +436,7 @@ class Predict:
                     pts2 = np.float32([left_point,height_point,new_right_point])
                     pts1 = np.float32([left_point,height_point,right_point])
                     M = cv2.getAffineTransform(pts1,pts2) #INPUT Array 2*3的变换矩阵
-                    dst = cv2.warpAffine(oldimg,M,(round(rect_w*2),round(rect_h*2)))#仿射变换,OUTPUT Array，输出图像
+                    dst = cv2.warpAffine(oldimg,M,(round(img_w*2),round(img_h*2)))#仿射变换,OUTPUT Array，输出图像
                     img_math.point_limit(new_right_point)
                     img_math.point_limit(left_point)
                     img_math.point_limit(height_point)
@@ -444,7 +450,7 @@ class Predict:
                     pts2 = np.float32([new_left_point,height_point,right_point])  #字符只是高度需要改变
                     pts1 = np.float32([left_point,height_point,right_point])
                     M = cv2.getAffineTransform(pts1,pts2)
-                    dst = cv2.warpAffine(oldimg,M,(round(rect_w*2),round(rect_h*2)))
+                    dst = cv2.warpAffine(oldimg,M,(round(img_w*2),round(img_h*2)))
                     img_math.point_limit(right_point)
                     img_math.point_limit(height_point)
                     img_math.point_limit(new_left_point)
@@ -513,7 +519,7 @@ class Predict:
                 colors.append(color)
                 print("blue:{},green:{},yellow:{},black:{},white:{},count:{}".format(blue,green,yellow,black,white,card_img_count))
 
-                if color =="green":
+                if color =="green":#绿色本来就区域小，不需要再缩小区域
                     continue
 
                 #根据车牌颜色在定位，缩小非车牌的边界区域
@@ -571,7 +577,7 @@ class Predict:
                 #（灰度图，阈值，最大值，阈值类型）把阈值设为0，算法会找到最优阈值
                 cv2.imshow("erzhihua", gray_img)
                 cv2.waitKey()
-                # cv2.destroyAllWindows()
+                cv2.destroyAllWindows()
 
 
                 # #img123=np.array(gray_img.convert('L'))
@@ -654,6 +660,7 @@ class Predict:
                 part_cards = img_math.sperate_card(gray_img,wave_peaks) 
                 card_color = color
                 roi = card_img
+
                 t = Train_SVM.TrainSVM()
                 t.train_svm()
                 predict_result,div= t.final_rec(part_cards,color)
@@ -661,6 +668,7 @@ class Predict:
                 colors_result.append(card_color)
                 rois.append(roi)
                 cards_result.append(predict_result)
+
         return cards_result, rois, colors_result,divs  # 识别到的字符、定位的车牌图像、车牌颜色
 
             
@@ -669,8 +677,8 @@ if __name__ == '__main__':
     q = Predict()
     #if q.isdark("test\\timg.jpg"):
         #print("是黑夜拍的")
-    #afterprocess,old=q.preprocess("test\\pictures\\38.jpg")
-    afterprocess,old =q.preprocess("D:\\车牌测试用\\车牌识别测试图\\P90427-145627.jpg")
+    #afterprocess,old=q.preprocess("test\\pictures\\37.jpg")
+    afterprocess,old =q.preprocess("D:\\车牌测试用\\车牌识别测试图\\P90427-144549.jpg")
     cv2.namedWindow("yuchuli",cv2.WINDOW_NORMAL)
     cv2.imshow("yuchuli", afterprocess)
     cv2.waitKey()

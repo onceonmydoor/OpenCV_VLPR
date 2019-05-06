@@ -201,9 +201,9 @@ class TrainSVM:
 
 
             #显示每个分割字符，用于界面显示
-            div.append(part_card)
-            cv2.imshow("fengezifu",part_card)
-            cv2.waitKey(0)
+            # div.append(part_card)
+            # cv2.imshow("fengezifu",part_card)
+            # cv2.waitKey(0)
 
             part_card = preprocess_hog([part_card])  
             if i == 0 :
