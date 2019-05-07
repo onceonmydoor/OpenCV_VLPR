@@ -67,7 +67,7 @@ class mywindow(QtWidgets.QWidget,Ui_Form):
                         #self.colorLabel.setStyleSheet("color:white")
                     self.colorLabel.setText(final_color)
                     print(result[r])
-                    result[r].insert(2,"-")
+                    final_result=result[r].insert(2,"-")
                     self.NumLabel.setText(final_result)
                     print("#" * 25)
                     roi[r] = cv2.cvtColor(roi[r],cv2.COLOR_BGR2RGB)
@@ -94,11 +94,6 @@ class mywindow(QtWidgets.QWidget,Ui_Form):
                         finally:
                             cur.close()
                             conn.close()
-
-
-
-
-
 
             ###################识别#####################
 
@@ -162,9 +157,12 @@ class mywindow(QtWidgets.QWidget,Ui_Form):
         self.hide()
         self.s = openCamera.CamShow()
         self.s.show()
+
     def show_preprocess(self):
         if self.Img_preprocess.any():
-            cv2.imshow("preprocess",self.Img_preprocess)
+            cv2.namedWindow("preprocess", cv2.WINDOW_NORMAL)
+            cv2.imshow("preprocess", self.Img_preprocess)
+
 
     def sql_btn_function(self):
         self.s = openSearch.Searchwindow()

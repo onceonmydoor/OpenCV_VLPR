@@ -442,9 +442,9 @@ class Predict:
                     img_math.point_limit(height_point)
                     card_img = dst[int(left_point[1]):int(height_point[1]),int(left_point[0]):int(new_right_point[0])]#摆正图像
                     #show
-                    card_imgs.append(card_img)
-                    #cv2.imshow("card2",card_img)
-                    #cv2.waitKey(0)
+                    # card_imgs.append(card_img)
+                    # cv2.imshow("card2",card_img)
+                    # cv2.waitKey(0)
                 elif low_point[0] < height_point[0]:  #负角度
                     new_left_point = [left_point[0],height_point[1]]
                     pts2 = np.float32([new_left_point,height_point,right_point])  #字符只是高度需要改变
@@ -457,8 +457,8 @@ class Predict:
                     card_img = dst[int(right_point[1]):int(height_point[1]),int(new_left_point[0]):int(right_point[0])]
                     #show
                     card_imgs.append(card_img)
-                    #cv2.imshow("card2",card_img)
-                    #cv2.waitKey(0)
+                    # cv2.imshow("card2",card_img)
+                    # cv2.waitKey(0)
 
         return card_imgs
 
@@ -523,34 +523,34 @@ class Predict:
                     continue
 
                 #根据车牌颜色在定位，缩小非车牌的边界区域
-                xl, xr, yh, yl = self.accurate_place(card_img_hsv, limit1, limit2, color)
-                if yl == yh and xl == xr:
-                    continue
-                need_accurate = False
-                if yl >= yh:
-                    yl = 0
-                    yh = row_num
-                    need_accurate = True
-                if xl >= xr:
-                    xl = 0
-                    xr = col_num
-                    need_accurate = True
-                card_imgs[card_index] = card_img[yl:yh, xl:xr] if color !="green" or yl < (yh - yl) // 4 else card_img[yl - (yh - yl) // 4:yh,xl:xr]
-
-
-                if need_accurate: #可能x或y方向未缩小，需要再试一次
-                    card_img = card_imgs[card_index]
-                    card_img_hsv = cv2.cvtColor(card_img,cv2.COLOR_BGR2HSV)
-                    xl, xr, yh, yl = self.accurate_place(card_img_hsv, limit1, limit2, color)
-                    if yl == yh and xl == xr:
-                        continue
-                    if yl >= yh:
-                        yl = 0
-                        yh = row_num
-                    if xl >= xr:
-                        xl = 0
-                        xr = col_num
-                card_imgs[card_index] = card_img[yl:yh, xl:xr] if color != "green" or yl < (yh - yl) // 4 else card_img[yl - (yh - yl) // 4:yh,xl:xr]
+                # xl, xr, yh, yl = self.accurate_place(card_img_hsv, limit1, limit2, color)
+                # if yl == yh and xl == xr:
+                #     continue
+                # need_accurate = False
+                # if yl >= yh:
+                #     yl = 0
+                #     yh = row_num
+                #     need_accurate = True
+                # if xl >= xr:
+                #     xl = 0
+                #     xr = col_num
+                #     need_accurate = True
+                # card_imgs[card_index] = card_img[yl:yh, xl:xr] if color !="green" or yl < (yh - yl) // 4 else card_img[yl - (yh - yl) // 4:yh,xl:xr]
+                #
+                #
+                # if need_accurate: #可能x或y方向未缩小，需要再试一次
+                #     card_img = card_imgs[card_index]
+                #     card_img_hsv = cv2.cvtColor(card_img,cv2.COLOR_BGR2HSV)
+                #     xl, xr, yh, yl = self.accurate_place(card_img_hsv, limit1, limit2, color)
+                #     if yl == yh and xl == xr:
+                #         continue
+                #     if yl >= yh:
+                #         yl = 0
+                #         yh = row_num
+                #     if xl >= xr:
+                #         xl = 0
+                #         xr = col_num
+                # card_imgs[card_index] = card_img[yl:yh, xl:xr] if color != "green" or yl < (yh - yl) // 4 else card_img[yl - (yh - yl) // 4:yh,xl:xr]
 
         return colors , card_imgs
 
@@ -678,7 +678,7 @@ if __name__ == '__main__':
     #if q.isdark("test\\timg.jpg"):
         #print("是黑夜拍的")
     #afterprocess,old=q.preprocess("test\\pictures\\37.jpg")
-    afterprocess,old =q.preprocess("D:\\车牌测试用\\车牌识别测试图\\P90427-144549.jpg")
+    afterprocess,old =q.preprocess("D:\\车牌测试用\\车牌识别测试图\\P90427-144853.jpg")
     cv2.namedWindow("yuchuli",cv2.WINDOW_NORMAL)
     cv2.imshow("yuchuli", afterprocess)
     cv2.waitKey()
