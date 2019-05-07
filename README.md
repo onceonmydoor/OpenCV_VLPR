@@ -10,11 +10,11 @@
 
 - 单个图片的识别
 
-![1557215109607](https://github.com/onceonmydoor/OpenCV_VLPR/readme_img/1557215109607.png)
+![1557215109607](https://raw.githubusercontent.com/onceonmydoor/OpenCV_VLPR/master/readme_img/1557215109607.png)
 
 - 数据库的查询（图片识别也会放入数据库）数据库使用的是mysql
 
-  ![1557215152576](https://github.com/onceonmydoor/OpenCV_VLPR/readme_img/1557215152576.png)
+  ![1557215152576](https://raw.githubusercontent.com/onceonmydoor/OpenCV_VLPR/master/readme_img/1557215152576.png)
 
 - 车牌号码的查询，颜色+时间区间的查询，条件查询中时间是必选的，优先级比颜色高
 
