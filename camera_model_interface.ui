@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1310</width>
-    <height>887</height>
+    <height>924</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,14 +15,14 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>icon/监视摄像头.png</normaloff>icon/监视摄像头.png</iconset>
+    <normaloff>C:/Users/dell.DESKTOP-FM0VES7/.designer/backup/icon/监视摄像头.png</normaloff>C:/Users/dell.DESKTOP-FM0VES7/.designer/backup/icon/监视摄像头.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QFrame" name="frame">
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>10</y>
+      <y>30</y>
       <width>791</width>
       <height>611</height>
      </rect>
@@ -36,8 +36,8 @@
     <widget class="QLabel" name="DispLb">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>10</y>
+       <x>20</x>
+       <y>20</y>
        <width>771</width>
        <height>581</height>
       </rect>
@@ -51,7 +51,7 @@
     <property name="geometry">
      <rect>
       <x>810</x>
-      <y>10</y>
+      <y>30</y>
       <width>441</width>
       <height>611</height>
      </rect>
@@ -71,6 +71,12 @@
        <height>31</height>
       </rect>
      </property>
+     <property name="styleSheet">
+      <string notr="true">background-color:rgb(94, 129, 172);
+color:white;
+font: 10pt &quot;微软雅黑&quot;;
+border-radius:7px;</string>
+     </property>
      <property name="text">
       <string>开始</string>
      </property>
@@ -83,6 +89,12 @@
        <width>111</width>
        <height>31</height>
       </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color:rgb(94, 129, 172);
+color:white;
+font: 10pt &quot;微软雅黑&quot;;
+border-radius:7px;</string>
      </property>
      <property name="text">
       <string>暂停</string>
@@ -596,6 +608,12 @@
        <height>31</height>
       </rect>
      </property>
+     <property name="styleSheet">
+      <string notr="true">background-color:rgb(94, 129, 172);
+color:white;
+font: 10pt &quot;微软雅黑&quot;;
+border-radius:7px;</string>
+     </property>
      <property name="text">
       <string>保存</string>
      </property>
@@ -608,6 +626,12 @@
        <width>111</width>
        <height>31</height>
       </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color:rgb(94, 129, 172);
+color:white;
+font: 10pt &quot;微软雅黑&quot;;
+border-radius:7px;</string>
      </property>
      <property name="text">
       <string>退出</string>
@@ -638,6 +662,12 @@
        <height>31</height>
       </rect>
      </property>
+     <property name="styleSheet">
+      <string notr="true">background-color:rgb(94, 129, 172);
+color:white;
+font: 10pt &quot;微软雅黑&quot;;
+border-radius:7px;</string>
+     </property>
      <property name="text">
       <string>图片模式</string>
      </property>
@@ -651,6 +681,12 @@
        <height>31</height>
       </rect>
      </property>
+     <property name="styleSheet">
+      <string notr="true">background-color:rgb(94, 129, 172);
+color:white;
+font: 10pt &quot;微软雅黑&quot;;
+border-radius:7px;</string>
+     </property>
      <property name="text">
       <string>数据库查询</string>
      </property>
@@ -660,7 +696,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>620</y>
+      <y>640</y>
       <width>1231</width>
       <height>231</height>
      </rect>
@@ -713,26 +749,31 @@
       <property name="geometry">
        <rect>
         <x>130</x>
-        <y>40</y>
-        <width>54</width>
-        <height>12</height>
+        <y>30</y>
+        <width>91</width>
+        <height>41</height>
        </rect>
       </property>
+      <property name="styleSheet">
+       <string notr="true">font: 20pt &quot;Agency FB&quot;;
+font: rgb(85, 255, 127)</string>
+      </property>
       <property name="text">
-       <string>LY</string>
+       <string>颜色</string>
       </property>
      </widget>
      <widget class="QLabel" name="NumLabel">
       <property name="geometry">
        <rect>
         <x>120</x>
-        <y>110</y>
-        <width>171</width>
-        <height>41</height>
+        <y>90</y>
+        <width>231</width>
+        <height>61</height>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">font: 75 22pt &quot;Agcy FB&quot;;</string>
+       <string notr="true">font: 75 22pt &quot;Agcy FB&quot;;
+font: 25pt &quot;微软雅黑&quot;;</string>
       </property>
       <property name="text">
        <string>浙A-XXXXXXX</string>
@@ -830,33 +871,33 @@
        </rect>
       </property>
      </widget>
-     <widget class="QLabel" name="timeLabel">
-      <property name="geometry">
-       <rect>
-        <x>200</x>
-        <y>10</y>
-        <width>261</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>TextLabel</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_17">
-      <property name="geometry">
-       <rect>
-        <x>130</x>
-        <y>10</y>
-        <width>51</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>当前时间:</string>
-      </property>
-     </widget>
     </widget>
+   </widget>
+   <widget class="QLabel" name="timeLabel">
+    <property name="geometry">
+     <rect>
+      <x>980</x>
+      <y>0</y>
+      <width>261</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_17">
+    <property name="geometry">
+     <rect>
+      <x>910</x>
+      <y>0</y>
+      <width>51</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>当前时间:</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

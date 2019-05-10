@@ -11,30 +11,38 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_camera(object):
     def setupUi(self, camera):
         camera.setObjectName("camera")
-        camera.resize(1310, 887)
+        camera.resize(1310, 924)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("icon/监视摄像头.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("C:/Users/dell.DESKTOP-FM0VES7/.designer/backup/icon/监视摄像头.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         camera.setWindowIcon(icon)
         self.centralwidget = QtWidgets.QWidget(camera)
         self.centralwidget.setObjectName("centralwidget")
         self.frame = QtWidgets.QFrame(self.centralwidget)
-        self.frame.setGeometry(QtCore.QRect(20, 10, 791, 611))
+        self.frame.setGeometry(QtCore.QRect(20, 30, 791, 611))
         self.frame.setFrameShape(QtWidgets.QFrame.Box)
         self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame.setObjectName("frame")
         self.DispLb = QtWidgets.QLabel(self.frame)
-        self.DispLb.setGeometry(QtCore.QRect(10, 10, 771, 581))
+        self.DispLb.setGeometry(QtCore.QRect(20, 20, 771, 581))
         self.DispLb.setObjectName("DispLb")
         self.frame_2 = QtWidgets.QFrame(self.centralwidget)
-        self.frame_2.setGeometry(QtCore.QRect(810, 10, 441, 611))
+        self.frame_2.setGeometry(QtCore.QRect(810, 30, 441, 611))
         self.frame_2.setFrameShape(QtWidgets.QFrame.Box)
         self.frame_2.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_2.setObjectName("frame_2")
         self.ShowBt = QtWidgets.QPushButton(self.frame_2)
         self.ShowBt.setGeometry(QtCore.QRect(10, 500, 111, 31))
+        self.ShowBt.setStyleSheet("background-color:rgb(94, 129, 172);\n"
+"color:white;\n"
+"font: 10pt \"微软雅黑\";\n"
+"border-radius:7px;")
         self.ShowBt.setObjectName("ShowBt")
         self.StopBt = QtWidgets.QPushButton(self.frame_2)
         self.StopBt.setGeometry(QtCore.QRect(160, 500, 111, 31))
+        self.StopBt.setStyleSheet("background-color:rgb(94, 129, 172);\n"
+"color:white;\n"
+"font: 10pt \"微软雅黑\";\n"
+"border-radius:7px;")
         self.StopBt.setObjectName("StopBt")
         self.RedColorSpB = QtWidgets.QDoubleSpinBox(self.frame_2)
         self.RedColorSpB.setGeometry(QtCore.QRect(320, 110, 62, 22))
@@ -184,9 +192,17 @@ class Ui_camera(object):
         self.label_11.setObjectName("label_11")
         self.RecordBt = QtWidgets.QPushButton(self.frame_2)
         self.RecordBt.setGeometry(QtCore.QRect(300, 500, 111, 31))
+        self.RecordBt.setStyleSheet("background-color:rgb(94, 129, 172);\n"
+"color:white;\n"
+"font: 10pt \"微软雅黑\";\n"
+"border-radius:7px;")
         self.RecordBt.setObjectName("RecordBt")
         self.ExitBt = QtWidgets.QPushButton(self.frame_2)
         self.ExitBt.setGeometry(QtCore.QRect(300, 562, 111, 31))
+        self.ExitBt.setStyleSheet("background-color:rgb(94, 129, 172);\n"
+"color:white;\n"
+"font: 10pt \"微软雅黑\";\n"
+"border-radius:7px;")
         self.ExitBt.setObjectName("ExitBt")
         self.label_3 = QtWidgets.QLabel(self.frame_2)
         self.label_3.setGeometry(QtCore.QRect(160, 40, 131, 51))
@@ -194,12 +210,20 @@ class Ui_camera(object):
         self.label_3.setObjectName("label_3")
         self.Picbtn = QtWidgets.QPushButton(self.frame_2)
         self.Picbtn.setGeometry(QtCore.QRect(160, 560, 111, 31))
+        self.Picbtn.setStyleSheet("background-color:rgb(94, 129, 172);\n"
+"color:white;\n"
+"font: 10pt \"微软雅黑\";\n"
+"border-radius:7px;")
         self.Picbtn.setObjectName("Picbtn")
         self.sql_model = QtWidgets.QPushButton(self.frame_2)
         self.sql_model.setGeometry(QtCore.QRect(10, 560, 111, 31))
+        self.sql_model.setStyleSheet("background-color:rgb(94, 129, 172);\n"
+"color:white;\n"
+"font: 10pt \"微软雅黑\";\n"
+"border-radius:7px;")
         self.sql_model.setObjectName("sql_model")
         self.frame_3 = QtWidgets.QFrame(self.centralwidget)
-        self.frame_3.setGeometry(QtCore.QRect(20, 620, 1231, 231))
+        self.frame_3.setGeometry(QtCore.QRect(20, 640, 1231, 231))
         self.frame_3.setFrameShape(QtWidgets.QFrame.Box)
         self.frame_3.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_3.setObjectName("frame_3")
@@ -213,11 +237,14 @@ class Ui_camera(object):
         self.label_13.setGeometry(QtCore.QRect(33, 112, 71, 20))
         self.label_13.setObjectName("label_13")
         self.colorLabel = QtWidgets.QLabel(self.groupBox)
-        self.colorLabel.setGeometry(QtCore.QRect(130, 40, 54, 12))
+        self.colorLabel.setGeometry(QtCore.QRect(130, 30, 91, 41))
+        self.colorLabel.setStyleSheet("font: 20pt \"Agency FB\";\n"
+"font: rgb(85, 255, 127)")
         self.colorLabel.setObjectName("colorLabel")
         self.NumLabel = QtWidgets.QLabel(self.groupBox)
-        self.NumLabel.setGeometry(QtCore.QRect(120, 110, 171, 41))
-        self.NumLabel.setStyleSheet("font: 75 22pt \"Agcy FB\";")
+        self.NumLabel.setGeometry(QtCore.QRect(120, 90, 231, 61))
+        self.NumLabel.setStyleSheet("font: 75 22pt \"Agcy FB\";\n"
+"font: 25pt \"微软雅黑\";")
         self.NumLabel.setObjectName("NumLabel")
         self.groupBox_2 = QtWidgets.QGroupBox(self.frame_3)
         self.groupBox_2.setGeometry(QtCore.QRect(730, 20, 481, 91))
@@ -243,11 +270,11 @@ class Ui_camera(object):
         self.ImgHeightLCD = QtWidgets.QLCDNumber(self.groupBox_3)
         self.ImgHeightLCD.setGeometry(QtCore.QRect(390, 40, 91, 61))
         self.ImgHeightLCD.setObjectName("ImgHeightLCD")
-        self.timeLabel = QtWidgets.QLabel(self.groupBox_3)
-        self.timeLabel.setGeometry(QtCore.QRect(200, 10, 261, 21))
+        self.timeLabel = QtWidgets.QLabel(self.centralwidget)
+        self.timeLabel.setGeometry(QtCore.QRect(980, 0, 261, 31))
         self.timeLabel.setObjectName("timeLabel")
-        self.label_17 = QtWidgets.QLabel(self.groupBox_3)
-        self.label_17.setGeometry(QtCore.QRect(130, 10, 51, 21))
+        self.label_17 = QtWidgets.QLabel(self.centralwidget)
+        self.label_17.setGeometry(QtCore.QRect(910, 0, 51, 31))
         self.label_17.setObjectName("label_17")
         camera.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(camera)
@@ -287,7 +314,7 @@ class Ui_camera(object):
         self.groupBox.setTitle(_translate("camera", "车牌识别结果"))
         self.label_12.setText(_translate("camera", "颜色："))
         self.label_13.setText(_translate("camera", "车牌号码："))
-        self.colorLabel.setText(_translate("camera", "LY"))
+        self.colorLabel.setText(_translate("camera", "颜色"))
         self.NumLabel.setText(_translate("camera", "浙A-XXXXXXX"))
         self.groupBox_2.setTitle(_translate("camera", "信息框"))
         self.groupBox_3.setTitle(_translate("camera", "基本信息"))

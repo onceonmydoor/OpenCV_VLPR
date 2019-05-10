@@ -446,7 +446,7 @@ class Predict:
                     img_math.point_limit(height_point)
                     card_img = dst[int(left_point[1]):int(height_point[1]),int(left_point[0]):int(new_right_point[0])]#摆正图像
                     #show
-                    # card_imgs.append(card_img)
+                    card_imgs.append(card_img)
                     # cv2.imshow("card2",card_img)
                     # cv2.waitKey(0)
                 elif low_point[0] < height_point[0]:  #负角度
@@ -476,8 +476,8 @@ class Predict:
                 #TODO：可能会存在转换失败的问题，原因来自于矫正矩形失败
                 if card_img_hsv is None:
                     continue
-                #cv2.imshow("hsv",card_img_hsv)
-                #cv2.waitKey(0)
+                # cv2.imshow("hsv",card_img_hsv)
+                # cv2.waitKey(0)
 
                 row_num , col_num = card_img_hsv.shape[:2]#获取长宽
                 card_img_count = row_num * col_num
@@ -682,12 +682,11 @@ if __name__ == '__main__':
     q = Predict()
     #if q.isdark("test\\timg.jpg"):
         #print("是黑夜拍的")
-    afterprocess,old=q.preprocess("test\\32.jpg")
+    afterprocess,old=q.preprocess("test\\Yes_img\\2_2.jpg")
     #afterprocess,old =q.preprocess("D:\\车牌测试用\\车牌识别测试图\\P90427-144853.jpg")
     cv2.namedWindow("yuchuli",cv2.WINDOW_NORMAL)
     cv2.imshow("yuchuli", afterprocess)
     cv2.waitKey()
-    cv2.destroyAllWindows()
     colors,card_imgs=q.locate_carPlate(afterprocess,old)
     #colors,card_imgs = q.img_only_color(old,afterprocess)
     result , roi , color,divs=q.char_recogize(colors,card_imgs) #all list

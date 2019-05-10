@@ -56,10 +56,11 @@ class mywindow(QtWidgets.QWidget,Ui_Form):
                 self.NumLabel.setText("抱歉，未能识别到车牌")
                 self.location.clear()
             else:
-                for r in result:
-                    if len(r)>=7:
+                for r in range(len(result)):
+                    if len(result[r])>=7:
                         final_result = result[r]
-                        color_index = result.index(r)
+                        color_index = r
+                        findex = r
 
                 if not final_result or len(final_result)<7:
                     self.NumLabel.setText("抱歉，未能识别到车牌")
@@ -70,19 +71,19 @@ class mywindow(QtWidgets.QWidget,Ui_Form):
                 print("车牌的颜色为：" + Eng2Chi[color[color_index]])
                 final_color = Eng2Chi[color[color_index]]
                 if final_color == "蓝色":
-                    self.colorLabel.setStyleSheet("QLabel{background-color:blue;color:white;font: 22pt;}")
+                    self.colorLabel.setStyleSheet("QLabel{background-color:blue;color:white;font: 20pt;alignment:center;}")
                 if final_color == "黄色":
-                    self.colorLabel.setStyleSheet("QLabel{background-color:yellow;color:black;font: 22pt;}")
+                    self.colorLabel.setStyleSheet("QLabel{background-color:yellow;color:black;font: 20pt;alignment:center;}")
                 if final_color == "绿色":
-                    self.colorLabel.setStyleSheet("QLabel{background-color:green;color:white;font: 22pt;}")
+                    self.colorLabel.setStyleSheet("QLabel{background-color:green;color:white;font: 20pt;alignment:center;}")
                 self.colorLabel.setText(final_color)
                 ########车牌颜色########
 
                 ########车牌号码########
-                final_result = final_result.insert(2, "-")
-                final_result = ''.join(final_result)
-                print(final_result)
-                self.NumLabel.setText(final_result)
+                final_result.insert(2, "-")
+                result = ''.join(final_result)
+                print(result)
+                self.NumLabel.setText(result)
                 print("#" * 25)
                 roi[color_index] = cv2.cvtColor(roi[color_index],cv2.COLOR_BGR2RGB)
                 qimg = qimage2ndarray.array2qimage(roi[color_index])

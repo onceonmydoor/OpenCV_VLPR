@@ -12,6 +12,7 @@ from PyQt5.QtGui import QPixmap
 from predict import Predict
 from PyQt5 import QtWidgets,QtGui,QtCore
 import datetime
+import pymysql
 
 
 class CamShow(QMainWindow,Ui_camera):
@@ -337,6 +338,13 @@ class CamShow(QMainWindow,Ui_camera):
                 print("车牌的颜色为：" + Eng2Chi[color[r]])
                 self.colorLabel.setText(Eng2Chi[color[r]])
                 final_color = Eng2Chi[color[r]]
+                if final_color == "蓝色":
+                    self.colorLabel.setStyleSheet("QLabel{background-color:blue;color:white;font: 20pt;alignment:center;}")
+                if final_color == "黄色":
+                    self.colorLabel.setStyleSheet("QLabel{background-color:yellow;color:black;font: 20pt;alignment:center;}")
+                if final_color == "绿色":
+                    self.colorLabel.setStyleSheet("QLabel{background-color:green;color:white;font: 20pt;alignment:center;}")
+                self.colorLabel.setText(final_color)
                 print(result[r])
                 result[r].insert(2, "-")
                 final_result = ''.join(result[r])
@@ -361,6 +369,13 @@ class CamShow(QMainWindow,Ui_camera):
                     finally:
                         cur.close()
                         conn.close()
+
+
+    def connetSQL(self):
+        conn = pymysql.connect(host='localhost',port=3306,user='root',password='root',db='opencv',charset='utf8')
+        cur = conn.cursor()
+        #获取游标
+        return conn,cur
 
 
 
