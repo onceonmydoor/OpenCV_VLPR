@@ -42,102 +42,115 @@ class mywindow(QtWidgets.QWidget,Ui_Form):
 
         if imgPath:
             ###################识别#####################
+            final_result = None
+            color_index = None
             q = Predict()
             afterprocess, old = q.preprocess(imgPath)
             self.Img_preprocess = afterprocess
             colors, card_imgs = q.locate_carPlate(afterprocess, old)
             result, roi, color, divs = q.char_recogize(colors, card_imgs)  # all list
+            print("识别到了{0}个车牌".format(len(result)))
             if len(result) == 0:
                 print("未能识别到车牌")
                 self.colorLabel.setText("抱歉未能识别到车牌")
                 self.NumLabel.setText("抱歉，未能识别到车牌")
                 self.location.clear()
             else:
-                for r  in range(len(result)):
-                    final_result = ''.join(result[r])
-                    if len(final_result)<7:
-                        self.NumLabel.setText("抱歉，未能识别到车牌")
-                        continue
+                for r in result:
+                    if len(r)>=7:
+                        final_result = result[r]
+                        color_index = result.index(r)
 
-                    print("#"*10+"识别结果是"+"#"*10)
-                    print("车牌的颜色为：" + Eng2Chi[color[r]])
-                    final_color = Eng2Chi[color[r]]
-                    if final_color == "蓝色":
-                        self.colorLabel.setStyleSheet("QLabel{background-color:blue;color:white}")
-                        #self.colorLabel.setStyleSheet("color:white")
-                    self.colorLabel.setText(final_color)
-                    print(result[r])
-                    final_result=result[r].insert(2,"-")
-                    self.NumLabel.setText(final_result)
-                    print("#" * 25)
-                    roi[r] = cv2.cvtColor(roi[r],cv2.COLOR_BGR2RGB)
-                    qimg = qimage2ndarray.array2qimage(roi[r])
-                    local_img =qimg.scaled(self.location.width(),self.location.height())
-                    self.location.setPixmap(QtGui.QPixmap(local_img))
-                    # QtImg = QtGui.QImage(roi[r].data,roi[r].shape[1],roi[r].shape[0],QtGui.QImage.Format_RGB888)
-                    # #显示图片到label中
-                    # self.location.resize(QtCore.QSize(roi[r].shape[1],roi[r].shape[0]))
-                    # self.location.setPixmap(QtGui.QPixmap.fromImage(QtImg))
+                if not final_result or len(final_result)<7:
+                    self.NumLabel.setText("抱歉，未能识别到车牌")
+                    return
 
+                print("#"*10+"识别结果是"+"#"*10)
+                ########车牌颜色########
+                print("车牌的颜色为：" + Eng2Chi[color[color_index]])
+                final_color = Eng2Chi[color[color_index]]
+                if final_color == "蓝色":
+                    self.colorLabel.setStyleSheet("QLabel{background-color:blue;color:white;font: 22pt;}")
+                if final_color == "黄色":
+                    self.colorLabel.setStyleSheet("QLabel{background-color:yellow;color:black;font: 22pt;}")
+                if final_color == "绿色":
+                    self.colorLabel.setStyleSheet("QLabel{background-color:green;color:white;font: 22pt;}")
+                self.colorLabel.setText(final_color)
+                ########车牌颜色########
 
+                ########车牌号码########
+                final_result = final_result.insert(2, "-")
+                final_result = ''.join(final_result)
+                print(final_result)
+                self.NumLabel.setText(final_result)
+                print("#" * 25)
+                roi[color_index] = cv2.cvtColor(roi[color_index],cv2.COLOR_BGR2RGB)
+                qimg = qimage2ndarray.array2qimage(roi[color_index])
+                local_img =qimg.scaled(self.location.width(),self.location.height())
+                self.location.setPixmap(QtGui.QPixmap(local_img))
+                # QtImg = QtGui.QImage(roi[r].data,roi[r].shape[1],roi[r].shape[0],QtGui.QImage.Format_RGB888)
+                # #显示图片到label中
+                # self.location.resize(QtCore.QSize(roi[r].shape[1],roi[r].shape[0]))
+                # self.location.setPixmap(QtGui.QPixmap.fromImage(QtImg))
+                ########车牌号码########
 
-                    if len(final_result)>=8 and u'\u4e00' <= final_result[0] <= u'\u9fff':
-                        #保存至MYSQL数据库
-                        conn, cur = self.connetSQL()
-                        currenttime = datetime.datetime.now()
-                        print(currenttime.strftime('%Y-%m-%d %H:%M:%S'))
-                        try:
-                            cur.execute("insert into plate(plate_num,plate_color,time)values(%s,%s,%s)",(final_result,final_color,currenttime))
-                            conn.commit()
-                        except Exception as e:
-                            print("expect: ",e)
-                        finally:
-                            cur.close()
-                            conn.close()
+                if len(final_result)>=8 and u'\u4e00' <= final_result[0] <= u'\u9fff':
+                    #保存至MYSQL数据库
+                    conn, cur = self.connetSQL()
+                    currenttime = datetime.datetime.now()
+                    print(currenttime.strftime('%Y-%m-%d %H:%M:%S'))
+                    try:
+                        cur.execute("insert into plate(plate_num,plate_color,time)values(%s,%s,%s)",(final_result,final_color,currenttime))
+                        conn.commit()
+                    except Exception as e:
+                        print("expect: ",e)
+                    finally:
+                        cur.close()
+                        conn.close()
 
             ###################识别#####################
 
 
-            if len(divs)==0:
-                pass
-            elif len(divs[0])<7:
-                pass
-            else:
-                # 与上同理
-                Gray1 = self.QImage2Pixmap(0,divs)
-                #self.div1.resize(QtCore.QSize(divs[0][0].shape[1], divs[0][0].shape[0]))
-                Gray1 = Gray1.scaled(self.div1.width(),self.div1.height())
-                self.div1.setPixmap(QtGui.QPixmap.fromImage(Gray1))
+        if len(divs)==0:
+            pass
+        elif len(divs[0])<7:
+            pass
+        else:
+            # 与上同理
+            Gray1 = self.QImage2Pixmap(0,divs)
+            #self.div1.resize(QtCore.QSize(divs[0][0].shape[1], divs[0][0].shape[0]))
+            Gray1 = Gray1.scaled(self.div1.width(),self.div1.height())
+            self.div1.setPixmap(QtGui.QPixmap.fromImage(Gray1))
 
-                Gray2 = self.QImage2Pixmap(1, divs)
-                # self.div1.resize(QtCore.QSize(divs[0][0].shape[1], divs[0][0].shape[0]))
-                Gray2 = Gray2.scaled(self.div2.width(), self.div2.height())
-                self.div2.setPixmap(QtGui.QPixmap.fromImage(Gray2))
+            Gray2 = self.QImage2Pixmap(1, divs)
+            # self.div1.resize(QtCore.QSize(divs[0][0].shape[1], divs[0][0].shape[0]))
+            Gray2 = Gray2.scaled(self.div2.width(), self.div2.height())
+            self.div2.setPixmap(QtGui.QPixmap.fromImage(Gray2))
 
-                Gray3 = self.QImage2Pixmap(2, divs)
-                # self.div1.resize(QtCore.QSize(divs[0][0].shape[1], divs[0][0].shape[0]))
-                Gray3 = Gray3.scaled(self.div3.width(), self.div3.height())
-                self.div3.setPixmap(QtGui.QPixmap.fromImage(Gray3))
+            Gray3 = self.QImage2Pixmap(2, divs)
+            # self.div1.resize(QtCore.QSize(divs[0][0].shape[1], divs[0][0].shape[0]))
+            Gray3 = Gray3.scaled(self.div3.width(), self.div3.height())
+            self.div3.setPixmap(QtGui.QPixmap.fromImage(Gray3))
 
-                Gray4 = self.QImage2Pixmap(3, divs)
-                # self.div1.resize(QtCore.QSize(divs[0][0].shape[1], divs[0][0].shape[0]))
-                Gray4 = Gray4.scaled(self.div4.width(), self.div4.height())
-                self.div4.setPixmap(QtGui.QPixmap.fromImage(Gray4))
+            Gray4 = self.QImage2Pixmap(3, divs)
+            # self.div1.resize(QtCore.QSize(divs[0][0].shape[1], divs[0][0].shape[0]))
+            Gray4 = Gray4.scaled(self.div4.width(), self.div4.height())
+            self.div4.setPixmap(QtGui.QPixmap.fromImage(Gray4))
 
-                Gray5 = self.QImage2Pixmap(4, divs)
-                # self.div1.resize(QtCore.QSize(divs[0][0].shape[1], divs[0][0].shape[0]))
-                Gray5 = Gray5.scaled(self.div5.width(), self.div5.height())
-                self.div5.setPixmap(QtGui.QPixmap.fromImage(Gray5))
+            Gray5 = self.QImage2Pixmap(4, divs)
+            # self.div1.resize(QtCore.QSize(divs[0][0].shape[1], divs[0][0].shape[0]))
+            Gray5 = Gray5.scaled(self.div5.width(), self.div5.height())
+            self.div5.setPixmap(QtGui.QPixmap.fromImage(Gray5))
 
-                Gray6 = self.QImage2Pixmap(5, divs)
-                # self.div1.resize(QtCore.QSize(divs[0][0].shape[1], divs[0][0].shape[0]))
-                Gray6 = Gray6.scaled(self.div6.width(), self.div6.height())
-                self.div6.setPixmap(QtGui.QPixmap.fromImage(Gray6))
+            Gray6 = self.QImage2Pixmap(5, divs)
+            # self.div1.resize(QtCore.QSize(divs[0][0].shape[1], divs[0][0].shape[0]))
+            Gray6 = Gray6.scaled(self.div6.width(), self.div6.height())
+            self.div6.setPixmap(QtGui.QPixmap.fromImage(Gray6))
 
-                Gray7 = self.QImage2Pixmap(6, divs)
-                # self.div1.resize(QtCore.QSize(divs[0][0].shape[1], divs[0][0].shape[0]))
-                Gray7 = Gray7.scaled(self.div7.width(), self.div7.height())
-                self.div7.setPixmap(QtGui.QPixmap.fromImage(Gray7))
+            Gray7 = self.QImage2Pixmap(6, divs)
+            # self.div1.resize(QtCore.QSize(divs[0][0].shape[1], divs[0][0].shape[0]))
+            Gray7 = Gray7.scaled(self.div7.width(), self.div7.height())
+            self.div7.setPixmap(QtGui.QPixmap.fromImage(Gray7))
 
 
 

@@ -295,6 +295,8 @@ class Predict:
 
         card_imgs = self.img_Transform(card_contours,oldimg)
         #开始使用颜色车牌定位，排除不是车牌的矩形，目前只识别蓝、绿、黄三种常规颜色的车牌
+
+
         
         print("正在根据颜色再定位...")
         colors , card_imgs = self.img_color(card_imgs)
@@ -403,12 +405,14 @@ class Predict:
             return_flag = False
             if angle == -0:
                 return_flag = True
-            if angle == -90 and rect_w>rect_h:
+            if angle == -90:
                 rect_w, rect_h = rect_h, rect_w
                 return_flag = True
             if return_flag:
                 card_img = oldimg[int(rect[0][1]-rect_h/2):int(rect[0][1]+rect_h/2),
                           int(rect[0][0]-rect_w/2):int(rect[0][0]+rect_w/2)]
+                cv2.imshow("transform",card_img)
+                cv2.waitKey(0)
 
                 card_imgs.append(card_img)
                 continue
@@ -523,34 +527,34 @@ class Predict:
                     continue
 
                 #根据车牌颜色在定位，缩小非车牌的边界区域
-                # xl, xr, yh, yl = self.accurate_place(card_img_hsv, limit1, limit2, color)
-                # if yl == yh and xl == xr:
-                #     continue
-                # need_accurate = False
-                # if yl >= yh:
-                #     yl = 0
-                #     yh = row_num
-                #     need_accurate = True
-                # if xl >= xr:
-                #     xl = 0
-                #     xr = col_num
-                #     need_accurate = True
-                # card_imgs[card_index] = card_img[yl:yh, xl:xr] if color !="green" or yl < (yh - yl) // 4 else card_img[yl - (yh - yl) // 4:yh,xl:xr]
-                #
-                #
-                # if need_accurate: #可能x或y方向未缩小，需要再试一次
-                #     card_img = card_imgs[card_index]
-                #     card_img_hsv = cv2.cvtColor(card_img,cv2.COLOR_BGR2HSV)
-                #     xl, xr, yh, yl = self.accurate_place(card_img_hsv, limit1, limit2, color)
-                #     if yl == yh and xl == xr:
-                #         continue
-                #     if yl >= yh:
-                #         yl = 0
-                #         yh = row_num
-                #     if xl >= xr:
-                #         xl = 0
-                #         xr = col_num
-                # card_imgs[card_index] = card_img[yl:yh, xl:xr] if color != "green" or yl < (yh - yl) // 4 else card_img[yl - (yh - yl) // 4:yh,xl:xr]
+                xl, xr, yh, yl = self.accurate_place(card_img_hsv, limit1, limit2, color)
+                if yl == yh and xl == xr:
+                    continue
+                need_accurate = False
+                if yl >= yh:
+                    yl = 0
+                    yh = row_num
+                    need_accurate = True
+                if xl >= xr:
+                    xl = 0
+                    xr = col_num
+                    need_accurate = True
+                card_imgs[card_index] = card_img[yl:yh, xl:xr] if color !="green" or yl < (yh - yl) // 4 else card_img[yl - (yh - yl) // 4:yh,xl:xr]
+
+
+                if need_accurate: #可能x或y方向未缩小，需要再试一次
+                    card_img = card_imgs[card_index]
+                    card_img_hsv = cv2.cvtColor(card_img,cv2.COLOR_BGR2HSV)
+                    xl, xr, yh, yl = self.accurate_place(card_img_hsv, limit1, limit2, color)
+                    if yl == yh and xl == xr:
+                        continue
+                    if yl >= yh:
+                        yl = 0
+                        yh = row_num
+                    if xl >= xr:
+                        xl = 0
+                        xr = col_num
+                card_imgs[card_index] = card_img[yl:yh, xl:xr] if color != "green" or yl < (yh - yl) // 4 else card_img[yl - (yh - yl) // 4:yh,xl:xr]
 
         return colors , card_imgs
 
@@ -575,6 +579,7 @@ class Predict:
                     gray_img = cv2.bitwise_not(gray_img)
                 ret , gray_img = cv2.threshold(gray_img, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)#OTSU  ,字符显示的第一步
                 #（灰度图，阈值，最大值，阈值类型）把阈值设为0，算法会找到最优阈值
+                gray_img[1][1] = gray_img[1][1]-20
                 cv2.imshow("erzhihua", gray_img)
                 cv2.waitKey()
                 cv2.destroyAllWindows()
@@ -677,8 +682,8 @@ if __name__ == '__main__':
     q = Predict()
     #if q.isdark("test\\timg.jpg"):
         #print("是黑夜拍的")
-    #afterprocess,old=q.preprocess("test\\pictures\\37.jpg")
-    afterprocess,old =q.preprocess("D:\\车牌测试用\\车牌识别测试图\\P90427-144853.jpg")
+    afterprocess,old=q.preprocess("test\\32.jpg")
+    #afterprocess,old =q.preprocess("D:\\车牌测试用\\车牌识别测试图\\P90427-144853.jpg")
     cv2.namedWindow("yuchuli",cv2.WINDOW_NORMAL)
     cv2.imshow("yuchuli", afterprocess)
     cv2.waitKey()
