@@ -6,7 +6,9 @@
 		"morphologyr":4,
 		"morphologyc":19,
 		"col_num_limit":10,
-		"row_num_limit":21
+		"row_num_limit":21,
+		"x_threshold_para":3,
+		"y_threshold_para":6
 	},
 	{
 		"open":0,
@@ -14,7 +16,9 @@
 		"morphologyr":5,
 		"morphologyc":12,
 		"col_num_limit":10,
-		"row_num_limit":18
+		"row_num_limit":18,
+		"x_threshold_para":3,
+		"y_threshold_para":6
 	}
 	]
 }

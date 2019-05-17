@@ -9,6 +9,7 @@ import Train_SVM
 import json
 from PIL import ImageStat
 from PIL import Image
+import time
 
 
 
@@ -179,22 +180,31 @@ class Predict:
             pic_hight, pic_width = img.shape[:2]
             print("图片长高为{}，图片长为{}".format(pic_hight,pic_width))
             #适当缩小图片
-            if pic_width > MAX_WIDTH:
+            if pic_width > MAX_WIDTH:#如果过大了
                 resize_rate = MAX_WIDTH / pic_width
                 img = cv2.resize(img, (MAX_WIDTH, int(pic_hight * resize_rate)), interpolation=cv2.INTER_AREA)
 
             #img = cv2.equalizeHist(img)
             
             gray_img = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)#转成灰度图
+            # cv2.imshow("gray", gray_img)
+            # cv2.waitKey(0)
 
             # dst = cv2.equalizeHist(gray_img)
             # cv2.imshow("dst",dst)
             # cv2.waitKey(0)
 
             blur_img = cv2.blur(gray_img,(3,3))#均值模糊
+            #blur_img = cv2.medianBlur(gray_img,3)
+            #cv2.imshow("blur",blur_img)
+            #cv2.waitKey(0)
 
-            sobel_img = cv2.Sobel(blur_img,cv2.CV_16S, 1, 0, ksize=3)#sobel获取垂直边缘
-            sobel_img = cv2.convertScaleAbs(sobel_img)
+            # sobel_img = cv2.Sobel(blur_img,cv2.CV_16S, 1, 0, ksize=3)#sobel获取垂直边缘
+            # sobel_img = cv2.convertScaleAbs(sobel_img)
+
+            sobel_img = cv2.Canny(blur_img,100,200)
+            cv2.imshow("sobel", sobel_img)
+            cv2.waitKey(0)
 
             hsv_img = cv2.cvtColor(img,cv2.COLOR_BGR2HSV)#转成HSV
 
@@ -208,7 +218,8 @@ class Predict:
             blue_img = blue_img.astype('float32')
 
             mix_img = np.multiply(sobel_img, blue_img)
-            #cv2.imshow('mix', mix_img)
+            # cv2.imshow('mix', mix_img)
+            # cv2.waitKey(0)
 
             mix_img = mix_img.astype(np.uint8)
 
@@ -220,12 +231,12 @@ class Predict:
             kernel = cv2.getStructuringElement(cv2.MORPH_RECT,(21,5))
             close_img = cv2.morphologyEx(binary_img, cv2.MORPH_CLOSE, kernel)
 
-
+            ##config##
             threshold_m = int(pic_width/80)#根据自己调参出来的
             print("开运算的阈值为"+str(threshold_m))
-
             x = threshold_m
             y = int(threshold_m*1.3)
+            ##config##
             Matrix = np.ones((x, y), np.uint8)
             img_edge1 = cv2.morphologyEx(close_img, cv2.MORPH_CLOSE, Matrix)
             img_edge2 = cv2.morphologyEx(img_edge1, cv2.MORPH_OPEN, Matrix)
@@ -360,7 +371,7 @@ class Predict:
             print("没有找到可能是车牌的区域")
         #一一排除不是车牌的矩形区域
         car_contours = []
-        for i in range(len(contours)-1,-1,-1):
+        for i in range(len(contours)-1,-1,-1):#倒序遍历排除不是车牌的矩形
         #for cnt in contours[:]:
             rect = cv2.minAreaRect(contours[i])# 得到最小外接矩形的（中心(x,y), (宽,高), 旋转角度）
 
@@ -370,7 +381,7 @@ class Predict:
             wh_ratio = area_width / area_height #长宽比
             print(wh_ratio)
             #要求矩形区域长宽比在2到5.5之间，2到5.5是车牌的长宽比，其余的矩形排除
-            if wh_ratio < 2 or wh_ratio > 6.1:
+            if wh_ratio < 2.5 or wh_ratio > 6.1:
                 contours.pop(i)
             else:
                 car_contours.append(rect)
@@ -395,6 +406,9 @@ class Predict:
         #矩形区域可能是倾斜的矩阵，需要矫正，以便使用颜色定位
         for rect in card_contours:#rect((中心点坐标)，（宽，长），角度)
             rect_w,rect_h = rect[1][0],rect[1][1]
+            ##config##
+            narrow = rect_h/40
+            ##config##
             angle = rect[2]#获得矩形旋转的角度
             print("矩形区域的角度是{}".format(angle))
             print("矩形区域宽是{},长是{}".format(rect[1][0],rect[1][1]))
@@ -411,8 +425,8 @@ class Predict:
             if return_flag:
                 card_img = oldimg[int(rect[0][1]-rect_h/2):int(rect[0][1]+rect_h/2),
                           int(rect[0][0]-rect_w/2):int(rect[0][0]+rect_w/2)]
-                cv2.imshow("transform",card_img)
-                cv2.waitKey(0)
+                # cv2.imshow("transform",card_img)
+                # cv2.waitKey(0)
 
                 card_imgs.append(card_img)
                 continue
@@ -444,11 +458,11 @@ class Predict:
                     img_math.point_limit(new_right_point)
                     img_math.point_limit(left_point)
                     img_math.point_limit(height_point)
-                    card_img = dst[int(left_point[1]):int(height_point[1]),int(left_point[0]):int(new_right_point[0])]#摆正图像
+                    card_img = dst[int(left_point[1]):int(height_point[1]),int(left_point[0]+narrow):int(new_right_point[0]-narrow)]#摆正图像
                     #show
                     card_imgs.append(card_img)
-                    # cv2.imshow("card2",card_img)
-                    # cv2.waitKey(0)
+                    cv2.imshow("card2",card_img)
+                    cv2.waitKey(0)
                 elif low_point[0] < height_point[0]:  #负角度
                     new_left_point = [left_point[0],height_point[1]]
                     pts2 = np.float32([new_left_point,height_point,right_point])  #字符只是高度需要改变
@@ -458,11 +472,11 @@ class Predict:
                     img_math.point_limit(right_point)
                     img_math.point_limit(height_point)
                     img_math.point_limit(new_left_point)
-                    card_img = dst[int(right_point[1]):int(height_point[1]),int(new_left_point[0]):int(right_point[0])]
+                    card_img = dst[int(right_point[1]):int(height_point[1]),int(new_left_point[0]+narrow):int(right_point[0]-narrow)]
                     #show
                     card_imgs.append(card_img)
-                    # cv2.imshow("card2",card_img)
-                    # cv2.waitKey(0)
+                    cv2.imshow("card2",card_img)
+                    cv2.waitKey(0)
 
         return card_imgs
 
@@ -513,48 +527,41 @@ class Predict:
                 elif black + white >= int(card_img_count*0.7):
                     color = "bw"
                 print(color)
-                # if color == "yellow" and black/card_img_count < 0.04:#排除黄色枯草
-                #     continue
-                # elif color == "blue" and blue/card_img_count < 0.03:
-                #     continue
-                # elif color == "green" and black/card_img_count < 0.03:#排除绿地
-                #     continue
-                
                 colors.append(color)
                 print("blue:{},green:{},yellow:{},black:{},white:{},count:{}".format(blue,green,yellow,black,white,card_img_count))
 
                 if color =="green":#绿色本来就区域小，不需要再缩小区域
                     continue
 
-                #根据车牌颜色在定位，缩小非车牌的边界区域
-                xl, xr, yh, yl = self.accurate_place(card_img_hsv, limit1, limit2, color)
-                if yl == yh and xl == xr:
-                    continue
-                need_accurate = False
-                if yl >= yh:
-                    yl = 0
-                    yh = row_num
-                    need_accurate = True
-                if xl >= xr:
-                    xl = 0
-                    xr = col_num
-                    need_accurate = True
-                card_imgs[card_index] = card_img[yl:yh, xl:xr] if color !="green" or yl < (yh - yl) // 4 else card_img[yl - (yh - yl) // 4:yh,xl:xr]
-
-
-                if need_accurate: #可能x或y方向未缩小，需要再试一次
-                    card_img = card_imgs[card_index]
-                    card_img_hsv = cv2.cvtColor(card_img,cv2.COLOR_BGR2HSV)
-                    xl, xr, yh, yl = self.accurate_place(card_img_hsv, limit1, limit2, color)
-                    if yl == yh and xl == xr:
-                        continue
-                    if yl >= yh:
-                        yl = 0
-                        yh = row_num
-                    if xl >= xr:
-                        xl = 0
-                        xr = col_num
-                card_imgs[card_index] = card_img[yl:yh, xl:xr] if color != "green" or yl < (yh - yl) // 4 else card_img[yl - (yh - yl) // 4:yh,xl:xr]
+                # #根据车牌颜色在定位，缩小非车牌的边界区域#TODO 不一定要再定位
+                # xl, xr, yh, yl = self.accurate_place(card_img_hsv, limit1, limit2, color)
+                # if yl == yh and xl == xr:
+                #     continue
+                # need_accurate = False
+                # if yl >= yh:
+                #     yl = 0
+                #     yh = row_num
+                #     need_accurate = True
+                # if xl >= xr:
+                #     xl = 0
+                #     xr = col_num
+                #     need_accurate = True
+                # card_imgs[card_index] = card_img[yl:yh, xl:xr] if color !="green" or yl < (yh - yl) // 4 else card_img[yl - (yh - yl) // 4:yh,xl:xr]
+                #
+                #
+                # if need_accurate: #可能x或y方向未缩小，需要再试一次
+                #     card_img = card_imgs[card_index]
+                #     card_img_hsv = cv2.cvtColor(card_img,cv2.COLOR_BGR2HSV)
+                #     xl, xr, yh, yl = self.accurate_place(card_img_hsv, limit1, limit2, color)
+                #     if yl == yh and xl == xr:
+                #         continue
+                #     if yl >= yh:
+                #         yl = 0
+                #         yh = row_num
+                #     if xl >= xr:
+                #         xl = 0
+                #         xr = col_num
+                # card_imgs[card_index] = card_img[yl:yh, xl:xr] if color != "green" or yl < (yh - yl) // 4 else card_img[yl - (yh - yl) // 4:yh,xl:xr]
 
         return colors , card_imgs
 
@@ -579,7 +586,6 @@ class Predict:
                     gray_img = cv2.bitwise_not(gray_img)
                 ret , gray_img = cv2.threshold(gray_img, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)#OTSU  ,字符显示的第一步
                 #（灰度图，阈值，最大值，阈值类型）把阈值设为0，算法会找到最优阈值
-                gray_img[1][1] = gray_img[1][1]-20
                 cv2.imshow("erzhihua", gray_img)
                 cv2.waitKey()
                 cv2.destroyAllWindows()
@@ -595,7 +601,8 @@ class Predict:
                 x_histogram = np.sum(gray_img , axis=1)
                 x_min = np.min(x_histogram)
                 x_average = np.sum(x_histogram) / x_histogram.shape[0]
-                x_threshold = (x_min + x_average)/3#TODO:根据分辨率进行调参使用config
+                x_threshold_para = self.cfg["x_threshold_para"]
+                x_threshold = (x_min + x_average)/x_threshold_para#TODO:根据分辨率进行调参使用config
                 wave_peaks = img_math.find_waves(x_threshold,x_histogram)
                 #
                 if len(wave_peaks) == 0:
@@ -615,7 +622,8 @@ class Predict:
                 y_histogram = np.sum( gray_img, axis=0)
                 y_min = np.min(y_histogram)
                 y_average = np.sum(y_histogram) / y_histogram.shape[0]
-                y_threshold = (y_min + y_average) / 6 #U 和 0 要求阈值偏小 ， 否则U和0会被分成两半
+                y_threshold_para = self.cfg["y_threshold_para"]
+                y_threshold = (y_min + y_average) / y_threshold_para#U 和 0 要求阈值偏小 ， 否则U和0会被分成两半
                 # TODO:根据分辨率进行调参使用config
                 print("阈值为："+str(y_threshold))
 
@@ -643,8 +651,10 @@ class Predict:
                 #组合分离汉字
                 cur_dis = 0
                 for i , wave in enumerate(wave_peaks):
-                    if wave[1] - wave[0] + cur_dis > int(max_wave_dis * 0.35):#TODO:优化调参
+                    ##config
+                    if wave[1] - wave[0] + cur_dis > int(max_wave_dis * 0.38):#TODO:优化调参
                         break
+                    ##config
                     else:
                         cur_dis += wave[1] - wave[0]
                 if i > 0:
@@ -679,10 +689,13 @@ class Predict:
             
 
 if __name__ == '__main__':
+
+    start = time.time()
+
     q = Predict()
     #if q.isdark("test\\timg.jpg"):
-        #print("是黑夜拍的")
-    afterprocess,old=q.preprocess("test\\Yes_img\\2_2.jpg")
+        #print("是黑夜拍的")1
+    afterprocess,old=q.preprocess("test\\29.jpg")
     #afterprocess,old =q.preprocess("D:\\车牌测试用\\车牌识别测试图\\P90427-144853.jpg")
     cv2.namedWindow("yuchuli",cv2.WINDOW_NORMAL)
     cv2.imshow("yuchuli", afterprocess)
@@ -697,3 +710,5 @@ if __name__ == '__main__':
             print("车牌的颜色为："+color[r])
             print(result[r])
             print("\n")
+    end = time.time()
+    print(round(end-start,3))

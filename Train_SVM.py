@@ -70,6 +70,7 @@ class SVM(StartModel):
     #训练svm，样本+标签 
     def train(self, samples, responses):
         self.model.train(samples, cv2.ml.ROW_SAMPLE, responses)
+        #self.model.train_auto()
 
     #字符识别
     def predict(self,samples):
@@ -118,7 +119,7 @@ class TrainSVM:
 
     def train_svm(self):
         #识别英文字母和数字
-        self.model = SVM(C=1,gamma=0.5)#TODO:优化调参，C越大越严格越容易过拟合，gamma过大会导致只支持样本
+        self.model = SVM(C=3,gamma=1.5)#TODO:优化调参，C越大越严格越容易过拟合，gamma过大会导致只支持样本
 
         #识别中文
         self.modelchinese = SVM(C=1,gamma=0.6)#TODO:优化调参
@@ -202,9 +203,8 @@ class TrainSVM:
 
             #显示每个分割字符，用于界面显示
             div.append(part_card)
-            # cv2.imshow("fengezifu",part_card)
-            # cv2.waitKey(0)
-
+            cv2.imshow("div",part_card)
+            cv2.waitKey(0)
             part_card = preprocess_hog([part_card])  
             if i == 0 :
                 #识别第一中文字符
@@ -217,18 +217,23 @@ class TrainSVM:
             if i == len(part_cards) - 1 and (charactor == "1" or charactor=="Z" or charactor == "7"):
                 if color != "green" and len(predict_result)==7:
                     #只有绿色车牌是8位数
-                    continue
+                    return predict_result, div
                 if color == "green" and len(predict_result)==8:
                 #绿色车牌已经是8位数了
-                    continue
+                    return predict_result, div
                 # if part_card_old.shape[0] / part_card_old.shape[1] >= 7 : #如果1太细，认为是边缘
                 #     continue
+
+            if color != "green" and len(predict_result) >= 7:
+                continue
+            if color == "green" and len(predict_result) >= 8:
+                continue
             predict_result.append(charactor)
         return predict_result,div # 识别到的字符、定位的车牌图像、车牌颜色
 
-# if __name__ == '__main__':
-#     c = TrainSVM()
-#     c.train_svm()  
-#     del c
+if __name__ == '__main__':
+    c = TrainSVM()
+    c.train_svm()
+    del c
                 
 

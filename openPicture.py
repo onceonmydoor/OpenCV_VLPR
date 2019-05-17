@@ -112,46 +112,46 @@ class mywindow(QtWidgets.QWidget,Ui_Form):
             ###################识别#####################
 
 
-        if len(divs)==0:
-            pass
-        elif len(divs[0])<7:
-            pass
-        else:
-            # 与上同理
-            Gray1 = self.QImage2Pixmap(0,divs)
-            #self.div1.resize(QtCore.QSize(divs[0][0].shape[1], divs[0][0].shape[0]))
-            Gray1 = Gray1.scaled(self.div1.width(),self.div1.height())
-            self.div1.setPixmap(QtGui.QPixmap.fromImage(Gray1))
+            if len(divs)==0:
+                pass
+            elif len(divs[0])<7:
+                pass
+            else:
+                # 与上同理
+                Gray1 = self.QImage2Pixmap(0,divs)
+                #self.div1.resize(QtCore.QSize(divs[0][0].shape[1], divs[0][0].shape[0]))
+                Gray1 = Gray1.scaled(self.div1.width(),self.div1.height())
+                self.div1.setPixmap(QtGui.QPixmap.fromImage(Gray1))
 
-            Gray2 = self.QImage2Pixmap(1, divs)
-            # self.div1.resize(QtCore.QSize(divs[0][0].shape[1], divs[0][0].shape[0]))
-            Gray2 = Gray2.scaled(self.div2.width(), self.div2.height())
-            self.div2.setPixmap(QtGui.QPixmap.fromImage(Gray2))
+                Gray2 = self.QImage2Pixmap(1, divs)
+                # self.div1.resize(QtCore.QSize(divs[0][0].shape[1], divs[0][0].shape[0]))
+                Gray2 = Gray2.scaled(self.div2.width(), self.div2.height())
+                self.div2.setPixmap(QtGui.QPixmap.fromImage(Gray2))
 
-            Gray3 = self.QImage2Pixmap(2, divs)
-            # self.div1.resize(QtCore.QSize(divs[0][0].shape[1], divs[0][0].shape[0]))
-            Gray3 = Gray3.scaled(self.div3.width(), self.div3.height())
-            self.div3.setPixmap(QtGui.QPixmap.fromImage(Gray3))
+                Gray3 = self.QImage2Pixmap(2, divs)
+                # self.div1.resize(QtCore.QSize(divs[0][0].shape[1], divs[0][0].shape[0]))
+                Gray3 = Gray3.scaled(self.div3.width(), self.div3.height())
+                self.div3.setPixmap(QtGui.QPixmap.fromImage(Gray3))
 
-            Gray4 = self.QImage2Pixmap(3, divs)
-            # self.div1.resize(QtCore.QSize(divs[0][0].shape[1], divs[0][0].shape[0]))
-            Gray4 = Gray4.scaled(self.div4.width(), self.div4.height())
-            self.div4.setPixmap(QtGui.QPixmap.fromImage(Gray4))
+                Gray4 = self.QImage2Pixmap(3, divs)
+                # self.div1.resize(QtCore.QSize(divs[0][0].shape[1], divs[0][0].shape[0]))
+                Gray4 = Gray4.scaled(self.div4.width(), self.div4.height())
+                self.div4.setPixmap(QtGui.QPixmap.fromImage(Gray4))
 
-            Gray5 = self.QImage2Pixmap(4, divs)
-            # self.div1.resize(QtCore.QSize(divs[0][0].shape[1], divs[0][0].shape[0]))
-            Gray5 = Gray5.scaled(self.div5.width(), self.div5.height())
-            self.div5.setPixmap(QtGui.QPixmap.fromImage(Gray5))
+                Gray5 = self.QImage2Pixmap(4, divs)
+                # self.div1.resize(QtCore.QSize(divs[0][0].shape[1], divs[0][0].shape[0]))
+                Gray5 = Gray5.scaled(self.div5.width(), self.div5.height())
+                self.div5.setPixmap(QtGui.QPixmap.fromImage(Gray5))
 
-            Gray6 = self.QImage2Pixmap(5, divs)
-            # self.div1.resize(QtCore.QSize(divs[0][0].shape[1], divs[0][0].shape[0]))
-            Gray6 = Gray6.scaled(self.div6.width(), self.div6.height())
-            self.div6.setPixmap(QtGui.QPixmap.fromImage(Gray6))
+                Gray6 = self.QImage2Pixmap(5, divs)
+                # self.div1.resize(QtCore.QSize(divs[0][0].shape[1], divs[0][0].shape[0]))
+                Gray6 = Gray6.scaled(self.div6.width(), self.div6.height())
+                self.div6.setPixmap(QtGui.QPixmap.fromImage(Gray6))
 
-            Gray7 = self.QImage2Pixmap(6, divs)
-            # self.div1.resize(QtCore.QSize(divs[0][0].shape[1], divs[0][0].shape[0]))
-            Gray7 = Gray7.scaled(self.div7.width(), self.div7.height())
-            self.div7.setPixmap(QtGui.QPixmap.fromImage(Gray7))
+                Gray7 = self.QImage2Pixmap(6, divs)
+                # self.div1.resize(QtCore.QSize(divs[0][0].shape[1], divs[0][0].shape[0]))
+                Gray7 = Gray7.scaled(self.div7.width(), self.div7.height())
+                self.div7.setPixmap(QtGui.QPixmap.fromImage(Gray7))
 
 
 
