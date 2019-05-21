@@ -8,12 +8,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0dc24bcb-9547-45af-9436-82979cbf304f" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test/car4.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test/car5.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test/car7.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test/ganzou7.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test/lLD9016.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test/test1.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test/timg1.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/test/timg4.jpg" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Train_SVM.py" afterPath="$PROJECT_DIR$/Train_SVM.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config.js" afterPath="$PROJECT_DIR$/config.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/jupyterNotebook/.ipynb_checkpoints/练习-checkpoint.ipynb" afterPath="$PROJECT_DIR$/jupyterNotebook/.ipynb_checkpoints/练习-checkpoint.ipynb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/jupyterNotebook/练习.ipynb" afterPath="$PROJECT_DIR$/jupyterNotebook/练习.ipynb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/openPicture.py" afterPath="$PROJECT_DIR$/openPicture.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/predict.py" afterPath="$PROJECT_DIR$/predict.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -28,8 +31,8 @@
       <file leaf-file-name="predict.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/predict.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="275">
-              <caret line="230" column="12" lean-forward="true" selection-start-line="230" selection-start-column="12" selection-end-line="230" selection-end-column="18" />
+            <state relative-caret-position="-8">
+              <caret line="683" column="0" lean-forward="true" selection-start-line="683" selection-start-column="0" selection-end-line="683" selection-end-column="0" />
               <folding>
                 <element signature="e#18#27#0" expanded="true" />
                 <element signature="e#349#615#0" expanded="false" />
@@ -37,8 +40,6 @@
                 <element signature="e#4999#5414#0" expanded="false" />
                 <element signature="e#5456#5605#0" expanded="false" />
                 <element signature="e#5646#6304#0" expanded="false" />
-                <element signature="e#9245#10537#0" expanded="false" />
-                <element signature="e#11847#13093#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -47,7 +48,7 @@
       <file leaf-file-name="search.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/search.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-510">
+            <state relative-caret-position="450">
               <caret line="15" column="47" lean-forward="false" selection-start-line="15" selection-start-column="47" selection-end-line="15" selection-end-column="47" />
               <folding />
             </state>
@@ -57,8 +58,8 @@
       <file leaf-file-name="img_math.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/img_math.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="5" column="15" lean-forward="false" selection-start-line="5" selection-start-column="15" selection-end-line="5" selection-end-column="15" />
+            <state relative-caret-position="600">
+              <caret line="21" column="34" lean-forward="false" selection-start-line="21" selection-start-column="25" selection-end-line="21" selection-end-column="34" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -76,21 +77,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="svmChinese.dat" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/svmChinese.dat">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="Train_SVM.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Train_SVM.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="148">
-              <caret line="201" column="0" lean-forward="true" selection-start-line="201" selection-start-column="0" selection-end-line="201" selection-end-column="0" />
+            <state relative-caret-position="-428">
+              <caret line="198" column="59" lean-forward="false" selection-start-line="198" selection-start-column="59" selection-end-line="198" selection-end-column="59" />
               <folding>
                 <element signature="e#19#29#0" expanded="true" />
               </folding>
@@ -101,7 +92,7 @@
       <file leaf-file-name="openSearch.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/openSearch.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="352">
+            <state relative-caret-position="690">
               <caret line="32" column="26" lean-forward="false" selection-start-line="32" selection-start-column="26" selection-end-line="32" selection-end-column="26" />
               <folding>
                 <element signature="e#193#233#0" expanded="true" />
@@ -113,12 +104,22 @@
       <file leaf-file-name="openPicture.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/openPicture.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="188">
-              <caret line="175" column="37" lean-forward="true" selection-start-line="175" selection-start-column="37" selection-end-line="175" selection-end-column="37" />
+            <state relative-caret-position="2910">
+              <caret line="166" column="49" lean-forward="false" selection-start-line="166" selection-start-column="49" selection-end-line="166" selection-end-column="49" />
               <folding>
                 <element signature="e#193#233#0" expanded="true" />
                 <marker date="1557626279266" expanded="false" signature="1160:4608" ph="..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="svm.dat" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/svm.dat">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="600">
+              <caret line="20" column="19" lean-forward="false" selection-start-line="20" selection-start-column="19" selection-end-line="20" selection-end-column="19" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -165,6 +166,7 @@
       <find>cfg</find>
       <find>config</find>
       <find>imshow</find>
+      <find>accurate_place</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -195,11 +197,11 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="-111" />
-    <option name="y" value="206" />
+  <component name="ProjectFrameBounds" extendedState="7">
+    <option name="x" value="108" />
+    <option name="y" value="264" />
     <option name="width" value="1850" />
-    <option name="height" value="981" />
+    <option name="height" value="1100" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -238,11 +240,6 @@
             <path>
               <item name="OpenCV_VLPR" type="b2602c69:ProjectViewProjectNode" />
               <item name="OpenCV_VLPR" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="OpenCV_VLPR" type="b2602c69:ProjectViewProjectNode" />
-              <item name="OpenCV_VLPR" type="462c0819:PsiDirectoryNode" />
-              <item name="svm" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -394,14 +391,15 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-111" y="206" width="1850" height="981" extended-state="0" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14503817" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.13854167" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36836517" sideWeight="0.409375" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26297578" sideWeight="0.590625" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28397566" sideWeight="0.590625" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -430,13 +428,8 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/predict.py</url>
-          <line>651</line>
+          <line>645</line>
           <option name="timeStamp" value="161" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Train_SVM.py</url>
-          <line>185</line>
-          <option name="timeStamp" value="164" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/predict.py</url>
@@ -464,13 +457,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/_pydev_imps/_pydev_execfile.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="3" column="18" lean-forward="true" selection-start-line="3" selection-start-column="18" selection-end-line="3" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://C:/Program Files/Python37/Lib/ntpath.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
@@ -679,23 +665,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/svm.dat">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="570">
-          <caret line="19" column="17" lean-forward="true" selection-start-line="19" selection-start-column="17" selection-end-line="19" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/img_math.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="5" column="15" lean-forward="false" selection-start-line="5" selection-start-column="15" selection-end-line="5" selection-end-column="15" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/svmChinese.dat">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -716,7 +685,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/openSearch.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
+        <state relative-caret-position="690">
           <caret line="32" column="26" lean-forward="false" selection-start-line="32" selection-start-column="26" selection-end-line="32" selection-end-column="26" />
           <folding>
             <element signature="e#193#233#0" expanded="true" />
@@ -726,30 +695,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/search.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-510">
+        <state relative-caret-position="450">
           <caret line="15" column="47" lean-forward="false" selection-start-line="15" selection-start-column="47" selection-end-line="15" selection-end-column="47" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Train_SVM.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="148">
-          <caret line="201" column="0" lean-forward="true" selection-start-line="201" selection-start-column="0" selection-end-line="201" selection-end-column="0" />
-          <folding>
-            <element signature="e#19#29#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/openPicture.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="188">
-          <caret line="175" column="37" lean-forward="true" selection-start-line="175" selection-start-column="37" selection-end-line="175" selection-end-column="37" />
+        <state relative-caret-position="2910">
+          <caret line="166" column="49" lean-forward="false" selection-start-line="166" selection-start-column="49" selection-end-line="166" selection-end-column="49" />
           <folding>
             <element signature="e#193#233#0" expanded="true" />
             <marker date="1557626279266" expanded="false" signature="1160:4608" ph="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/svm.dat">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="600">
+          <caret line="20" column="19" lean-forward="false" selection-start-line="20" selection-start-column="19" selection-end-line="20" selection-end-column="19" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -761,10 +728,38 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/img_math.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="600">
+          <caret line="21" column="34" lean-forward="false" selection-start-line="21" selection-start-column="25" selection-end-line="21" selection-end-column="34" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Train_SVM.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-428">
+          <caret line="198" column="59" lean-forward="false" selection-start-line="198" selection-start-column="59" selection-end-line="198" selection-end-column="59" />
+          <folding>
+            <element signature="e#19#29#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/text.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="5" lean-forward="true" selection-start-line="0" selection-start-column="5" selection-end-line="0" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/predict.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="230" column="12" lean-forward="true" selection-start-line="230" selection-start-column="12" selection-end-line="230" selection-end-column="18" />
+        <state relative-caret-position="-8">
+          <caret line="683" column="0" lean-forward="true" selection-start-line="683" selection-start-column="0" selection-end-line="683" selection-end-column="0" />
           <folding>
             <element signature="e#18#27#0" expanded="true" />
             <element signature="e#349#615#0" expanded="false" />
@@ -772,8 +767,6 @@
             <element signature="e#4999#5414#0" expanded="false" />
             <element signature="e#5456#5605#0" expanded="false" />
             <element signature="e#5646#6304#0" expanded="false" />
-            <element signature="e#9245#10537#0" expanded="false" />
-            <element signature="e#11847#13093#0" expanded="false" />
           </folding>
         </state>
       </provider>

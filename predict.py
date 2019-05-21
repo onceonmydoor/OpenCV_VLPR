@@ -199,10 +199,10 @@ class Predict:
             #cv2.imshow("blur",blur_img)
             #cv2.waitKey(0)
 
-            # sobel_img = cv2.Sobel(blur_img,cv2.CV_16S, 1, 0, ksize=3)#sobel获取垂直边缘
-            # sobel_img = cv2.convertScaleAbs(sobel_img)
+            sobel_img = cv2.Sobel(blur_img,cv2.CV_16S, 1, 0, ksize=3)#sobel获取垂直边缘
+            sobel_img = cv2.convertScaleAbs(sobel_img)
 
-            sobel_img = cv2.Canny(blur_img,100,200)
+            #sobel_img = cv2.Canny(blur_img,100,200)
             cv2.imshow("sobel", sobel_img)
             cv2.waitKey(0)
 
@@ -301,18 +301,12 @@ class Predict:
 
         print("精确定位中...")
         print("正在调整车牌位置...")
-
-        
-
         card_imgs = self.img_Transform(card_contours,oldimg)
+
         #开始使用颜色车牌定位，排除不是车牌的矩形，目前只识别蓝、绿、黄三种常规颜色的车牌
-
-
-        
         print("正在根据颜色再定位...")
-        colors , card_imgs = self.img_color(card_imgs)
 
-            
+        colors , card_imgs = self.img_color(card_imgs)
         #返回可能存在的
         for i in range(len(colors)-1,-1,-1):
             if colors[i] == "no":
@@ -381,7 +375,7 @@ class Predict:
             wh_ratio = area_width / area_height #长宽比
             print(wh_ratio)
             #要求矩形区域长宽比在2到5.5之间，2到5.5是车牌的长宽比，其余的矩形排除
-            if wh_ratio < 2.5 or wh_ratio > 6.1:
+            if wh_ratio < 2 or wh_ratio > 6:
                 contours.pop(i)
             else:
                 car_contours.append(rect)
@@ -461,8 +455,8 @@ class Predict:
                     card_img = dst[int(left_point[1]):int(height_point[1]),int(left_point[0]+narrow):int(new_right_point[0]-narrow)]#摆正图像
                     #show
                     card_imgs.append(card_img)
-                    cv2.imshow("card2",card_img)
-                    cv2.waitKey(0)
+                    # cv2.imshow("card2",card_img)
+                    # cv2.waitKey(0)
                 elif low_point[0] < height_point[0]:  #负角度
                     new_left_point = [left_point[0],height_point[1]]
                     pts2 = np.float32([new_left_point,height_point,right_point])  #字符只是高度需要改变
@@ -475,8 +469,8 @@ class Predict:
                     card_img = dst[int(right_point[1]):int(height_point[1]),int(new_left_point[0]+narrow):int(right_point[0]-narrow)]
                     #show
                     card_imgs.append(card_img)
-                    cv2.imshow("card2",card_img)
-                    cv2.waitKey(0)
+                    # cv2.imshow("card2",card_img)
+                    # cv2.waitKey(0)
 
         return card_imgs
 

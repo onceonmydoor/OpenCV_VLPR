@@ -1,0 +1,9 @@
+/test
+/dist
+/build
+.idea
+/jupyterNotebook
+/LearnQT
+/TK
+/video
+/__pycache__
